@@ -24,6 +24,7 @@
     "@types/react-dom": "^18.0.7",
     "eslint": "7.32.0",
     "eslint-config-custom": "workspace:*",
+    "tailwind-config": "workspace:*",
     "jest": "^29.5.0",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
