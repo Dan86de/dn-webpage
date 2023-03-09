@@ -107,7 +107,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log({ geomanist });
   return (
     <html
       lang="en"

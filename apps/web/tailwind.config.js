@@ -15,5 +15,6 @@ module.exports = {
       ...globalConfig.theme,
     },
   },
+  plugins: [require("@tailwindcss/typography")],
   ...globalConfig,
 };
