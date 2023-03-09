@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^0.1.11",
+    "clsx": "^1.2.1",
     "next": "^13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -24,8 +25,8 @@
     "@types/react-dom": "^18.0.7",
     "eslint": "7.32.0",
     "eslint-config-custom": "workspace:*",
-    "tailwind-config": "workspace:*",
     "jest": "^29.5.0",
+    "tailwind-config": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
   }
