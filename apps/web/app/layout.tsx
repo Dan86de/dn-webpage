@@ -107,12 +107,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log({ geomanist });
   return (
     <html
       lang="en"
       className={clsx(
         "text-neutral-900 bg-neutral-50 dark:text-neutral-50 dark:bg-neutral-900",
-        geomanist.variable
+        geomanist.className
       )}
     >
       <body>
