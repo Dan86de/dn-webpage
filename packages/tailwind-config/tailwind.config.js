@@ -6,7 +6,11 @@ module.exports = {
     "../../packages/ui/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      future: {
+        hoverOnlyWhenSupported: true,
+      },
+    },
   },
   plugins: [],
 };
