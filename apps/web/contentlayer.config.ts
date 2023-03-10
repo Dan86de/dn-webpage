@@ -29,7 +29,9 @@ export const Post = defineDocumentType(() => ({
     url: {
       type: "string",
       resolve: (post) =>
-        `https://danielnoworyta.com/blog/${post._raw.flattenedPath}`,
+        // use env variables here to make this more dynamic
+        // `https://danielnoworyta.com/blog/${post._raw.flattenedPath}`,
+        `http://localhost:3000/blog/${post._raw.flattenedPath}`,
     },
   },
 }));

@@ -20,7 +20,6 @@ importers:
       '@types/react': ^18.0.22
       '@types/react-dom': ^18.0.7
       '@vercel/analytics': ^0.1.11
-      clsx: ^1.2.1
       contentlayer: ^0.3.0
       date-fns: ^2.29.3
       eslint: 7.32.0
@@ -36,7 +35,6 @@ importers:
       ui: workspace:*
     dependencies:
       '@vercel/analytics': 0.1.11_react@18.2.0
-      clsx: 1.2.1
       contentlayer: 0.3.0
       date-fns: 2.29.3
       next: 13.2.3_6m24vuloj5ihw4zc5lbsktc4fu
@@ -77,10 +75,12 @@ importers:
   packages/tailwind-config:
     specifiers:
       autoprefixer: ^10.4.13
+      clsx: ^1.2.1
       postcss: ^8.4.21
       tailwindcss: ^3.2.7
     devDependencies:
       autoprefixer: 10.4.13_postcss@8.4.21
+      clsx: 1.2.1
       postcss: 8.4.21
       tailwindcss: 3.2.7_postcss@8.4.21
 
@@ -94,6 +94,7 @@ importers:
       eslint: ^7.32.0
       eslint-config-custom: workspace:*
       react: ^18.2.0
+      tailwind-config: workspace:*
       tsconfig: workspace:*
       typescript: ^4.5.2
     devDependencies:
@@ -102,6 +103,7 @@ importers:
       eslint: 7.32.0
       eslint-config-custom: link:../eslint-config-custom
       react: 18.2.0
+      tailwind-config: link:../tailwind-config
       tsconfig: link:../tsconfig
       typescript: 4.9.5
 
@@ -2248,7 +2250,7 @@ packages:
   /clsx/1.2.1:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
-    dev: false
+    dev: true
 
   /co/4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
