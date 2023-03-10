@@ -9,7 +9,7 @@ export default function Homepage() {
       <h2 className="text-2xl font-medium text-center max-w-xl mx-auto mt-6">
         There is some subheading for this page.
       </h2>
-      <Button />
+      <Button className="w-[400px]">Subscribe newsletter</Button>
     </div>
   );
 }
