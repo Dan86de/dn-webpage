@@ -14,6 +14,11 @@ export default defineConfig({
     webAnalytics: {
       enabled: true,
     },
+    imagesConfig: {
+      sizes: [344],
+      minimumCacheTTL: 60,
+      formats: ["image/webp"],
+    },
     imageService: true,
     devImageService: "sharp",
     isr: true,
