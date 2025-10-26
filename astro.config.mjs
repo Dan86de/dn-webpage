@@ -14,9 +14,6 @@ export default defineConfig({
     webAnalytics: {
       enabled: true,
     },
-    imagesConfig: {
-      sizes: [480, 744, 1024, 1440],
-    },
     imageService: true,
     devImageService: "sharp",
     isr: true,
