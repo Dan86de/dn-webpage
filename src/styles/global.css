@@ -172,6 +172,11 @@
   }
 }
 
+/* Brand gradients */
+@utility bg-brand-gradient {
+  background-image: var(--brand-gradient);
+}
+
 /* Every Layout Components */
 
 /* STACK COMPONENT */

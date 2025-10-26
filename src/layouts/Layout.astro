@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import TailwindIndicator from "../components/TailwindIndicator.astro";
+import { Image } from "astro:assets";
+import Logo from "../images/logo.svg";
 ---
 
 <script is:inline>
@@ -57,6 +59,20 @@ import TailwindIndicator from "../components/TailwindIndicator.astro";
     <title>Astro</title>
   </head>
   <body class="bg-grey-50">
+    <header
+      class="mx-auto max-w-3xl px-(--inline-padding) flex items-center justify-between h-16 laptop:h-20"
+    >
+      <a href="/" class="flex items-center gap-2">
+        <p class="font-medium">Daniel</p>
+        <Logo width={17} height={15} class="-rotate-15" />
+        <p class="font-medium">Noworyta</p>
+      </a>
+      <nav>
+        <ul class="flex items-center justify-between gap-8">
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+    </header>
     <slot />
   </body>
   <TailwindIndicator />
