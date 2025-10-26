@@ -178,7 +178,6 @@
 }
 
 /* Every Layout Components */
-
 /* STACK COMPONENT */
 @utility stack {
   @apply flex flex-col justify-start;
