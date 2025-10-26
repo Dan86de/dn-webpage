@@ -13,6 +13,7 @@
     url("/fonts/Geomanist/Geomanist-Regular-Webfont/geomanist-regular-webfont.svg#geomanistregular")
       format("svg");
   font-weight: 400;
+  font-display: swap;
   font-style: normal;
 }
 
@@ -31,6 +32,7 @@
     url("/fonts/Geomanist/Geomanist-Regular-Italic-Webfont/geomanist-regular-italic-webfont.svg#geomanistitalic")
       format("svg");
   font-weight: 400;
+  font-display: swap;
   font-style: italic;
 }
 
@@ -49,6 +51,7 @@
     url("/fonts/Geomanist/Geomanist-Medium-Webfont/geomanist-medium-webfont.svg#geomanistregular")
       format("svg");
   font-weight: 500;
+  font-display: swap;
   font-style: normal;
 }
 
@@ -67,5 +70,6 @@
     url("/fonts/Geomanist/Geomanist-Light-Webfont/geomanist-light-webfont.svg#geomanistregular")
       format("svg");
   font-weight: 300;
+  font-display: swap;
   font-style: normal;
 }
