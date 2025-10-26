@@ -93,6 +93,7 @@
 @layer base {
   :root {
     color: var(--color-grey-950);
+    font-display: swap;
     @media (min-width: 744px) {
       --inline-padding: calc(var(--spacing) * 6);
     }
