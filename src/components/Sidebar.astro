@@ -1,0 +1,21 @@
+---
+import { cn } from "../lib/utils";
+const {
+  sidebarGap,
+  sidebarWidth,
+  contentWidth,
+  noStretch = false,
+  class: className,
+} = Astro.props;
+---
+
+<div
+  class={cn("sidebar", noStretch && "items-start", className && className)}
+  style={{
+    "--sidebar-gap": sidebarGap,
+    "--sidebar-width": sidebarWidth,
+    "--sidebar-content-min": contentWidth,
+  }}
+>
+  <slot />
+</div>

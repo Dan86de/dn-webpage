@@ -1,0 +1,63 @@
+---
+import "../styles/global.css";
+import TailwindIndicator from "../components/TailwindIndicator.astro";
+---
+
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  const updateTheme = (theme) => {
+    const isDark = theme === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+  };
+
+  // Set initial theme
+  updateTheme(getThemePreference());
+
+  // Listen for system theme changes
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (e) => {
+      // Clear the stored preference when system theme changes
+      // This allows the site to follow system preferences again
+      if (typeof localStorage !== "undefined") {
+        localStorage.removeItem("theme");
+      }
+      updateTheme(e.matches ? "dark" : "light");
+    });
+
+  // Optional: If you want to track manual theme changes
+  // (for example, if you add a theme toggle button)
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      // Only save if it's a manual change (not from system preference)
+      // You might want to add a flag to distinguish manual vs system changes
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body class="bg-grey-50">
+    <slot />
+  </body>
+  <TailwindIndicator />
+</html>
