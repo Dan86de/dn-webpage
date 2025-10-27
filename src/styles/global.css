@@ -180,6 +180,21 @@
   background-image: var(--brand-gradient);
 }
 
+@utility caption {
+  font-size: var(--text-xs);
+  line-height: calc(var(--spacing) * 4);
+  letter-spacing: 4%;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/*TODO: Not really footnote*/
+@utility footnote {
+  font-size: 12px;
+  line-height: calc(var(--spacing) * 4);
+  font-weight: 400;
+}
+
 /* Every Layout Components */
 /* STACK COMPONENT */
 @utility stack {
