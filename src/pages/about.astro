@@ -14,26 +14,25 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
     <h1
       class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-12 mt-10"
     >
-      Developer. Father. Creator.
+      Developer.<br /> Father. Creator.
     </h1>
     <p class="pb-6">
       From dreaming of becoming a programmer to making it a reality in 2020, I'm
       now sharing my journey through teaching and creating. I help others
       transition into tech while building useful things along the way.
     </p>
-    <Sidebar
-      class="mb-10 tablet:[--sidebar-width:324px] laptop:[--sidebar-width:324px]"
-    >
+    <Sidebar class="mb-10 tablet:[--sidebar-width:324px]">
       <div>
         <Image
+          loading="eager"
           src={avatar}
-          alt="Daniel's Profile Picture"
-          class="aspect-square w-full mx-auto rounded-lg"
+          alt="Daniel Noworyta"
+          class="aspect-square w-full mx-auto rounded-lg block"
         />
       </div>
       <Stack
         space="calc(var(--spacing) * 4)"
-        class="tablet:border-y border-orange-500 text-pretty tablet:justify-center tablet:text-grey-800 italic"
+        class="tablet:border-y border-orange-500 text-pretty tablet:justify-center tablet:text-grey-800 italic py-4"
       >
         <p>
           Hey, I'm Daniel Noworyta. For most of my life, I pushed aside my dream

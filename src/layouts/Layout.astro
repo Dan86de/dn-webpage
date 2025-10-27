@@ -61,18 +61,21 @@ import Logo from "../images/Logo.svg";
     <header
       class="mx-auto max-w-3xl px-(--inline-padding) flex items-center justify-between h-16 laptop:h-20"
     >
-      <a href="/" class="flex items-center gap-1.5">
+      <a href="/" class="flex items-center gap-1.5 group">
         <p class="font-medium">Daniel</p>
-        <Logo width={17} height={15} class="-rotate-15" />
+        <Logo
+          width={17}
+          height={15}
+          class="-rotate-15 group-hover:rotate-0 duration-200"
+        />
         <p class="font-medium">Noworyta</p>
       </a>
       <nav>
-        <ul class="flex items-center justify-between gap-8">
+        <ul class="flex items-baseline justify-between gap-8">
           <li><a href="/about">About</a></li>
         </ul>
       </nav>
     </header>
     <slot />
-  </body>
-  <TailwindIndicator />
+  </body><TailwindIndicator />
 </html>

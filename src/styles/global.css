@@ -14,10 +14,9 @@
   /* Reset breakpoints */
   --breakpoint-*: initial;
   /* New breakpoints */
-  --breakpoint-mobile: 480px;
-  --breakpoint-tablet: 744px;
-  --breakpoint-laptop: 1024px;
-  --breakpoint-desktop: 1440px;
+  --breakpoint-tablet: 550px;
+  --breakpoint-laptop: 1100px;
+  --breakpoint-desktop: 1500px;
   /* COLORS */
   /* Light mode colors (default) */
   --color-*: initial;
@@ -127,7 +126,7 @@
   }
 
   /* Tablet and up */
-  @media (min-width: 744px) {
+  @media (min-width: 550px) {
     h1 {
       font-size: var(--text-5xl); /* 48px */
       line-height: calc(var(--spacing) * 13); /* 52px */
@@ -147,11 +146,11 @@
   }
 
   /* Laptop and up */
-  @media (min-width: 1024px) {
+  @media (min-width: 1100px) {
   }
 
   /* Desktop and up */
-  @media (min-width: 1440px) {
+  @media (min-width: 1500px) {
     h1 {
       font-size: var(--text-6xl); /* 60px */
       line-height: calc(var(--spacing) * 16); /* 64px */
