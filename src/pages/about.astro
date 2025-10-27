@@ -10,13 +10,14 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
 ---
 
 <Layout>
-  <div class="px-(--inline-padding)">
+  <div class="px-(--inline-padding) pb-[1440px]">
     <Sidebar
       class="mx-auto max-w-4xl tablet:[--sidebar-width:var(--container-2xl)] tablet:[--sidebar-content-min:100px] tablet:[--sidebar-gap:4rem]"
     >
       <!-- CONTENT -->
       <div>
         <h1
+          id="introduction"
           class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-12 mt-10"
         >
           Developer.<br /> Father. Creator.
@@ -58,7 +59,7 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
             </p>
           </Stack>
         </Sidebar>
-        <h3 class="font-medium max-w-[675px] pb-6">My Story</h3>
+        <h3 id="my-story" class="font-medium max-w-[675px] pb-6">My Story</h3>
         <Stack class="pb-8">
           <p>
             I used to live a life that, on the surface, looked successful but
@@ -72,7 +73,7 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
           <p>
             The constant delegations kept me away from home, which became
             unbearable when I met my wife and dreamed of starting a family. I
-            felt trapped, knowing I’d hit the ceiling of my career with no room
+            felt trapped, knowing I'd hit the ceiling of my career with no room
             to grow or earn more, and my true passion—creating web pages and
             solving problems through coding—was just a distant dream I lacked
             the courage to pursue.
@@ -80,18 +81,20 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
           <p>
             My mindset back then was a mix of hope and frustration. I believed I
             could change my life, inspired by YouTube creators and tech blogs,
-            but I wasn’t sure if I could pull it off. I felt excited about the
+            but I wasn't sure if I could pull it off. I felt excited about the
             possibility of becoming a software developer, yet the demands of my
             job and the fear of failure held me back.
           </p>
         </Stack>
-        <h4 class="font-medium max-w-[675px] pb-6">My "rock bottom" moment</h4>
+        <h4 id="rock-bottom" class="font-medium max-w-[675px] pb-6">
+          My "rock bottom" moment
+        </h4>
         <Stack class="pb-8">
           <p>
             The lowest point came when my son was born, and my company sent me
             to Detroit for a six-month project. Missing those precious early
             months with my newborn son was heartbreaking—it was my rock bottom.
-            I knew I couldn’t keep living a life that kept me away from my
+            I knew I couldn't keep living a life that kept me away from my
             family and my true calling. That moment, coupled with my desire to
             return to Poland and raise my son there, was the spark that pushed
             me to act.
@@ -101,7 +104,7 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
             started with online courses from Udemy and YouTube, focusing on
             HTML, CSS, and JavaScript. To make progress, I reshaped my routine,
             waking up at 5:30 AM—or even 4:30 AM—to study before my 8-to-5 job,
-            then coding again in the evenings. It wasn’t easy.
+            then coding again in the evenings. It wasn't easy.
           </p>
           <p>
             As a self-taught developer, I faced imposter syndrome and struggled
@@ -113,23 +116,25 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
             job as a full-stack developer in the TypeScript ecosystem.
           </p>
         </Stack>
-        <h4 class="font-medium max-w-[675px] pb-6">What I'm doing today</h4>
+        <h4 id="today" class="font-medium max-w-[675px] pb-6">
+          What I'm doing today
+        </h4>
         <Stack class="mb-10">
           <p>
             Today, I work remotely for a German company, building applications
             for installers of heat pumps and gas boilers using React and React
             Native. With six years of professional coding experience, I earn a
             good living and have the freedom to be with my family in Poland. My
-            life has transformed—I’m no longer tethered to constant travel or a
+            life has transformed—I'm no longer tethered to constant travel or a
             career ceiling.
           </p>
           <p>
             I also run a YouTube channel with over 5,500 subscribers, where I
             share my coding journey and inspire others, recently switching to
-            English to reach a broader audience. The key lesson I’ve learned is
+            English to reach a broader audience. The key lesson I've learned is
             that with enough will and dedication, anyone can make a significant
             life change, no matter their circumstances. Two and a half years may
-            seem long, but it’s a small price to pay for a lifetime of
+            seem long, but it's a small price to pay for a lifetime of
             fulfillment.
           </p>
           <p>
@@ -151,22 +156,170 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
         />
       </div>
       <!-- TOC -->
-      <div class="mt-49 relative">
+      <div class="hidden desktop:block mt-49 relative">
         <div class="sticky top-20">
           <p class="caption pb-4">Table of contents</p>
-          <ul class="flex flex-col gap-1">
+          <ul id="toc-list" class="flex flex-col gap-1">
             <li
-              class="footnote cursor-pointer flex gap-2 items-center -ml-4 text-orange-500"
+              data-section="introduction"
+              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
             >
-              <span class="block size-2 bg-orange-500 rounded-full"
-              ></span>Introduction
+              <span
+                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+              ></span><a href="#introduction">Introduction</a>
             </li>
-            <li class="footnote cursor-pointer">My Story</li>
-            <li class="footnote cursor-pointer">My "rock bottom" moment</li>
-            <li class="footnote cursor-pointer">What I'm doing today</li>
+            <li
+              data-section="my-story"
+              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+            >
+              <span
+                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+              ></span><a href="#my-story">My Story</a>
+            </li>
+            <li
+              data-section="rock-bottom"
+              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+            >
+              <span
+                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+              ></span><a href="#rock-bottom">My "rock bottom" moment</a>
+            </li>
+            <li
+              data-section="today"
+              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+            >
+              <span
+                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+              ></span><a href="#today">What I'm doing today</a>
+            </li>
           </ul>
         </div>
       </div>
     </Sidebar>
   </div>
 </Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("h1[id], h3[id], h4[id]");
+    const tocItems = document.querySelectorAll(".toc-item");
+
+    // Function to update active TOC item
+    function updateActiveSection() {
+      const scrollPosition = window.scrollY + 100; // Offset for better UX
+
+      let activeSection = null;
+
+      // Find which section is currently in view
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + window.scrollY;
+
+        if (scrollPosition >= sectionTop) {
+          activeSection = section.id;
+        }
+      });
+
+      // Update TOC styling
+      tocItems.forEach((item) => {
+        const sectionId = item.getAttribute("data-section");
+        const indicator = item.querySelector(".toc-indicator");
+        const link = item.querySelector("a");
+
+        if (sectionId === activeSection) {
+          // Active state
+          item.classList.add("text-orange-500");
+          item.classList.remove("text-current");
+          if (indicator) {
+            indicator.classList.remove("opacity-0");
+            indicator.classList.add("opacity-100");
+          }
+        } else {
+          // Inactive state
+          item.classList.remove("text-orange-500");
+          item.classList.add("text-current");
+          if (indicator) {
+            indicator.classList.add("opacity-0");
+            indicator.classList.remove("opacity-100");
+          }
+        }
+      });
+    }
+
+    // Add smooth scrolling for TOC links
+    tocItems.forEach((item) => {
+      const link = item.querySelector("a");
+      if (link) {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            const offset = 80; // Adjust this value based on your header height
+            const targetPosition =
+              targetSection.getBoundingClientRect().top +
+              window.scrollY -
+              offset;
+
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
+          }
+        });
+      }
+    });
+
+    // Use Intersection Observer for better performance
+    const observerOptions = {
+      rootMargin: "-20% 0% -70% 0%",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+
+          // Update TOC styling
+          tocItems.forEach((item) => {
+            const itemSectionId = item.getAttribute("data-section");
+            const indicator = item.querySelector(".toc-indicator");
+
+            if (itemSectionId === sectionId) {
+              item.classList.add("text-orange-500");
+              item.classList.remove("text-current");
+              if (indicator) {
+                indicator.classList.remove("opacity-0");
+                indicator.classList.add("opacity-100");
+              }
+            } else {
+              item.classList.remove("text-orange-500");
+              item.classList.add("text-current");
+              if (indicator) {
+                indicator.classList.add("opacity-0");
+                indicator.classList.remove("opacity-100");
+              }
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    // Initial check
+    updateActiveSection();
+
+    // Fallback scroll listener for edge cases
+    let scrollTimeout;
+    window.addEventListener("scroll", () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveSection, 10);
+    });
+  });
+</script>
