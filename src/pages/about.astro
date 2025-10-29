@@ -10,9 +10,9 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
 ---
 
 <Layout>
-  <div class="px-(--inline-padding) pb-[1440px]">
+  <div class="px-(--inline-padding) pb-[100vh]">
     <Sidebar
-      class="mx-auto max-w-4xl tablet:[--sidebar-width:var(--container-2xl)] tablet:[--sidebar-content-min:100px] tablet:[--sidebar-gap:4rem]"
+      class="mx-auto max-w-4xl laptop:[--sidebar-width:var(--container-2xl)] laptop:[--sidebar-content-min:100px] laptop:[--sidebar-gap:4rem]"
     >
       <!-- CONTENT -->
       <div>
@@ -28,9 +28,7 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
           others transition into tech while building useful things along the
           way.
         </p>
-        <Sidebar
-          class="mb-10 tablet:[--sidebar-width:324px] tablet:[--sidebar-gap:1rem]"
-        >
+        <Sidebar sidebarWidth="312px" class="mb-10 tablet:[--sidebar-gap:1rem]">
           <div>
             <Image
               loading="eager"
@@ -41,7 +39,7 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
           </div>
           <Stack
             space="calc(var(--spacing) * 4)"
-            class="tablet:border-y border-orange-500 text-pretty tablet:justify-center tablet:text-grey-800 italic py-4"
+            class="[@media(min-width:702px)]:border-t border-orange-500 text-pretty [@media(min-width:702px)]:text-grey-800 italic [@media(min-width:702px)]:pt-4"
           >
             <p>
               Hey, I'm Daniel Noworyta. For most of my life, I pushed aside my
@@ -53,7 +51,9 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
               experiences in learning programming, transitioning to new fields,
               and advancing my career in IT.
             </p>
-            <p>
+            <p
+              class="[@media(min-width:702px)]:border-b border-orange-500 [@media(min-width:702px)]:pb-4"
+            >
               I love dark mode and side projects. When I'm not working, I like
               playing football, reading books, and eating pizza.
             </p>
@@ -208,7 +208,7 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
     function updateActiveSection() {
       const scrollPosition = window.scrollY + 100; // Offset for better UX
 
-      let activeSection = null;
+      let activeSection: string | null = null;
 
       // Find which section is currently in view
       sections.forEach((section) => {
@@ -252,8 +252,8 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
       if (link) {
         link.addEventListener("click", (e) => {
           e.preventDefault();
-          const targetId = link.getAttribute("href").substring(1);
-          const targetSection = document.getElementById(targetId);
+          const targetId = link.getAttribute("href")?.substring(1);
+          const targetSection = document.getElementById(targetId ?? "");
 
           if (targetSection) {
             const offset = 80; // Adjust this value based on your header height
@@ -316,7 +316,7 @@ import LazyThemedImage from "../components/LazyThemedImage.astro";
     updateActiveSection();
 
     // Fallback scroll listener for edge cases
-    let scrollTimeout;
+    let scrollTimeout: NodeJS.Timeout;
     window.addEventListener("scroll", () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(updateActiveSection, 10);
