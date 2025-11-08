@@ -17,6 +17,12 @@ import Logo from "../images/Logo.svg";
   const updateTheme = (theme) => {
     const isDark = theme === "dark";
     document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+    // Update favicon based on theme
+    const favicon = document.querySelector("link[rel='icon']");
+    if (favicon) {
+      favicon.href = isDark ? "/favicon-dark.ico" : "/favicon-light.ico";
+    }
   };
 
   // Set initial theme
@@ -52,7 +58,7 @@ import Logo from "../images/Logo.svg";
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon-light.ico" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
