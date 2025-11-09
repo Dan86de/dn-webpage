@@ -3,8 +3,13 @@ import Layout from "@/layouts/Layout.astro";
 import VaillantLogo from "@/images/vaillant_logo.svg";
 import BechtleLogo from "@/images/bechtle_logo.svg";
 import CodeIcon from "@/images/icons/code.svg";
+import ReactIcon from "@/images/icons/react.svg";
+import NextJSIcon from "@/images/icons/nextjs.svg";
+import VercelIcon from "@/images/icons/vercel.svg";
+import TypeScriptIcon from "@/images/icons/ts.svg";
 import WorkExperience from "@/components/experience/WorkExperience.astro";
 import Position from "@/components/experience/Position.astro";
+import PixelCard from "@/components/PixelCard.astro";
 ---
 
 <Layout>
@@ -40,7 +45,7 @@ import Position from "@/components/experience/Position.astro";
       </div>
 
       <!-- Bechtle -->
-      <div class="max-w-3xl border-b border-b-grey-200 mb-3">
+      <div class="max-w-3xl border-b border-b-grey-200 mb-8">
         <WorkExperience companyName="Bechtle / AV360" isCurrentJob={false}>
           <BechtleLogo width={24} height={32} slot="logo" />
           <Position
@@ -107,6 +112,42 @@ import Position from "@/components/experience/Position.astro";
             </div>
           </Position>
         </WorkExperience>
+      </div>
+
+      <h2 class="font-medium pb-10">Stack</h2>
+      <div class="grid grid-cols-7 max-w-3xl">
+        <PixelCard
+          variant="react"
+          className="w-[110.5px] h-[110.5px] border-dashed border border-grey-200 hover:border-grey-300 hover:border-solid hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <ReactIcon class="dark:text-[#58C4DC] text-[#087EA4] size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="ts"
+          className="w-[110.5px] h-[110.5px] border-dashed border border-grey-200 hover:border-grey-300 hover:border-solid hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <TypeScriptIcon class="text-[#3178C6] size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="default"
+          className="w-[110.5px] h-[110.5px] border-dashed border border-grey-200 hover:border-grey-300 hover:border-solid hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <NextJSIcon class="text-grey-950 size-12" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="default"
+          className="w-[110.5px] h-[110.5px] border-dashed border border-grey-200 hover:border-grey-300 hover:border-solid hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <VercelIcon class="text-grey-950 size-8" />
+          </div>
+        </PixelCard>
       </div>
     </div>
   </div>
