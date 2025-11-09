@@ -1,12 +1,106 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Cover from "../components/Cover.astro";
+import VaillantLogo from "../images/vaillant_logo.svg";
+import BechtleLogo from "../images/bechtle_logo.svg";
+import CodeIcon from "../images/icons/code.svg";
 ---
 
 <Layout>
-  <Cover class="h-svh items-center justify-center">
-    <h1 class="bg-brand-gradient bg-clip-text text-transparent font-medium">
-      Daniel Noworyta
-    </h1>
-  </Cover>
+  <div class="px-(--inline-padding)">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="font-medium pb-10">Experience</h2>
+      <!-- Vaillant -->
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-3 pb-3">
+          <VaillantLogo width={24} height={32} />
+          <h4 class="font-medium">Vaillant Group</h4>
+          <div class="bg-orange-500 size-2 rounded-full animate-pulse"></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div
+            class="flex items-center justify-center bg-orange-100 text-orange-800 rounded-lg size-6"
+          >
+            <CodeIcon width={18} />
+          </div>
+          <p class="body-large font-medium">React Native Developer</p>
+        </div>
+        <div class="pl-9 pb-10">
+          <p class="pb-3">Full-time 05-2024 - now</p>
+          <ul class="list-disc pl-4 text-grey-800">
+            <li>Develop Web and Native myVaillant PRO App.</li>
+            <li>
+              Cooperate with business and design in creating new features.
+            </li>
+            <li>
+              Analyze technical capabilities and provide optimal solutions.
+            </li>
+            <li>Ensure UI/UX consistency and adherence to standards.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bechtle -->
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-3 pb-3">
+          <BechtleLogo width={24} height={32} />
+          <h4 class="font-medium">Bechtle / AV360</h4>
+        </div>
+        <div class="flex items-center gap-3">
+          <div
+            class="flex items-center justify-center bg-orange-100 text-orange-800 rounded-lg size-6"
+          >
+            <CodeIcon width={18} />
+          </div>
+          <p class="body-large font-medium">Software Developer</p>
+        </div>
+        <div class="pl-9">
+          <p class="pb-3">Full-time 12-2020 - 05-2024</p>
+          <p class="text-grey-800 underline pb-2">
+            Develop interface for document management platform
+          </p>
+          <ul class="list-disc pl-4 text-grey-800 pb-3">
+            <li>
+              Developed interface for a document management platform using
+              ReactJS, FluentUI, and TypeScript.
+            </li>
+            <li>
+              Designed and applied a testing strategy with Jest and snapshot
+              tests to improve software reliability.
+            </li>
+            <li>
+              Devised and executed more effective solutions for large data
+              tables using infinite scrolling and pagination.
+            </li>
+            <li>
+              Collaborated closely with UI/UX Design Team to enhance interface
+              usability and aesthetics.
+            </li>
+          </ul>
+          <p class="text-grey-800 underline pb-2">
+            Ideated and implemented a multi-platform chat messaging app in
+            Tauri, boosting the company’s product portfolio and revenue
+          </p>
+          <ul class="list-disc pl-4 text-grey-800">
+            <li>
+              Constructed interfaces and logic for system management and chat
+              messaging applications.
+            </li>
+            <li>
+              Incorporated the open-source Matrix Protocol for enhanced
+              communication capabilities.
+            </li>
+            <li>
+              Created an advanced editor using the Lexical Framework,
+              contributing to the expansion of the company’s software
+              capabilities.
+            </li>
+            <li>
+              Implemented CI/CD pipeline on Azure for Tauri and Rust,
+              streamlining the development and deployment process.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </Layout>

@@ -75,6 +75,17 @@
 
 /* Dark mode color overrides */
 .dark {
+  --color-orange-100: oklch(16.4% 0.038952 58.5);
+  --color-orange-200: oklch(23.1% 0.061677 49.2);
+  --color-orange-300: oklch(35.5% 0.104191 43.5);
+  --color-orange-400: oklch(47% 0.142888 41.6);
+  --color-orange-500: oklch(57.7% 0.179949 40.3);
+  --color-orange-600: oklch(68% 0.214267 39.8);
+  --color-orange-700: oklch(72.5% 0.181096 45.3);
+  --color-orange-800: oklch(78.4% 0.13731 48.5);
+  --color-orange-900: oklch(85% 0.090443 49.7);
+  --color-orange-950: oklch(92.3% 0.043978 50.4);
+
   --color-grey-50: oklch(0% 0 0);
   --color-grey-100: oklch(15.9% 0.002075 106.6);
   --color-grey-200: oklch(21.5% 0.001566 17.3);
@@ -173,6 +184,12 @@
     font-weight: 400;
     line-height: calc(var(--spacing) * 5.5);
   }
+}
+
+/* Body text variants */
+@utility body-large {
+  font-size: var(--text-lg); /* 18px */
+  line-height: calc(var(--spacing) * 6); /* 32px */
 }
 
 /* Brand gradients */
