@@ -1,0 +1,19 @@
+---
+import { type WorkExperienceProps } from "./types";
+type Props = WorkExperienceProps;
+const { companyName, isCurrentJob } = Astro.props;
+---
+
+<!-- Vaillant -->
+<>
+  <div class="flex items-center gap-3 pb-3">
+    <slot name="logo" />
+    <h4 class="font-medium">{companyName}</h4>
+    {
+      isCurrentJob && (
+        <div class="bg-orange-500 size-2.5 rounded-full animate-pulse" />
+      )
+    }
+  </div>
+  <slot name="positions" />
+</>
