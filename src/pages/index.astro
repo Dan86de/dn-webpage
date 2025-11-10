@@ -23,14 +23,12 @@ import Stack from "@/components/Stack.astro";
 ---
 
 <Layout>
-  <div class="px-(--inline-padding) h-[200vh]">
-    <Sidebar
-      class="mx-auto max-w-4xl laptop:[--sidebar-width:var(--container-2xl)] laptop:[--sidebar-content-min:100px] laptop:[--sidebar-gap:4rem]"
-    >
+  <div class="px-(--inline-padding)">
+    <div class="mx-auto max-w-4xl">
       <div>
         <h2 class="font-medium pb-10" id="experience">Experience</h2>
         <!-- Vaillant -->
-        <div class="max-w-3xl border-b border-b-grey-200 mb-3">
+        <div class="max-w-4xl border-b border-b-grey-200 mb-3">
           <WorkExperience companyName="Vaillant Group" isCurrentJob={true}>
             <VaillantLogo width={24} height={32} slot="logo" />
             <Position
@@ -41,7 +39,7 @@ import Stack from "@/components/Stack.astro";
               endDate="now"
             >
               <CodeIcon width={18} slot="icon" />
-              <div class="pl-8 pb-4" slot="description">
+              <div class="pl-8 pb-4 max-w-3xl" slot="description">
                 <ul class="list-disc pl-5 text-grey-800 text-sm">
                   <li>Develop Web and Native myVaillant PRO App.</li>
                   <li>
@@ -59,7 +57,7 @@ import Stack from "@/components/Stack.astro";
         </div>
 
         <!-- Bechtle -->
-        <div class="max-w-3xl border-b border-b-grey-200 mb-8">
+        <div class="max-w-4xl border-b border-b-grey-200 mb-8">
           <WorkExperience companyName="Bechtle / AV360" isCurrentJob={false}>
             <BechtleLogo width={24} height={32} slot="logo" />
             <Position
@@ -70,7 +68,7 @@ import Stack from "@/components/Stack.astro";
               endDate="05-2024"
             >
               <CodeIcon width={18} slot="icon" />
-              <div class="pl-8 pb-4" slot="description">
+              <div class="pl-8 pb-4 max-w-3xl" slot="description">
                 <p class="text-grey-800 underline pb-2 text-sm">
                   Develop interface for document management platform
                 </p>
@@ -129,7 +127,7 @@ import Stack from "@/components/Stack.astro";
         </div>
 
         <h2 class="font-medium pb-6" id="stack">Stack</h2>
-        <div class="cluster max-w-3xl" style={{ "--cluster-space": "0" }}>
+        <div class="cluster max-w-4xl" style={{ "--cluster-space": "0" }}>
           <PixelCard
             variant="react"
             className="w-1/4 tablet:w-1/6 h-auto aspect-square laptop:w-1/6 desktop:w-1/8 hover:z-10"
@@ -231,172 +229,6 @@ import Stack from "@/components/Stack.astro";
         <!-- <h2 class="font-medium pb-6" id="blog">Blog</h2>
         <h2 class="font-medium pb-6" id="certifications">Certifications</h2> -->
       </div>
-      <div class="hidden desktop:block mt-49 relative">
-        <div class="sticky top-20">
-          <p class="caption pb-4">Table of contents</p>
-          <ul id="toc-list" class="flex flex-col gap-1">
-            <li
-              data-section="experience"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#experience">Experience</a>
-            </li>
-            <li
-              data-section="stack"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#stack">Stack</a>
-            </li>
-            <!-- <li
-              data-section="blog"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#blog">Blog</a>
-            </li>
-            <li
-              data-section="certifications"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#certifications">Certifications</a>
-            </li> -->
-          </ul>
-        </div>
-      </div>
-    </Sidebar>
+    </div>
   </div>
 </Layout>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll(
-      "h1[id], h2[id], h3[id], h4[id]",
-    );
-    const tocItems = document.querySelectorAll(".toc-item");
-
-    // Function to update active TOC item
-    function updateActiveSection() {
-      const scrollPosition = window.scrollY + 100; // Offset for better UX
-
-      let activeSection: string | null = null;
-
-      // Find which section is currently in view
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const sectionTop = rect.top + window.scrollY;
-
-        if (scrollPosition >= sectionTop) {
-          activeSection = section.id;
-        }
-      });
-
-      // Update TOC styling
-      tocItems.forEach((item) => {
-        const sectionId = item.getAttribute("data-section");
-        const indicator = item.querySelector(".toc-indicator");
-        const link = item.querySelector("a");
-
-        if (sectionId === activeSection) {
-          // Active state
-          item.classList.add("text-orange-500");
-          item.classList.remove("text-current");
-          if (indicator) {
-            indicator.classList.remove("opacity-0");
-            indicator.classList.add("opacity-100");
-          }
-        } else {
-          // Inactive state
-          item.classList.remove("text-orange-500");
-          item.classList.add("text-current");
-          if (indicator) {
-            indicator.classList.add("opacity-0");
-            indicator.classList.remove("opacity-100");
-          }
-        }
-      });
-    }
-
-    // Add smooth scrolling for TOC links
-    tocItems.forEach((item) => {
-      const link = item.querySelector("a");
-      if (link) {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute("href")?.substring(1);
-          const targetSection = document.getElementById(targetId ?? "");
-
-          if (targetSection) {
-            const offset = 80; // Adjust this value based on your header height
-            const targetPosition =
-              targetSection.getBoundingClientRect().top +
-              window.scrollY -
-              offset;
-
-            window.scrollTo({
-              top: targetPosition,
-              behavior: "smooth",
-            });
-          }
-        });
-      }
-    });
-
-    // Use Intersection Observer for better performance
-    const observerOptions = {
-      rootMargin: "-20% 0% -70% 0%",
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id;
-
-          // Update TOC styling
-          tocItems.forEach((item) => {
-            const itemSectionId = item.getAttribute("data-section");
-            const indicator = item.querySelector(".toc-indicator");
-
-            if (itemSectionId === sectionId) {
-              item.classList.add("text-orange-500");
-              item.classList.remove("text-current");
-              if (indicator) {
-                indicator.classList.remove("opacity-0");
-                indicator.classList.add("opacity-100");
-              }
-            } else {
-              item.classList.remove("text-orange-500");
-              item.classList.add("text-current");
-              if (indicator) {
-                indicator.classList.add("opacity-0");
-                indicator.classList.remove("opacity-100");
-              }
-            }
-          });
-        }
-      });
-    }, observerOptions);
-
-    // Observe all sections
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    // Initial check
-    updateActiveSection();
-
-    // Fallback scroll listener for edge cases
-    let scrollTimeout: NodeJS.Timeout;
-    window.addEventListener("scroll", () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(updateActiveSection, 10);
-    });
-  });
-</script>
