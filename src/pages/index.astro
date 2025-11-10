@@ -7,6 +7,14 @@ import ReactIcon from "@/images/icons/react.svg";
 import NextJSIcon from "@/images/icons/nextjs.svg";
 import VercelIcon from "@/images/icons/vercel.svg";
 import TypeScriptIcon from "@/images/icons/ts.svg";
+import JavaScriptIcon from "@/images/icons/js.svg";
+import NodeJsIcon from "@/images/icons/nodejs.svg";
+import BunIcon from "@/images/icons/bun.svg";
+import TailwindCSSIcon from "@/images/icons/tailwindcss.svg";
+import ShadCnUIIcon from "@/images/icons/shadcnui.svg";
+import RadixUIIcon from "@/images/icons/radixui.svg";
+import MotionIcon from "@/images/icons/motion.svg";
+import TanstackIcon from "@/images/icons/tanstack.svg";
 import WorkExperience from "@/components/experience/WorkExperience.astro";
 import Position from "@/components/experience/Position.astro";
 import PixelCard from "@/components/PixelCard.astro";
@@ -115,10 +123,13 @@ import PixelCard from "@/components/PixelCard.astro";
       </div>
 
       <h2 class="font-medium pb-6">Stack</h2>
-      <div class="cluster" style={{ "--cluster-space": "0" }}>
+      <div
+        class="cluster divide-x divide-grey-200 border border-grey-200"
+        style={{ "--cluster-space": "0" }}
+      >
         <PixelCard
           variant="react"
-          className="w-1/4 h-auto aspect-square tablet:w-1/4 laptop:w-1/5 desktop:w-1/6 hover:z-10"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
         >
           <div class="flex items-center flex-col gap-2 z-10">
             <ReactIcon class="dark:text-[#58C4DC] text-[#087EA4] size-8" />
@@ -126,7 +137,7 @@ import PixelCard from "@/components/PixelCard.astro";
         </PixelCard>
         <PixelCard
           variant="ts"
-          className="w-1/4 h-auto aspect-square tablet:w-1/4 laptop:w-1/5 desktop:w-1/6 hover:z-10"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
         >
           <div class="flex items-center flex-col gap-2 z-10">
             <TypeScriptIcon class="text-[#3178C6] size-8" />
@@ -134,18 +145,82 @@ import PixelCard from "@/components/PixelCard.astro";
         </PixelCard>
         <PixelCard
           variant="default"
-          className="w-1/4 h-auto aspect-square tablet:w-1/4 laptop:w-1/5 desktop:w-1/6 hover:z-10"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
         >
           <div class="flex items-center flex-col gap-2 z-10">
-            <NextJSIcon class="text-grey-950 size-12" />
+            <NextJSIcon class="text-grey-950 size-8" />
           </div>
         </PixelCard>
         <PixelCard
           variant="default"
-          className="w-1/4 h-auto aspect-square tablet:w-1/4 laptop:w-1/5 desktop:w-1/6 hover:z-10"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
         >
           <div class="flex items-center flex-col gap-2 z-10">
             <VercelIcon class="text-grey-950 size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="js"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <JavaScriptIcon class="text-[#f7df1e] size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="nodejs"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <NodeJsIcon class="size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="bun"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <BunIcon class="size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="tailwindcss"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <TailwindCSSIcon class="size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="default"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <ShadCnUIIcon class="size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="default"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <RadixUIIcon class="size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="motion"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <MotionIcon class="size-8" />
+          </div>
+        </PixelCard>
+        <PixelCard
+          variant="tanstack"
+          className="w-1/5 h-auto aspect-square laptop:w-1/6 desktop:w-1/7 hover:z-10"
+        >
+          <div class="flex items-center flex-col gap-2 z-10">
+            <TanstackIcon class="size-8" />
           </div>
         </PixelCard>
       </div>

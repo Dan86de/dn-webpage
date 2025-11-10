@@ -1,6 +1,18 @@
 ---
 export interface Props {
-  variant?: "default" | "blue" | "yellow" | "pink" | "react" | "ts";
+  variant?:
+    | "default"
+    | "blue"
+    | "yellow"
+    | "pink"
+    | "react"
+    | "ts"
+    | "js"
+    | "nodejs"
+    | "bun"
+    | "tailwindcss"
+    | "motion"
+    | "tanstack";
   gap?: number;
   speed?: number;
   colors?: string;
@@ -16,6 +28,34 @@ const VARIANTS = {
     colors: "#f8fafc,#f1f5f9,#cbd5e1",
     noFocus: false,
   },
+  tanstack: {
+    activeColor: "#6BDAFF",
+    gap: 5,
+    speed: 35,
+    colors: "#6BDAFF,#FFA770,#FF7373",
+    noFocus: false,
+  },
+  motion: {
+    activeColor: "#FFF312",
+    gap: 5,
+    speed: 35,
+    colors: "#FFF312,#0f0f0f,#cbd5e1",
+    noFocus: false,
+  },
+  tailwindcss: {
+    activeColor: "#38bdf8",
+    gap: 5,
+    speed: 25,
+    colors: "#38bdf8,#22d3ee,#0ea5e9",
+    noFocus: false,
+  },
+  bun: {
+    activeColor: "#ff6164",
+    gap: 5,
+    speed: 25,
+    colors: "#ff6164,#ccbea7,#f6dece",
+    noFocus: false,
+  },
   react: {
     activeColor: "#58C4DC",
     gap: 5,
@@ -23,11 +63,25 @@ const VARIANTS = {
     colors: "#58C4DC,#2D98B4,#087EA4",
     noFocus: false,
   },
+  nodejs: {
+    activeColor: "#66B848",
+    gap: 5,
+    speed: 25,
+    colors: "#6CC04A,#419637,#418B3D",
+    noFocus: false,
+  },
   ts: {
     activeColor: "#3178C6",
     gap: 5,
     speed: 25,
     colors: "#3178C6,#358EF1,#235A97",
+    noFocus: false,
+  },
+  js: {
+    activeColor: "#f7df1e",
+    gap: 5,
+    speed: 25,
+    colors: "#f7df1e,#f7ca1e,#f7b81e",
     noFocus: false,
   },
   blue: {
