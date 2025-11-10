@@ -1,0 +1,145 @@
+---
+// ThemeToggle.astro - Theme toggle button component
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="relative flex items-center justify-center w-10 h-10 rounded-md transition-colors duration-200"
+  aria-label="Toggle theme"
+>
+  <!-- Sun Icon (visible in light mode) -->
+  <svg
+    id="sun-icon"
+    class="absolute w-5 h-5 transition-all duration-300"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="m4.93 4.93 1.41 1.41"></path>
+    <path d="m17.66 17.66 1.41 1.41"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+    <path d="m6.34 17.66-1.41 1.41"></path>
+    <path d="m19.07 4.93-1.41 1.41"></path>
+  </svg>
+
+  <!-- Moon Icon (visible in dark mode) -->
+  <svg
+    id="moon-icon"
+    class="absolute w-5 h-5 transition-all duration-300"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+  </svg>
+</button>
+
+<script>
+  // Audio setup for theme toggle sound
+  let audioContext: AudioContext | null = null;
+  let audioBuffer: AudioBuffer | null = null;
+
+  function initAudio() {
+    const AudioContextClass =
+      window.AudioContext || (window as any).webkitAudioContext;
+
+    if (!AudioContextClass) {
+      console.warn("Web Audio API is not supported in this browser.");
+      return;
+    }
+
+    audioContext = new AudioContextClass();
+
+    fetch("/audio/click.wav")
+      .then((res) => res.arrayBuffer())
+      .then((data) => audioContext!.decodeAudioData(data))
+      .then((decoded) => {
+        audioBuffer = decoded;
+      })
+      .catch((err) => {
+        console.log("Failed to load click sound:", err);
+      });
+  }
+
+  function playClickSound() {
+    if (audioContext && audioBuffer) {
+      const source = audioContext.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(audioContext.destination);
+      source.start(0);
+    }
+  }
+
+  function updateIcons() {
+    const isDark = document.documentElement.classList.contains("dark");
+    const sunIcon = document.getElementById("sun-icon");
+    const moonIcon = document.getElementById("moon-icon");
+
+    if (sunIcon && moonIcon) {
+      if (isDark) {
+        // Dark mode: show moon, hide sun
+        sunIcon.classList.add("rotate-90", "scale-0");
+        sunIcon.classList.remove("rotate-0", "scale-100");
+        moonIcon.classList.add("rotate-0", "scale-100");
+        moonIcon.classList.remove("rotate-90", "scale-0");
+      } else {
+        // Light mode: show sun, hide moon
+        sunIcon.classList.add("rotate-0", "scale-100");
+        sunIcon.classList.remove("rotate-90", "scale-0");
+        moonIcon.classList.add("rotate-90", "scale-0");
+        moonIcon.classList.remove("rotate-0", "scale-100");
+      }
+    }
+  }
+
+  // Initialize audio
+  initAudio();
+
+  const button = document.getElementById("theme-toggle");
+
+  const updateTheme = (theme: string) => {
+    const isDark = theme === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+    localStorage.setItem("theme", theme);
+
+    // Update favicon based on theme
+    const favicon = document.querySelector(
+      "link[rel='icon']",
+    ) as HTMLLinkElement;
+    if (favicon) {
+      favicon.href = isDark ? "/favicon-dark.ico" : "/favicon-light.ico";
+    }
+
+    // Update icons
+    updateIcons();
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light";
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    playClickSound();
+    updateTheme(newTheme);
+  };
+
+  // Set initial icon state
+  updateIcons();
+
+  button?.addEventListener("click", toggleTheme);
+
+  // Re-attach event listener after navigation (for view transitions)
+  document.addEventListener("astro:after-swap", () => {
+    initAudio();
+    updateIcons();
+    const button = document.getElementById("theme-toggle");
+    button?.addEventListener("click", toggleTheme);
+  });
+</script>

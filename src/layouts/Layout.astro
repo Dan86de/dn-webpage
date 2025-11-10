@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import TailwindIndicator from "../components/TailwindIndicator.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import Logo from "../images/Logo.svg";
 import SpeedInsights from "@vercel/speed-insights/astro";
 ---
@@ -28,32 +29,6 @@ import SpeedInsights from "@vercel/speed-insights/astro";
 
   // Set initial theme
   updateTheme(getThemePreference());
-
-  // Listen for system theme changes
-  window
-    .matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", (e) => {
-      // Clear the stored preference when system theme changes
-      // This allows the site to follow system preferences again
-      if (typeof localStorage !== "undefined") {
-        localStorage.removeItem("theme");
-      }
-      updateTheme(e.matches ? "dark" : "light");
-    });
-
-  // Optional: If you want to track manual theme changes
-  // (for example, if you add a theme toggle button)
-  if (typeof localStorage !== "undefined") {
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains("dark");
-      // Only save if it's a manual change (not from system preference)
-      // You might want to add a flag to distinguish manual vs system changes
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  }
 </script>
 
 <html lang="en">
@@ -97,6 +72,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
             <li><a href="/about">About</a></li>
           </ul>
         </nav>
+        <ThemeToggle />
       </header>
     </div>
     <slot />
