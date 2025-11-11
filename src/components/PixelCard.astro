@@ -1,5 +1,6 @@
 ---
 export interface Props {
+  to?: string;
   variant?:
     | "default"
     | "blue"
@@ -45,14 +46,14 @@ const VARIANTS = {
   tailwindcss: {
     activeColor: "#38bdf8",
     gap: 5,
-    speed: 25,
+    speed: 35,
     colors: "#38bdf8,#22d3ee,#0ea5e9",
     noFocus: false,
   },
   bun: {
     activeColor: "#ff6164",
     gap: 5,
-    speed: 25,
+    speed: 35,
     colors: "#ff6164,#ccbea7,#f6dece",
     noFocus: false,
   },
@@ -66,48 +67,49 @@ const VARIANTS = {
   nodejs: {
     activeColor: "#66B848",
     gap: 5,
-    speed: 25,
+    speed: 35,
     colors: "#6CC04A,#419637,#418B3D",
     noFocus: false,
   },
   ts: {
     activeColor: "#3178C6",
     gap: 5,
-    speed: 25,
+    speed: 35,
     colors: "#3178C6,#358EF1,#235A97",
     noFocus: false,
   },
   js: {
     activeColor: "#f7df1e",
     gap: 5,
-    speed: 25,
+    speed: 35,
     colors: "#f7df1e,#f7ca1e,#f7b81e",
     noFocus: false,
   },
   blue: {
     activeColor: "#e0f2fe",
-    gap: 10,
-    speed: 25,
+    gap: 5,
+    speed: 35,
     colors: "#e0f2fe,#7dd3fc,#0ea5e9",
     noFocus: false,
   },
   yellow: {
     activeColor: "#fef08a",
-    gap: 3,
-    speed: 20,
+    gap: 5,
+    speed: 35,
     colors: "#fef08a,#fde047,#eab308",
     noFocus: false,
   },
   pink: {
     activeColor: "#fecdd3",
-    gap: 6,
-    speed: 80,
+    gap: 5,
+    speed: 35,
     colors: "#fecdd3,#fda4af,#e11d48",
-    noFocus: true,
+    noFocus: false,
   },
 };
 
 const {
+  to,
   variant = "default",
   gap,
   speed,
@@ -123,8 +125,10 @@ const finalColors = colors ?? variantCfg.colors;
 const finalNoFocus = noFocus ?? variantCfg.noFocus;
 ---
 
-<div
-  class={`pixel-card size-10 relative overflow-hidden grid place-items-center aspect-4/5 isolate transition-colors duration-200 ease-[cubic-bezier(0.5,1,0.89,1)] select-none ${className}`}
+<a
+  href={to}
+  target="_blank"
+  class={`pixel-card size-10 relative  grid place-items-center aspect-4/5 isolate transition-colors duration-200 ease-[cubic-bezier(0.5,1,0.89,1)] select-none ${className}`}
   data-gap={finalGap}
   data-speed={finalSpeed}
   data-colors={finalColors}
@@ -133,7 +137,7 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
 >
   <canvas class="absolute inset-0 block"></canvas>
   <slot />
-</div>
+</a>
 
 <script>
   class Pixel {
