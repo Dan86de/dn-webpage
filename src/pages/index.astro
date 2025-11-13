@@ -125,129 +125,102 @@ import PixelCard from "@/components/PixelCard.astro";
         </div>
 
         <h2 class="font-medium pb-6" id="stack">Stack</h2>
-        <div class="cluster w-full" style={{ "--cluster-space": "0" }}>
+        <div class="cluster overflow-hidden" style={{ "--cluster-space": "0" }}>
           <PixelCard
             to="https://react.dev"
             variant="react"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
             tooltipText="React"
           >
-            <div
-              class="flex items-center flex-col gap-2 z-10"
-              data-tooltip="React"
-            >
-              <ReactIcon class="dark:text-[#58C4DC] text-[#087EA4] size-8" />
-            </div>
+            <ReactIcon class="dark:text-[#58C4DC] text-[#087EA4] size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="TypeScript"
             to="https://www.typescriptlang.org/"
             variant="ts"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <TypeScriptIcon class="text-[#3178C6] size-8" />
-            </div>
+            <TypeScriptIcon class="text-[#3178C6] size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="NextJS"
             to="https://nextjs.org/"
             variant="default"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <NextJSIcon class="text-grey-950 size-10" />
-            </div>
+            <NextJSIcon class="text-grey-950 size-10" />
           </PixelCard>
           <PixelCard
             tooltipText="Vercel"
             to="https://vercel.com/"
             variant="default"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <VercelIcon class="text-grey-950 size-8" />
-            </div>
+            <VercelIcon class="text-grey-950 size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="JavaScript"
             to="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
             variant="js"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <JavaScriptIcon class="text-[#f7df1e] size-8" />
-            </div>
+            <JavaScriptIcon class="text-[#f7df1e] size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="NodeJS"
             to="https://nodejs.org/en/"
             variant="nodejs"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <NodeJsIcon class="size-8" />
-            </div>
+            <NodeJsIcon class="size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="Bun"
             to="https://bun.sh/"
             variant="bun"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <BunIcon class="size-8" />
-            </div>
+            <BunIcon class="size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="Tailwind CSS"
             to="https://tailwindcss.com/"
             variant="tailwindcss"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <TailwindCSSIcon class="size-8" />
-            </div>
+            <TailwindCSSIcon class="size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="Shadcn UI"
             to="https://ui.shadcn.com/"
             variant="default"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <ShadCnUIIcon class="size-8" />
-            </div>
+            <ShadCnUIIcon class="size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="Radix UI"
             to="https://www.radix-ui.com/"
             variant="default"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <RadixUIIcon class="size-8" />
-            </div>
+            <RadixUIIcon class="size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="Motion"
             to="https://motion.dev"
             variant="motion"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <MotionIcon class="size-10" />
-            </div>
+            <MotionIcon class="size-10" />
           </PixelCard>
           <PixelCard
             tooltipText="TanStack"
             to="https://tanstack.com"
             variant="tanstack"
-            className="w-1/5 tablet:w-1/6 h-auto aspect-square laptop:w-1/8 desktop:w-1/10 hover:z-10"
+            className="hover:z-10 w-20 aspect-square"
           >
-            <div class="flex items-center flex-col gap-2 z-10">
-              <TanstackIcon class="size-8" />
-            </div>
+            <TanstackIcon class="size-8" />
           </PixelCard>
         </div>
 
