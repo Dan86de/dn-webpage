@@ -6,6 +6,13 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 
 export default defineConfig({
+  markdown: {
+    shikiConfig: {
+      theme: "github-dark",
+      langs: [],
+      wrap: true,
+    },
+  },
   integrations: [react(), mdx()],
   vite: {
     plugins: [tailwindcss()],
