@@ -107,14 +107,71 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
       margin-bottom: calc(var(--spacing) * 6); /* pb-6 */
     }
 
-    /* Heading styles matching about page */
-    & h1,
-    & h2,
-    & h3,
+    /* Heading styles for blog posts */
+    & h1 {
+      font-weight: 500; /* font-medium */
+      max-width: 675px;
+      padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
+    }
+
+    & h2 {
+      font-weight: 500; /* font-medium */
+      max-width: 675px;
+      padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
+      font-size: var(--text-xl); /* 20px - same as h3 mobile */
+      line-height: calc(var(--spacing) * 6); /* 24px */
+    }
+
+    & h3 {
+      font-weight: 500; /* font-medium */
+      max-width: 675px;
+      padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
+      font-size: var(--text-lg); /* 18px */
+      line-height: calc(var(--spacing) * 5.5); /* 22px */
+    }
+
     & h4 {
       font-weight: 500; /* font-medium */
       max-width: 675px;
       padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
+      font-size: var(--text-base); /* 16px */
+      line-height: calc(var(--spacing) * 5); /* 20px */
+    }
+
+    /* Tablet and up */
+    @media (min-width: 550px) {
+      & h2 {
+        font-size: var(--text-2xl); /* 24px - same as old h3 tablet */
+        line-height: calc(var(--spacing) * 7); /* 28px */
+      }
+
+      & h3 {
+        font-size: var(--text-xl); /* 20px */
+        line-height: calc(var(--spacing) * 6); /* 24px */
+      }
+
+      & h4 {
+        font-size: var(--text-lg); /* 18px */
+        line-height: calc(var(--spacing) * 5.5); /* 22px */
+      }
+    }
+
+    /* Desktop and up */
+    @media (min-width: 1500px) {
+      & h2 {
+        font-size: var(--text-3xl); /* 30px - same as old h3 desktop */
+        line-height: calc(var(--spacing) * 8.5); /* 34px */
+      }
+
+      & h3 {
+        font-size: var(--text-2xl); /* 24px */
+        line-height: calc(var(--spacing) * 7); /* 28px */
+      }
+
+      & h4 {
+        font-size: var(--text-xl); /* 20px */
+        line-height: calc(var(--spacing) * 6); /* 24px */
+      }
     }
 
     /* Lists */
