@@ -7,16 +7,13 @@ const blog = defineCollection({
   schema: z.object({
     isDraft: z.boolean(),
     title: z.string(),
-    // image: z.object({
-    //   src: z.string(),
-    //   alt: z.string(),
-    // }),
+    description: z.string(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    category: z.string().optional(),
     author: z.string().default("Anonymous"),
     tags: z.array(z.string()),
-
-    // In YAML, dates written without quotes around them are interpreted as Date objects
-    publishDate: z.date(), // e.g. 2024-09-17
-
+    publishDate: z.date(),
     authorContact: z.string().email(),
     canonicalURL: z.string().url(),
     slug: z.string().default(""),
