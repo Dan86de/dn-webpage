@@ -234,6 +234,16 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
     transform: translateY(0);
     transition-duration: 300ms;
   }
+
+  .pixel-card {
+    outline: none;
+  }
+
+  .pixel-card:focus-visible {
+    outline: 2px solid var(--color-orange-500);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 </style>
 <a
   href={to}
@@ -246,8 +256,10 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
   tabindex={finalNoFocus ? -1 : 0}
   data-tooltip={tooltipText}
 >
-  <canvas class="absolute inset-0 block"></canvas>
-  <slot />
+  <canvas class="absolute inset-0 block z-0"></canvas>
+  <div class="relative z-10">
+    <slot />
+  </div>
 </a>
 
 <script>
