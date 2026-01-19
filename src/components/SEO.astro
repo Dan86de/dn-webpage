@@ -1,0 +1,87 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonicalURL: string;
+  image?: string;
+  imageAlt?: string;
+  publishDate?: Date;
+  author?: string;
+  tags?: string[];
+  type?: "website" | "article";
+}
+
+const {
+  title,
+  description,
+  canonicalURL,
+  image,
+  imageAlt,
+  publishDate,
+  author,
+  tags = [],
+  type = "article",
+} = Astro.props;
+
+// Default fallback image if none provided
+const ogImage = image || "/og-default.jpg";
+const ogImageAlt = imageAlt || title;
+
+// Get site URL from canonical URL (extract origin)
+const siteUrl = new URL(canonicalURL).origin;
+
+// JSON-LD structured data for BlogPosting
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: description,
+  image: ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`,
+  datePublished: publishDate?.toISOString(),
+  author: {
+    "@type": "Person",
+    name: author || "Anonymous",
+  },
+  keywords: tags.join(", "),
+  url: canonicalURL,
+};
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta
+  property="og:image"
+  content={ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`}
+/>
+{imageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta
+  name="twitter:image"
+  content={ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`}
+/>
+{imageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}
+
+<!-- Structured Data (JSON-LD) -->
+{
+  type === "article" && publishDate && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+  )
+}

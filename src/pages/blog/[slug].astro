@@ -1,6 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
+import BlogPostLayout from "@/layouts/BlogPostLayout.astro";
+import { getReadingTime } from "@/lib/readingTime";
+import { generateToc } from "@/lib/toc";
+
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
@@ -9,19 +12,22 @@ export async function getStaticPaths() {
   }));
 }
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const readingTime = getReadingTime(post.body || "");
+const toc = generateToc(headings);
 ---
 
-<Layout>
-  <div class="px-(--inline-padding)">
-    <div class="max-w-4xl mx-auto">
-      <h2
-        id="introduction"
-        class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-12 mt-10"
-      >
-        {post.data.title}
-      </h2>
-      <Content />
-    </div>
-  </div>
-</Layout>
+<BlogPostLayout
+  title={post.data.title}
+  description={post.data.description}
+  author={post.data.author}
+  publishDate={post.data.publishDate}
+  readingTime={readingTime}
+  tags={post.data.tags}
+  toc={toc}
+  canonicalURL={post.data.canonicalURL}
+  image={post.data.image}
+  imageAlt={post.data.imageAlt}
+>
+  <Content />
+</BlogPostLayout>

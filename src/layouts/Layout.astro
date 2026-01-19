@@ -51,8 +51,16 @@ import SpeedInsights from "@vercel/speed-insights/astro";
     <link rel="icon" href="/favicon-light.ico" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Code to learn..." />
-    <title>Daniel Noworyta</title>
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Daniel Noworyta's Blog"
+      href="/rss.xml"
+    />
+    <slot name="head">
+      <meta name="description" content="Code to learn..." />
+      <title>Daniel Noworyta</title>
+    </slot>
   </head>
   <body class="bg-grey-50">
     <div class="px-(--inline-padding)">
@@ -71,6 +79,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
         <nav>
           <ul class="flex items-baseline justify-between gap-8">
             <li><a href="/about">About</a></li>
+            <li><a href="/blog">Blog</a></li>
           </ul>
         </nav>
         <ThemeToggle />

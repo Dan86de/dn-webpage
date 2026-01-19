@@ -1,0 +1,162 @@
+---
+import type { TocItem } from "@/lib/toc";
+
+interface Props {
+  toc: TocItem[];
+}
+
+const { toc } = Astro.props;
+---
+
+<div class="sticky top-20">
+  <p class="caption pb-4">Table of contents</p>
+  <ul id="toc-list" class="flex flex-col gap-1">
+    {
+      toc.map((item) => (
+        <>
+          <li
+            data-section={item.slug}
+            class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+          >
+            <span class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity" />
+            <a href={`#${item.slug}`}>{item.text}</a>
+          </li>
+          {item.children.length > 0 &&
+            item.children.map((child) => (
+              <li
+                data-section={child.slug}
+                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors pl-4"
+              >
+                <span class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity" />
+                <a href={`#${child.slug}`}>{child.text}</a>
+              </li>
+            ))}
+        </>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("h2[id], h3[id]");
+    const tocItems = document.querySelectorAll(".toc-item");
+
+    // Function to update active TOC item
+    function updateActiveSection() {
+      const scrollPosition = window.scrollY + 100; // Offset for better UX
+
+      let activeSection: string | null = null;
+
+      // Find which section is currently in view
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + window.scrollY;
+
+        if (scrollPosition >= sectionTop) {
+          activeSection = section.id;
+        }
+      });
+
+      // Update TOC styling
+      tocItems.forEach((item) => {
+        const sectionId = item.getAttribute("data-section");
+        const indicator = item.querySelector(".toc-indicator");
+
+        if (sectionId === activeSection) {
+          // Active state
+          item.classList.add("text-orange-500");
+          item.classList.remove("text-current");
+          if (indicator) {
+            indicator.classList.remove("opacity-0");
+            indicator.classList.add("opacity-100");
+          }
+        } else {
+          // Inactive state
+          item.classList.remove("text-orange-500");
+          item.classList.add("text-current");
+          if (indicator) {
+            indicator.classList.add("opacity-0");
+            indicator.classList.remove("opacity-100");
+          }
+        }
+      });
+    }
+
+    // Add smooth scrolling for TOC links
+    tocItems.forEach((item) => {
+      const link = item.querySelector("a");
+      if (link) {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute("href")?.substring(1);
+          const targetSection = document.getElementById(targetId ?? "");
+
+          if (targetSection) {
+            const offset = 80; // Adjust this value based on your header height
+            const targetPosition =
+              targetSection.getBoundingClientRect().top +
+              window.scrollY -
+              offset;
+
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
+          }
+        });
+      }
+    });
+
+    // Use Intersection Observer for better performance
+    const observerOptions = {
+      rootMargin: "-20% 0% -70% 0%",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+
+          // Update TOC styling
+          tocItems.forEach((item) => {
+            const itemSectionId = item.getAttribute("data-section");
+            const indicator = item.querySelector(".toc-indicator");
+
+            if (itemSectionId === sectionId) {
+              item.classList.add("text-orange-500");
+              item.classList.remove("text-current");
+              if (indicator) {
+                indicator.classList.remove("opacity-0");
+                indicator.classList.add("opacity-100");
+              }
+            } else {
+              item.classList.remove("text-orange-500");
+              item.classList.add("text-current");
+              if (indicator) {
+                indicator.classList.add("opacity-0");
+                indicator.classList.remove("opacity-100");
+              }
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    // Initial check
+    updateActiveSection();
+
+    // Fallback scroll listener for edge cases
+    let scrollTimeout: NodeJS.Timeout;
+    window.addEventListener("scroll", () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveSection, 10);
+    });
+  });
+</script>
