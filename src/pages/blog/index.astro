@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import SEO from "@/components/SEO.astro";
@@ -6,9 +8,28 @@ import { getReadingTime } from "@/lib/readingTime";
 
 // Query all blog posts and filter out drafts
 const allPosts = await getCollection("blog");
-const posts = allPosts
+const publishedPosts = allPosts
   .filter((post) => !post.data.isDraft)
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+// Get selected tag from URL query param
+const selectedTag = Astro.url.searchParams.get("tag");
+
+// Filter posts by tag if one is selected
+const posts = selectedTag
+  ? publishedPosts.filter((post) => post.data.tags.includes(selectedTag))
+  : publishedPosts;
+
+// Extract all unique tags with counts
+const tagCounts = new Map<string, number>();
+publishedPosts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+const allTags = Array.from(tagCounts.entries()).sort((a, b) =>
+  a[0].localeCompare(b[0])
+);
 
 // Site URL for SEO
 const siteUrl = "http://localhost:4321";
@@ -35,6 +56,38 @@ const siteUrl = "http://localhost:4321";
           engineering.
         </p>
       </header>
+
+      <!-- Tag filter -->
+      <div class="mb-8">
+        <div class="flex flex-wrap gap-2">
+          <a
+            href="/blog"
+            class:list={[
+              "px-3 py-1.5 text-sm rounded-md transition-colors",
+              !selectedTag
+                ? "bg-orange-500 text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700",
+            ]}
+          >
+            All posts ({publishedPosts.length})
+          </a>
+          {
+            allTags.map(([tag, count]) => (
+              <a
+                href={`/blog?tag=${encodeURIComponent(tag)}`}
+                class:list={[
+                  "px-3 py-1.5 text-sm rounded-md transition-colors",
+                  selectedTag === tag
+                    ? "bg-orange-500 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700",
+                ]}
+              >
+                {tag} ({count})
+              </a>
+            ))
+          }
+        </div>
+      </div>
 
       <!-- Blog post grid -->
       <div
