@@ -6,6 +6,7 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 
 export default defineConfig({
+  site: "https://danielnoworyta.com",
   markdown: {
     shikiConfig: {
       theme: "github-dark",
