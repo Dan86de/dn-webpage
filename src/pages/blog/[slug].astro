@@ -1,9 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
+import BlogPostLayout from "@/layouts/BlogPostLayout.astro";
 import { getReadingTime } from "@/lib/readingTime";
 import { generateToc } from "@/lib/toc";
-import TableOfContents from "@/components/TableOfContents.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -18,30 +17,13 @@ const readingTime = getReadingTime(post.body || "");
 const toc = generateToc(headings);
 ---
 
-<Layout>
-  <div class="px-(--inline-padding)">
-    <div class="max-w-7xl mx-auto">
-      <!-- Two column layout: main content + TOC sidebar -->
-      <div class="grid grid-cols-1 laptop:grid-cols-[1fr_250px] gap-8">
-        <!-- Main content column -->
-        <article class="max-w-3xl">
-          <h2
-            id="introduction"
-            class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4 mt-10"
-          >
-            {post.data.title}
-          </h2>
-          <div class="text-sm text-gray-600 dark:text-gray-400 pb-8">
-            <span>{readingTime}</span>
-          </div>
-          <Content />
-        </article>
-
-        <!-- TOC sidebar (hidden on mobile, sticky on desktop) -->
-        <aside class="hidden laptop:block">
-          <TableOfContents toc={toc} />
-        </aside>
-      </div>
-    </div>
-  </div>
-</Layout>
+<BlogPostLayout
+  title={post.data.title}
+  author={post.data.author}
+  publishDate={post.data.publishDate}
+  readingTime={readingTime}
+  tags={post.data.tags}
+  toc={toc}
+>
+  <Content />
+</BlogPostLayout>
