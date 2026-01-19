@@ -1,18 +1,34 @@
 ---
 import Layout from "./Layout.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
+import SEO from "@/components/SEO.astro";
 import type { TocItem } from "@/lib/toc";
 
 interface Props {
   title: string;
+  description: string;
   author: string;
   publishDate: Date;
   readingTime: string;
   tags: string[];
   toc: TocItem[];
+  canonicalURL: string;
+  image?: string;
+  imageAlt?: string;
 }
 
-const { title, author, publishDate, readingTime, tags, toc } = Astro.props;
+const {
+  title,
+  description,
+  author,
+  publishDate,
+  readingTime,
+  tags,
+  toc,
+  canonicalURL,
+  image,
+  imageAlt,
+} = Astro.props;
 
 // Format date as "Jan 19, 2026"
 const formattedDate = publishDate.toLocaleDateString("en-US", {
@@ -23,6 +39,18 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
 ---
 
 <Layout>
+  <SEO
+    slot="head"
+    title={title}
+    description={description}
+    canonicalURL={canonicalURL}
+    image={image}
+    imageAlt={imageAlt}
+    publishDate={publishDate}
+    author={author}
+    tags={tags}
+    type="article"
+  />
   <div class="px-(--inline-padding)">
     <div class="max-w-7xl mx-auto">
       <!-- Two column layout: main content + TOC sidebar -->

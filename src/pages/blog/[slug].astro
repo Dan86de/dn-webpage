@@ -19,11 +19,15 @@ const toc = generateToc(headings);
 
 <BlogPostLayout
   title={post.data.title}
+  description={post.data.description}
   author={post.data.author}
   publishDate={post.data.publishDate}
   readingTime={readingTime}
   tags={post.data.tags}
   toc={toc}
+  canonicalURL={post.data.canonicalURL}
+  image={post.data.image}
+  imageAlt={post.data.imageAlt}
 >
   <Content />
 </BlogPostLayout>
