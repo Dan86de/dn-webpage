@@ -1,0 +1,91 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import SEO from "@/components/SEO.astro";
+import { getReadingTime } from "@/lib/readingTime";
+
+// Query all blog posts and filter out drafts
+const allPosts = await getCollection("blog");
+const posts = allPosts
+  .filter((post) => !post.data.isDraft)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+// Site URL for SEO
+const siteUrl = "http://localhost:4321";
+---
+
+<Layout>
+  <SEO
+    slot="head"
+    title="Blog - Daniel Noworyta"
+    description="Articles about web development, TypeScript, React, and software engineering."
+    canonicalURL={`${siteUrl}/blog`}
+    type="website"
+  />
+  <div class="px-(--inline-padding)">
+    <div class="max-w-7xl mx-auto py-12">
+      <header class="mb-12">
+        <h1
+          class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4"
+        >
+          Blog
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 text-lg">
+          Articles about web development, TypeScript, React, and software
+          engineering.
+        </p>
+      </header>
+
+      <!-- Blog post grid -->
+      <div
+        class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-6"
+      >
+        {
+          posts.map((post) => {
+            const readingTime = getReadingTime(post.body || "");
+            const formattedDate = post.data.publishDate.toLocaleDateString(
+              "en-US",
+              {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              }
+            );
+
+            return (
+              <a
+                href={`/blog/${post.data.slug}`}
+                class="group block p-6 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
+              >
+                <article>
+                  <h2 class="text-xl font-medium mb-2 group-hover:text-orange-500 transition-colors">
+                    {post.data.title}
+                  </h2>
+                  <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                    {post.data.description}
+                  </p>
+                  <div class="text-xs text-gray-500 dark:text-gray-500 space-y-2">
+                    <div>
+                      <span>{formattedDate}</span>
+                      <span class="mx-2">·</span>
+                      <span>{readingTime}</span>
+                    </div>
+                    {post.data.tags.length > 0 && (
+                      <div class="flex flex-wrap gap-2">
+                        {post.data.tags.map((tag) => (
+                          <span class="px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</Layout>
