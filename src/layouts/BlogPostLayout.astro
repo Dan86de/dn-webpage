@@ -2,6 +2,7 @@
 import Layout from "./Layout.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import SEO from "@/components/SEO.astro";
+import Sidebar from "@/components/Sidebar.astro";
 import type { TocItem } from "@/lib/toc";
 
 interface Props {
@@ -51,52 +52,47 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
     tags={tags}
     type="article"
   />
-  <div class="px-(--inline-padding)">
-    <div class="max-w-7xl mx-auto">
-      <!-- Two column layout: main content + TOC sidebar -->
-      <div class="grid grid-cols-1 laptop:grid-cols-[1fr_250px] gap-8">
-        <!-- Main content column -->
-        <article class="max-w-3xl">
-          <!-- Post header with metadata -->
-          <header class="pb-8 mt-10">
-            <h2
-              class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4"
-            >
-              {title}
-            </h2>
-            <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-              <div>
-                <span>{author}</span>
-                <span class="mx-2">·</span>
-                <span>{formattedDate}</span>
-                <span class="mx-2">·</span>
-                <span>{readingTime}</span>
-              </div>
-              {
-                tags.length > 0 && (
-                  <div class="flex flex-wrap gap-2 pt-2">
-                    {tags.map((tag) => (
-                      <span class="px-2 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )
-              }
+  <div class="px-(--inline-padding) pb-[100vh]">
+    <Sidebar
+      class="mx-auto max-w-4xl laptop:[--sidebar-width:var(--container-2xl)] laptop:[--sidebar-content-min:100px] laptop:[--sidebar-gap:4rem]"
+    >
+      <!-- CONTENT -->
+      <article>
+        <!-- Post header with metadata -->
+        <header class="pb-8 mt-10">
+          <h1
+            class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4"
+          >
+            {title}
+          </h1>
+          <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+            <div>
+              <span>{formattedDate}</span>
+              <span class="mx-2">·</span>
+              <span>{readingTime}</span>
             </div>
-          </header>
-
-          <!-- MDX content with prose styling -->
-          <div class="prose dark:prose-invert prose-headings:scroll-mt-20 max-w-none">
-            <slot />
+            {
+              tags.length > 0 && (
+                <div class="flex flex-wrap gap-2 pt-2">
+                  {tags.map((tag) => (
+                    <span class="px-2 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )
+            }
           </div>
-        </article>
+        </header>
 
-        <!-- TOC sidebar (hidden on mobile, sticky on desktop) -->
-        <aside class="hidden laptop:block">
-          <TableOfContents toc={toc} />
-        </aside>
+        <!-- MDX content with prose styling -->
+        <slot />
+      </article>
+
+      <!-- TOC -->
+      <div class="hidden desktop:block mt-49 relative">
+        <TableOfContents toc={toc} />
       </div>
-    </div>
+    </Sidebar>
   </div>
 </Layout>
