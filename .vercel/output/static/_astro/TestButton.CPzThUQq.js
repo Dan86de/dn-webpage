@@ -1,0 +1,1 @@
+import{j as t}from"./jsx-runtime.D_zvdyIk.js";import{r as e}from"./index.WFquGv8Z.js";function i(){const[r,o]=e.useState(0);return t.jsxs("button",{onClick:()=>o(r+1),style:{padding:"0.5rem 1rem",backgroundColor:"#3b82f6",color:"white",border:"none",borderRadius:"0.25rem",cursor:"pointer"},children:["Clicked ",r," times"]})}export{i as TestButton};

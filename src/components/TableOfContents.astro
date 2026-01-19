@@ -1,0 +1,135 @@
+---
+import type { TocItem } from "@/lib/toc";
+
+interface Props {
+  toc: TocItem[];
+}
+
+const { toc } = Astro.props;
+---
+
+<nav class="toc-nav" aria-label="Table of Contents">
+  <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
+    On this page
+  </h3>
+  <ul class="space-y-2 text-sm">
+    {
+      toc.map((item) => (
+        <li>
+          <a
+            href={`#${item.slug}`}
+            class="toc-link block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+            data-slug={item.slug}
+          >
+            {item.text}
+          </a>
+          {item.children.length > 0 && (
+            <ul class="mt-2 space-y-2 ml-4 border-l border-gray-200 dark:border-gray-700 pl-4">
+              {item.children.map((child) => (
+                <li>
+                  <a
+                    href={`#${child.slug}`}
+                    class="toc-link block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                    data-slug={child.slug}
+                  >
+                    {child.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  // Smooth scroll behavior
+  document.querySelectorAll('.toc-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = (e.currentTarget as HTMLAnchorElement).getAttribute('href');
+      if (targetId) {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Update URL without jumping
+          history.pushState(null, '', targetId);
+        }
+      }
+    });
+  });
+
+  // Active section highlighting based on scroll position
+  function updateActiveSection() {
+    const headings = document.querySelectorAll('h2[id], h3[id]');
+    const links = document.querySelectorAll('.toc-link');
+
+    let currentActive = '';
+    const scrollPos = window.scrollY + 100; // Offset for better UX
+
+    headings.forEach((heading) => {
+      const rect = heading.getBoundingClientRect();
+      const headingTop = rect.top + window.scrollY;
+
+      if (headingTop <= scrollPos) {
+        currentActive = heading.id;
+      }
+    });
+
+    // Update active states
+    links.forEach((link) => {
+      const slug = link.getAttribute('data-slug');
+      if (slug === currentActive) {
+        link.classList.add('text-brand', 'dark:text-brand', 'font-medium');
+        link.classList.remove('text-gray-600', 'dark:text-gray-400');
+      } else {
+        link.classList.remove('text-brand', 'dark:text-brand', 'font-medium');
+        link.classList.add('text-gray-600', 'dark:text-gray-400');
+      }
+    });
+  }
+
+  // Initial check
+  updateActiveSection();
+
+  // Listen for scroll events (throttled)
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActiveSection();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+</script>
+
+<style>
+  .toc-nav {
+    position: sticky;
+    top: 2rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  /* Hide scrollbar for cleaner look */
+  .toc-nav::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .toc-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .toc-nav::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.3);
+    border-radius: 2px;
+  }
+
+  .toc-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.5);
+  }
+</style>
