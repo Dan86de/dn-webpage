@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { getReadingTime } from "@/lib/readingTime";
+
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
@@ -10,6 +12,7 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props;
 const { Content } = await render(post);
+const readingTime = getReadingTime(post.body || "");
 ---
 
 <Layout>
@@ -17,10 +20,13 @@ const { Content } = await render(post);
     <div class="max-w-4xl mx-auto">
       <h2
         id="introduction"
-        class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-12 mt-10"
+        class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4 mt-10"
       >
         {post.data.title}
       </h2>
+      <div class="text-sm text-gray-600 dark:text-gray-400 pb-8">
+        <span>{readingTime}</span>
+      </div>
       <Content />
     </div>
   </div>
