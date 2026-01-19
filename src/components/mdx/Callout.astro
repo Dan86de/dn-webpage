@@ -1,0 +1,36 @@
+---
+export interface Props {
+  type?: "info" | "warning" | "tip" | "danger";
+  title?: string;
+}
+
+const { type = "info", title } = Astro.props;
+
+const styles = {
+  info: "bg-blue-50 border-blue-200 text-blue-900",
+  warning: "bg-yellow-50 border-yellow-200 text-yellow-900",
+  tip: "bg-green-50 border-green-200 text-green-900",
+  danger: "bg-red-50 border-red-200 text-red-900",
+};
+
+const icons = {
+  info: "ℹ️",
+  warning: "⚠️",
+  tip: "💡",
+  danger: "🚨",
+};
+---
+
+<div class={`callout border-l-4 p-4 my-4 ${styles[type]}`}>
+  {
+    title && (
+      <div class="callout-title font-semibold mb-2 flex items-center gap-2">
+        <span>{icons[type]}</span>
+        <span>{title}</span>
+      </div>
+    )
+  }
+  <div class="callout-content">
+    <slot />
+  </div>
+</div>

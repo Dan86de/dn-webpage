@@ -14,6 +14,7 @@ slug: test-mdx
 ---
 
 import { TestButton } from "@/components/TestButton";
+import { Callout, CodeDemo, Figure, YouTube } from "@/components/mdx";
 
 # MDX Integration Test
 
@@ -24,6 +25,49 @@ This is a test post to verify MDX integration is working correctly.
 Below is a React component imported and rendered in MDX:
 
 <TestButton client:load />
+
+## MDX Component Library
+
+### Callout Component
+
+<Callout type="info" title="Information">
+This is an informational callout. Use it to highlight important details.
+</Callout>
+
+<Callout type="warning" title="Warning">
+This is a warning callout. Use it to alert readers about potential issues.
+</Callout>
+
+<Callout type="tip" title="Pro Tip">
+This is a tip callout. Share helpful advice and best practices.
+</Callout>
+
+<Callout type="danger" title="Danger">
+This is a danger callout. Use it for critical warnings.
+</Callout>
+
+### Code Demo Component
+
+<CodeDemo
+  client:load
+  title="Interactive JavaScript Demo"
+  code={`console.log("Hello from CodeDemo!");
+console.log("This code runs in the browser!");
+const result = 2 + 2;
+console.log("2 + 2 =", result);`}
+/>
+
+### Figure Component
+
+<Figure
+  src="/favicon-light.ico"
+  alt="Site favicon"
+  caption="An example figure with a caption"
+/>
+
+### YouTube Component
+
+<YouTube id="dQw4w9WgXcQ" title="Example YouTube Video" />
 
 ## Markdown Features
 
