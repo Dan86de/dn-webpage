@@ -1,0 +1,40 @@
+---
+isDraft: false
+title: Testing MDX Integration
+author: Daniel Noworyta
+tags: ["mdx", "test", "react"]
+publishDate: 2026-01-19
+authorContact: daniel.noworyta@gmail.com
+canonicalURL: http://localhost:4321/blog/test-mdx
+slug: test-mdx
+---
+
+import { TestButton } from "@/components/TestButton";
+
+# MDX Integration Test
+
+This is a test post to verify MDX integration is working correctly.
+
+## Interactive Component
+
+Below is a React component imported and rendered in MDX:
+
+<TestButton client:load />
+
+## Markdown Features
+
+All standard markdown features should still work:
+
+- Lists work
+- **Bold text** works
+- *Italic text* works
+- `Inline code` works
+
+```javascript
+// Code blocks work
+function hello() {
+  console.log("Hello from MDX!");
+}
+```
+
+This confirms MDX is properly configured!
