@@ -14,7 +14,17 @@ export interface Props {
     | "bun"
     | "tailwindcss"
     | "motion"
-    | "tanstack";
+    | "tanstack"
+    | "openai"
+    | "redis"
+    | "claude"
+    | "sql"
+    | "pnpm"
+    | "docker"
+    | "reactnative"
+    | "prisma"
+    | "nestjs"
+    | "python";
   gap?: number;
   speed?: number;
   colors?: string;
@@ -105,6 +115,76 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#fecdd3,#fda4af,#e11d48",
+    noFocus: false,
+  },
+  openai: {
+    activeColor: "#10a37f",
+    gap: 5,
+    speed: 35,
+    colors: "#10a37f,#1a7f64,#0d8a6f",
+    noFocus: false,
+  },
+  redis: {
+    activeColor: "#DC382D",
+    gap: 5,
+    speed: 35,
+    colors: "#DC382D,#A41E11,#C6302B",
+    noFocus: false,
+  },
+  claude: {
+    activeColor: "#D97757",
+    gap: 5,
+    speed: 35,
+    colors: "#D97757,#CC8B6A,#E08B6D",
+    noFocus: false,
+  },
+  sql: {
+    activeColor: "#336791",
+    gap: 5,
+    speed: 35,
+    colors: "#336791,#295F7E,#4A7BA7",
+    noFocus: false,
+  },
+  pnpm: {
+    activeColor: "#f9ad00",
+    gap: 5,
+    speed: 35,
+    colors: "#f9ad00,#FFC331,#FFB800",
+    noFocus: false,
+  },
+  docker: {
+    activeColor: "#008fe2",
+    gap: 5,
+    speed: 35,
+    colors: "#008fe2,#0DB7ED,#066DA5",
+    noFocus: false,
+  },
+  reactnative: {
+    activeColor: "#61DAFB",
+    gap: 5,
+    speed: 35,
+    colors: "#61DAFB,#2D98B4,#1AACD8",
+    noFocus: false,
+  },
+  prisma: {
+    activeColor: "#e0234e",
+    gap: 5,
+    speed: 35,
+    colors: "#e0234e,#C41E44,#F52858",
+    noFocus: false,
+  },
+  nestjs: {
+    activeColor: "#e0234e",
+    gap: 5,
+    speed: 35,
+    colors: "#e0234e,#C41E44,#F52858",
+    noFocus: false,
+  },
+  python: {
+    activeColor: "#FFE052",
+    gap: 5,
+    speed: 35,
+    colors: "#387EB8,#366994,#FFE052,#FFC331",
     noFocus: false,
   },
 };
