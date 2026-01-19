@@ -18,7 +18,7 @@ I left my automotive career to fulfill my dream: becoming a software developer. 
 
 But the path is changing faster than I expected.
 
-#### What I Built in Hours, Not Weeks
+## What I Built in Hours, Not Weeks
 
 A few months ago, I had a problem: I needed to track my finances. Before AI, I would have searched for an existing app, compromised on features I didn't need, and lived with limitations that didn't fit my workflow. Or I would have spent weeks, maybe months building something myself, learning the full stack piece by piece, debugging late into the night.
 
@@ -28,17 +28,17 @@ I want to be clear about what this means. The code that came out wasn't sloppy o
 
 The bottleneck has shifted. Writing code is no longer the hard part. Understanding what needs to be built, knowing how the pieces should fit together, being able to evaluate whether the output is correct; these are the skills that matter now. Typing was never the point. It was always about thinking. But now the ratio between thinking and typing has changed dramatically.
 
-### Why This Matters
+## Why This Matters
 
 I know there's noise in the market. Stock prices swing wildly. CEOs make grandiose claims. The hype cycle churns through excitement and disappointment in predictable waves. It's tempting to dismiss all of this as another bubble, another overpromise, another technology that won't live up to the marketing.
 
-Ignore all of that. Watch what the tools actually do.
+**Ignore all of that. Watch what the tools actually do.**
 
 The shift I'm describing isn't about valuations or investor sentiment. It's about capability. The underlying technology has crossed a threshold, and it's not going back. Every month it gets better. Every month the gap between what you could build alone and what you can build with these tools widens further.
 
 The programmers who will thrive are the ones who can isolate problems cleanly, communicate intent precisely, and hold accurate mental models of complex systems. The skills haven't changed, but the leverage they provide has been multiplied.
 
-### The Opportunity
+## The Opportunity
 
 I remember when I was learning how to code, staring at tutorials late at night, dreaming about what I could become. I wanted to be a full-stack machine, someone who could solve any problem with code. Need a backend? I'll build it. Need a frontend? Done. Database, API, deployment? All of it. No limitations, no waiting on others, just pure capability to turn ideas into reality.
 
@@ -50,7 +50,7 @@ A single developer with domain expertise and clear vision can prototype in days 
 
 For me personally, this means more building, not less. The things I always wanted to create but couldn't justify the time investment, now I can build them. Side projects that would have taken years can happen in weeks. The constraint was never ideas. It was always time and energy. That constraint just loosened significantly.
 
-### The Concerns
+## The Concerns
 
 I'd be lying if I said I'm not worrying.
 
@@ -60,7 +60,7 @@ Job displacement is real. We can debate the timeline and the extent but pretendi
 
 I don't think the market will solve this by itself. We'll need political and social responses: better safety nets, retraining programs, perhaps more radical rethinking of how we distribute the gains from increased productivity. These are not technical problems, and technologists shouldn't pretend they are.
 
-### What Programmers Should Do Now
+## What Programmers Should Do Now
 
 If you're a working programmer, here's my honest advice.
 
