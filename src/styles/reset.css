@@ -35,8 +35,8 @@ ol[role="list"] {
 /* Set core body defaults */
 body {
   min-height: 100vh;
-  background: var(--color-grey-50);
-  color: var(--color-grey-950);
+  background: var(--color-gray-100);
+  color: var(--color-gray-1200);
   font-family: var(--font-sans);
 }
 

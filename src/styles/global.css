@@ -38,19 +38,19 @@
   --color-orange-900: oklch(23.1% 0.061677 49.2);
   --color-orange-950: oklch(16.4% 0.038952 58.5);
 
-  /* GREY */
-  --color-grey-50: oklch(100% 0 0);
-  --color-grey-100: oklch(92.3% 0.001082 17.2);
-  --color-grey-200: oklch(84.6% 0.003543 67.8);
-  --color-grey-300: oklch(76.5% 0.004446 56.4);
-  --color-grey-400: oklch(68.3% 0.007336 53.4);
-  --color-grey-500: oklch(67% 0.007372 53.4);
-  --color-grey-600: oklch(51% 0.007901 53.3);
-  --color-grey-700: oklch(41.9% 0.005177 56.3);
-  --color-grey-800: oklch(32.2% 0.004507 67.7);
-  --color-grey-900: oklch(21.5% 0.001566 17.3);
-  --color-grey-950: oklch(15.9% 0.002075 106.6);
-  --color-grey-1000: oklch(0% 0 0);
+  /* GRAY */
+  --color-gray-100: oklch(99% 0 0);
+  --color-gray-200: oklch(98% 0 0);
+  --color-gray-300: oklch(96% 0 0);
+  --color-gray-400: oklch(93% 0 0);
+  --color-gray-500: oklch(91% 0 0);
+  --color-gray-600: oklch(89% 0 0);
+  --color-gray-700: oklch(85% 0.01 0);
+  --color-gray-800: oklch(79% 0.01 0);
+  --color-gray-900: oklch(64% 0.01 106.51);
+  --color-gray-1000: oklch(60% 0.01 0);
+  --color-gray-1100: oklch(50% 0.01 0);
+  --color-gray-1200: oklch(24% 0.01 0);
 
   /* GRADIENTS */
   --brand-gradient: linear-gradient(
@@ -87,23 +87,22 @@
   --color-orange-900: oklch(85% 0.090443 49.7);
   --color-orange-950: oklch(92.3% 0.043978 50.4);
 
-  --color-grey-50: oklch(0% 0 0);
-  --color-grey-100: oklch(15.9% 0.002075 106.6);
-  --color-grey-200: oklch(21.5% 0.001566 17.3);
-  --color-grey-300: oklch(32.2% 0.004507 67.7);
-  --color-grey-400: oklch(41.9% 0.005177 56.3);
-  --color-grey-500: oklch(51% 0.007901 53.3);
-  --color-grey-600: oklch(67% 0.007372 53.4);
-  --color-grey-700: oklch(68.3% 0.007336 53.4);
-  --color-grey-800: oklch(76.5% 0.004446 56.4);
-  --color-grey-900: oklch(84.6% 0.003543 67.8);
-  --color-grey-950: oklch(92.3% 0.001082 17.2);
-  --color-grey-1000: oklch(100% 0 0);
+  --color-gray-100: oklch(18% 0 0);
+  --color-gray-200: oklch(21% 0 0);
+  --color-gray-300: oklch(25% 0 0);
+  --color-gray-400: oklch(28% 0 0);
+  --color-gray-500: oklch(31% 0.01 0);
+  --color-gray-600: oklch(35% 0.01 0);
+  --color-gray-700: oklch(40% 0.01 0);
+  --color-gray-800: oklch(49% 0.01 0);
+  --color-gray-900: oklch(53% 0.01 93.54);
+  --color-gray-1000: oklch(58% 0.01 99.95);
+  --color-gray-1100: oklch(77% 0.01 0);
+  --color-gray-1200: oklch(95% 0 0);
 }
 
 @layer base {
   :root {
-    color: var(--color-grey-950);
     font-display: swap;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;

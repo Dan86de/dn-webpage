@@ -43,10 +43,10 @@ const latestPosts = allPosts
   <div class="px-(--inline-padding)">
     <div class="mx-auto max-w-4xl">
       <div>
-        <h2 class="font-medium pb-6">Recent Articles</h2>
+        <h2>Recent Articles</h2>
         <BlogPostList posts={latestPosts} />
 
-        <h2 class="font-medium pb-10" id="experience">Experience</h2>
+        <h2 class="pb-10" id="experience">Experience</h2>
         <!-- Vaillant -->
         <div class="max-w-4xl border-b border-b-grey-200 mb-3">
           <WorkExperience companyName="Vaillant Group" isCurrentJob={true}>
@@ -146,7 +146,7 @@ const latestPosts = allPosts
           </WorkExperience>
         </div>
 
-        <h2 class="font-medium pb-6" id="stack">Stack</h2>
+        <h2 class="pb-6" id="stack">Stack</h2>
         <div class="cluster" style={{ "--cluster-space": "0" }}>
           <PixelCard
             to="https://react.dev"

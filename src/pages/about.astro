@@ -7,22 +7,66 @@ import signatureDark from "@/images/signature-dark.webp";
 import Sidebar from "@/components/Sidebar.astro";
 import Stack from "@/components/Stack.astro";
 import LazyThemedImage from "@/components/LazyThemedImage.astro";
+import { cn } from "@/lib/utils";
 ---
 
 <Layout>
   <div class="px-(--inline-padding) pb-[100vh]">
     <Sidebar
-      class="mx-auto max-w-4xl laptop:[--sidebar-width:var(--container-2xl)] laptop:[--sidebar-content-min:100px] laptop:[--sidebar-gap:4rem]"
+      class={cn(
+      "mx-auto max-w-4xl",
+      "tablet:[--sidebar-width:var(--container-2xl)]",
+      "tablet:[--sidebar-content-min:100px]",
+      "tablet:[--sidebar-gap:4rem]")}
     >
       <!-- CONTENT -->
-      <div>
+      <div class="max-w-2xl">
         <h1
           id="introduction"
           class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-12 mt-10"
         >
           Developer.<br /> Father. Creator.
         </h1>
-        <p class="pb-6">
+        <div class="laptop:hidden relative py-8 border-y border-orange-600 pl-4">
+          <div class="sticky top-20">
+            <p class="caption pb-4">Table of contents</p>
+            <ul id="toc-list" class="flex flex-col gap-1">
+              <li
+                data-section="introduction"
+                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+              >
+                <span
+                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+                ></span><a href="#introduction">Introduction</a>
+              </li>
+              <li
+                data-section="my-story"
+                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+              >
+                <span
+                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+                ></span><a href="#my-story">My Story</a>
+              </li>
+              <li
+                data-section="rock-bottom"
+                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+              >
+                <span
+                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+                ></span><a href="#rock-bottom">My "rock bottom" moment</a>
+              </li>
+              <li
+                data-section="today"
+                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
+              >
+                <span
+                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
+                ></span><a href="#today">What I'm doing today</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p class="pb-6 mt-10 laptop:mt-0">
           From dreaming of becoming a programmer to making it a reality in 2020,
           I'm now sharing my journey through teaching and creating. I help
           others transition into tech while building useful things along the
@@ -39,7 +83,7 @@ import LazyThemedImage from "@/components/LazyThemedImage.astro";
           </div>
           <Stack
             space="calc(var(--spacing) * 4)"
-            class="[@media(min-width:702px)]:border-t border-orange-500 text-pretty [@media(min-width:702px)]:text-grey-800 italic [@media(min-width:702px)]:pt-4"
+            class="text-pretty [@media(min-width:702px)]:text-grey-1200 italic [@media(min-width:702px)]:pt-4"
           >
             <p>
               Hey, I'm Daniel Noworyta. For most of my life, I pushed aside my
@@ -52,14 +96,14 @@ import LazyThemedImage from "@/components/LazyThemedImage.astro";
               and advancing my career in IT.
             </p>
             <p
-              class="[@media(min-width:702px)]:border-b border-orange-500 [@media(min-width:702px)]:pb-4"
+              class="[@media(min-width:702px)]:pb-4"
             >
               I love dark mode and side projects. When I'm not working, I like
               playing football, reading books, and eating pizza.
             </p>
           </Stack>
         </Sidebar>
-        <h3 id="my-story" class="font-medium max-w-[675px] pb-6">My Story</h3>
+        <h3 id="my-story" class="font-medium `max-w-168.75 pb-6">My Story</h3>
         <Stack class="pb-8">
           <p>
             I used to live a life that, on the surface, looked successful but
@@ -152,11 +196,11 @@ import LazyThemedImage from "@/components/LazyThemedImage.astro";
           darkSrc={signatureDark}
           width={300}
           alt="Signature"
-          class="w-[200px] ml-auto"
+          class="w-50 ml-auto"
         />
       </div>
       <!-- TOC -->
-      <div class="hidden desktop:block mt-49 relative">
+      <div class="hidden laptop:block mt-49 relative">
         <div class="sticky top-20">
           <p class="caption pb-4">Table of contents</p>
           <ul id="toc-list" class="flex flex-col gap-1">

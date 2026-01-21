@@ -90,9 +90,9 @@ const { title, employmentType, startDate, endDate, defaultOpen } = Astro.props;
         >
           <slot name="icon" />
         </div>
-        <p class="body-large font-medium">{title}</p>
+        <p class="body-large">{title}</p>
       </div>
-      <div class="pl-9">
+      <div class="pl-9 text-grey-600">
         <p>{`${employmentType} ${startDate} - ${endDate}`}</p>
       </div>
     </div>

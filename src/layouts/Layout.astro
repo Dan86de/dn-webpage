@@ -62,7 +62,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
       <title>Daniel Noworyta</title>
     </slot>
   </head>
-  <body class="bg-grey-50">
+  <body>
     <div class="px-(--inline-padding)">
       <header
         class="mx-auto max-w-4xl flex items-center justify-between h-16 laptop:h-20"
@@ -86,6 +86,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
       </header>
     </div>
     <slot />
+    <TailwindIndicator />
   </body>
   <TailwindIndicator />
   <SpeedInsights />

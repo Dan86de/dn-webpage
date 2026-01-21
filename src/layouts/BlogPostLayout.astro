@@ -4,6 +4,7 @@ import TableOfContents from "@/components/TableOfContents.astro";
 import SEO from "@/components/SEO.astro";
 import Sidebar from "@/components/Sidebar.astro";
 import type { TocItem } from "@/lib/toc";
+import { cn } from "@/lib/utils";
 
 interface Props {
   title: string;
@@ -54,10 +55,16 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
   />
   <div class="px-(--inline-padding) pb-[100vh]">
     <Sidebar
-      class="mx-auto max-w-4xl laptop:[--sidebar-width:var(--container-2xl)] laptop:[--sidebar-content-min:100px] laptop:[--sidebar-gap:4rem]"
+      class={cn(
+      "mx-auto max-w-4xl",
+      "tablet:[--sidebar-width:var(--container-2xl)]",
+      "tablet:[--sidebar-content-min:100px]",
+      "tablet:[--sidebar-gap:4rem]")}
     >
+
       <!-- CONTENT -->
-      <article>
+      <article class="max-w-xl">
+
         <!-- Post header with metadata -->
         <header class="pb-8 mt-10">
           <h1
@@ -65,7 +72,7 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
           >
             {title}
           </h1>
-          <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <div class="text-sm space-y-1">
             <div>
               <span>{formattedDate}</span>
               <span class="mx-2">·</span>
@@ -84,15 +91,17 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
             }
           </div>
         </header>
-
+        <div class="laptop:hidden relative py-4 border-y border-orange-600">
+          <TableOfContents toc={toc} />
+        </div>
         <!-- MDX content with prose styling -->
-        <div class="mdx-content">
+        <div class="mdx-content mt-8 laptop:mt-0">
           <slot />
         </div>
       </article>
 
       <!-- TOC -->
-      <div class="hidden desktop:block mt-49 relative">
+      <div class="hidden laptop:block mt-49 relative">
         <TableOfContents toc={toc} />
       </div>
     </Sidebar>
@@ -107,15 +116,19 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
       margin-bottom: calc(var(--spacing) * 6); /* pb-6 */
     }
 
+    & strong {
+      font-weight: 500; /* font-semibold */
+    }
+
     /* Heading styles for blog posts */
     & h1 {
-      font-weight: 500; /* font-medium */
+      font-weight: 500;
       max-width: 675px;
       padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
     }
 
     & h2 {
-      font-weight: 500; /* font-medium */
+      font-weight: 500;
       max-width: 675px;
       padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
       font-size: var(--text-xl); /* 20px - same as h3 mobile */
@@ -123,7 +136,7 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
     }
 
     & h3 {
-      font-weight: 500; /* font-medium */
+      font-weight: 500;
       max-width: 675px;
       padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
       font-size: var(--text-lg); /* 18px */
@@ -131,7 +144,7 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
     }
 
     & h4 {
-      font-weight: 500; /* font-medium */
+      font-weight: 500;
       max-width: 675px;
       padding-bottom: calc(var(--spacing) * 6); /* pb-6 */
       font-size: var(--text-base); /* 16px */
@@ -211,11 +224,11 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
       padding-left: calc(var(--spacing) * 4);
       margin-bottom: calc(var(--spacing) * 6);
       font-style: italic;
-      color: var(--color-grey-800);
+      color: var(--color-gray-800);
     }
 
     .dark & blockquote {
-      color: var(--color-grey-800);
+      color: var(--color-gray-800);
     }
 
     /* Links */
