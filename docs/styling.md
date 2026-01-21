@@ -9,7 +9,7 @@
 ## Color System
 
 - Custom OKLCH color system
-- Orange brand colors + grey scale
+- Orange brand colors + gray scale
 - Automatic dark mode inversion
 
 ## Breakpoints
@@ -28,6 +28,7 @@
 ## Layout Patterns ("Every Layout")
 
 Utility classes:
+
 - `stack` - Vertical stacking layout
 - `cluster` - Horizontal clustering layout
 - `cover` - Cover layout pattern
@@ -42,6 +43,7 @@ Utility classes:
 ## Global Styles
 
 Located in `src/styles/`:
+
 - `global.css` - Main entry point, imports reset and typography
 - `reset.css` - CSS reset
 - `typography.css` - Typography definitions

@@ -48,7 +48,7 @@ const latestPosts = allPosts
 
         <h2 class="pb-10" id="experience">Experience</h2>
         <!-- Vaillant -->
-        <div class="max-w-4xl border-b border-b-grey-200 mb-3">
+        <div class="max-w-4xl border-b border-b-gray-200 mb-3">
           <WorkExperience companyName="Vaillant Group" isCurrentJob={true}>
             <VaillantLogo width={24} height={32} slot="logo" />
             <Position
@@ -60,7 +60,10 @@ const latestPosts = allPosts
             >
               <CodeIcon width={18} slot="icon" />
               <div class="pl-8 pb-4 max-w-3xl" slot="description">
-                <ul class="list-disc pl-5 text-grey-800 text-sm">
+                <p class="text-gray-1200 underline pb-2 text-sm">
+                  Making better myVaillantPRO web and mobile experience
+                </p>
+                <ul class="list-disc pl-5 text-gray-1100 text-sm">
                   <li>Develop Web and Native myVaillant PRO App.</li>
                   <li>
                     Cooperate with business and design in creating new features.
@@ -70,6 +73,7 @@ const latestPosts = allPosts
                     solutions.
                   </li>
                   <li>Ensure UI/UX consistency and adherence to standards.</li>
+                  <li>Spreading knowledge and usage of AI tools in daily work.</li>
                 </ul>
               </div>
             </Position>
@@ -77,7 +81,7 @@ const latestPosts = allPosts
         </div>
 
         <!-- Bechtle -->
-        <div class="max-w-4xl border-b border-b-grey-200 mb-8">
+        <div class="max-w-4xl border-b border-b-gray-200 mb-8">
           <WorkExperience companyName="Bechtle / AV360" isCurrentJob={false}>
             <BechtleLogo width={24} height={32} slot="logo" />
             <Position
@@ -89,10 +93,10 @@ const latestPosts = allPosts
             >
               <CodeIcon width={18} slot="icon" />
               <div class="pl-8 pb-4 max-w-3xl" slot="description">
-                <p class="text-grey-800 underline pb-2 text-sm">
+                <p class="text-gray-1200 underline pb-2 text-sm">
                   Develop interface for document management platform
                 </p>
-                <ul class="list-disc pl-5 text-grey-800 pb-3 text-sm">
+                <ul class="list-disc pl-5 text-gray-1100 pb-3 text-sm">
                   <li>
                     Developed interface for a document management platform using
                     ReactJS, FluentUI, and TypeScript.
@@ -110,11 +114,11 @@ const latestPosts = allPosts
                     interface usability and aesthetics.
                   </li>
                 </ul>
-                <p class="text-grey-800 underline pb-2 text-sm">
+                <p class="text-gray-1200 underline pb-2 text-sm">
                   Ideated and implemented a multi-platform chat messaging app in
                   Tauri, boosting the company’s product portfolio and revenue
                 </p>
-                <ul class="list-disc pl-5 text-grey-800 text-sm pb-4">
+                <ul class="list-disc pl-5 text-gray-1100 text-sm pb-4">
                   <li>
                     Constructed interfaces and logic for system management and
                     chat messaging applications.
@@ -133,7 +137,7 @@ const latestPosts = allPosts
                     streamlining the development and deployment process.
                   </li>
                 </ul>
-                <p class="max-w-3xl text-grey-800 text-sm font-medium">
+                <p class="max-w-3xl text-gray-1200 text-sm font-medium">
                   Throughout my tenure, I have successfully tackled complex
                   challenges, innovated solutions, and developed impactful
                   software. My contributions have played a key role in enhancing
@@ -170,7 +174,7 @@ const latestPosts = allPosts
             variant="default"
             className="hover:z-10 w-20 aspect-square"
           >
-            <NextJSIcon class="text-grey-950 size-10" />
+            <NextJSIcon class="text-gray-950 size-10" />
           </PixelCard>
           <PixelCard
             tooltipText="Vercel"
@@ -178,7 +182,7 @@ const latestPosts = allPosts
             variant="default"
             className="hover:z-10 w-20 aspect-square"
           >
-            <VercelIcon class="text-grey-950 size-8" />
+            <VercelIcon class="text-gray-950 size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="JavaScript"
@@ -306,7 +310,7 @@ const latestPosts = allPosts
             variant="default"
             className="hover:z-10 w-20 aspect-square"
           >
-            <PrismaIcon class="text-grey-950 size-8" />
+            <PrismaIcon class="text-gray-950 size-8" />
           </PixelCard>
           <PixelCard
             tooltipText="NestJS"
