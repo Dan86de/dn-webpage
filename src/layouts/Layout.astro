@@ -76,18 +76,115 @@ import SpeedInsights from "@vercel/speed-insights/astro";
           />
           <p class="font-medium tracking-wide">Noworyta</p>
         </a>
-        <nav>
+        <nav class="hidden laptop:block">
           <ul class="flex items-baseline justify-between gap-8">
             <li><a href="/about">About</a></li>
             <li><a href="/blog">Blog</a></li>
             <li><a href="/uses">Uses</a></li>
           </ul>
         </nav>
-        <ThemeToggle />
+        <div class="flex items-center gap-4">
+          <ThemeToggle />
+          <button
+            id="menu-toggle"
+            class="laptop:hidden relative inline-flex items-center justify-center w-10 h-10 rounded-md transition-colors"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            <span
+              id="hamburger-icon"
+              class="flex flex-col gap-1.5 w-6 h-6 justify-center items-center transition-opacity duration-200"
+            >
+              <span class="w-full h-0.5 bg-current"></span>
+              <span class="w-full h-0.5 bg-current"></span>
+              <span class="w-full h-0.5 bg-current"></span>
+            </span>
+            <span
+              id="close-icon"
+              class="absolute flex flex-col gap-1.5 w-6 h-6 justify-center items-center opacity-0 transition-opacity duration-200"
+            >
+              <span class="w-full h-0.5 bg-current rotate-45 translate-y-1"
+              ></span>
+              <span class="w-full h-0.5 bg-current -rotate-45 -translate-y-1"
+              ></span>
+            </span>
+          </button>
+        </div>
       </header>
+      <nav
+        id="mobile-menu"
+        class="laptop:hidden overflow-hidden transition-all duration-200 ease-in-out max-h-0 opacity-0"
+        aria-label="Mobile navigation"
+      >
+        <div class="pt-2 pb-3">
+          <div class="mx-auto flex flex-col gap-1">
+            <a
+              href="/about"
+              class="-ml-(--inline-padding) px-(--inline-padding) block rounded-md py-2 text-2xl font-medium"
+              >About</a
+            >
+            <a
+              href="/blog"
+              class="-ml-(--inline-padding) px-(--inline-padding) block rounded-md py-2 text-2xl font-medium"
+              >Blog</a
+            >
+            <a
+              href="/uses"
+              class="-ml-(--inline-padding) px-(--inline-padding) block rounded-md py-2 text-2xl font-medium"
+              >Uses</a
+            >
+          </div>
+        </div>
+      </nav>
     </div>
     <slot />
     <TailwindIndicator />
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const hamburgerIcon = document.getElementById("hamburger-icon");
+      const closeIcon = document.getElementById("close-icon");
+
+      let isMenuOpen = false;
+
+      const toggleMenu = () => {
+        isMenuOpen = !isMenuOpen;
+
+        if (isMenuOpen) {
+          // Open menu
+          mobileMenu?.classList.remove("max-h-0", "opacity-0");
+          mobileMenu?.classList.add("max-h-96", "opacity-100");
+          hamburgerIcon?.classList.add("opacity-0");
+          closeIcon?.classList.remove("opacity-0");
+          menuToggle?.setAttribute("aria-expanded", "true");
+        } else {
+          // Close menu
+          mobileMenu?.classList.add("max-h-0", "opacity-0");
+          mobileMenu?.classList.remove("max-h-96", "opacity-100");
+          hamburgerIcon?.classList.remove("opacity-0");
+          closeIcon?.classList.add("opacity-0");
+          menuToggle?.setAttribute("aria-expanded", "false");
+        }
+      };
+
+      menuToggle?.addEventListener("click", toggleMenu);
+
+      // Close menu when clicking a navigation link
+      mobileMenu?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (isMenuOpen) {
+            toggleMenu();
+          }
+        });
+      });
+
+      // Close menu on escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && isMenuOpen) {
+          toggleMenu();
+        }
+      });
+    </script>
   </body>
   <TailwindIndicator />
   <SpeedInsights />
