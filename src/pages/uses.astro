@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SEO from "@/components/SEO.astro";
+
+const siteUrl = "http://localhost:4321";
+---
+
+<Layout>
+  <SEO
+    slot="head"
+    title="Uses - Daniel Noworyta"
+    description="Hardware, software, and tools I use daily for development and content creation."
+    canonicalURL={`${siteUrl}/uses`}
+    type="website"
+  />
+  <div class="px-(--inline-padding)">
+    <div class="max-w-4xl mx-auto py-12">
+      <header class="mb-12">
+        <h1
+          class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4"
+        >
+          Uses
+        </h1>
+        <p class="text-gray-1100 text-lg">
+          Hardware, software, and tools I use daily.
+        </p>
+      </header>
+    </div>
+  </div>
+</Layout>
