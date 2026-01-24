@@ -27,6 +27,39 @@ const hardwareItems = [
     description: "Low-profile mechanical keyboard that's perfect for coding. Hot-swappable switches and wireless connectivity."
   }
 ];
+
+const softwareItems = [
+  {
+    name: "VS Code",
+    url: "https://code.visualstudio.com/",
+    description: "My main code editor with carefully selected extensions. Fast, customizable, and integrates perfectly with my workflow."
+  },
+  {
+    name: "Claude Code",
+    url: "https://github.com/anthropics/claude-code",
+    description: "AI coding assistant that helps me write better code faster. Invaluable for complex refactorings and exploring new codebases."
+  },
+  {
+    name: "Arc Browser",
+    url: "https://arc.net/",
+    description: "My primary browser for development and research. The Space organization and command bar make it incredibly productive."
+  },
+  {
+    name: "iTerm2",
+    url: "https://iterm2.com/",
+    description: "Terminal emulator with split panes, search, and tmux integration. Much more powerful than the default Terminal app."
+  },
+  {
+    name: "Raycast",
+    url: "https://www.raycast.com/",
+    description: "Productivity launcher that replaced Spotlight for me. Extensions for everything from clipboard history to GitHub PRs."
+  },
+  {
+    name: "Figma",
+    url: "https://www.figma.com/",
+    description: "Design tool for UI/UX work and prototyping. The collaboration features make it perfect for working with designers."
+  }
+];
 ---
 
 <Layout>
@@ -67,6 +100,30 @@ const hardwareItems = [
         <Stack space="calc(var(--spacing) * 6)">
           {
             hardwareItems.map((item) => (
+              <div class="group">
+                <h3 class="font-medium mb-2">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-orange-600 hover:text-orange-700 transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                </h3>
+                <p class="text-gray-1100">{item.description}</p>
+              </div>
+            ))
+          }
+        </Stack>
+      </section>
+
+      <!-- Software Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-medium mb-6">Software</h2>
+        <Stack space="calc(var(--spacing) * 6)">
+          {
+            softwareItems.map((item) => (
               <div class="group">
                 <h3 class="font-medium mb-2">
                   <a
