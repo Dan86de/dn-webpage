@@ -60,6 +60,29 @@ const softwareItems = [
     description: "Design tool for UI/UX work and prototyping. The collaboration features make it perfect for working with designers."
   }
 ];
+
+const otherItems = [
+  {
+    name: "Notion",
+    url: "https://www.notion.so/",
+    description: "My second brain for notes, documentation, and project management. I use it for tracking learning goals and organizing content ideas."
+  },
+  {
+    name: "1Password",
+    url: "https://1password.com/",
+    description: "Password manager that I trust with all my credentials. The developer tools integration is excellent."
+  },
+  {
+    name: "CleanShot X",
+    url: "https://cleanshot.com/",
+    description: "Screenshot and screen recording tool for creating tutorials and documentation. Much better than the built-in macOS tools."
+  },
+  {
+    name: "Spotify",
+    url: "https://www.spotify.com/",
+    description: "Music streaming for focus and productivity. I have curated playlists for different types of work."
+  }
+];
 ---
 
 <Layout>
@@ -124,6 +147,30 @@ const softwareItems = [
         <Stack space="calc(var(--spacing) * 6)">
           {
             softwareItems.map((item) => (
+              <div class="group">
+                <h3 class="font-medium mb-2">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-orange-600 hover:text-orange-700 transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                </h3>
+                <p class="text-gray-1100">{item.description}</p>
+              </div>
+            ))
+          }
+        </Stack>
+      </section>
+
+      <!-- Other Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-medium mb-6">Other</h2>
+        <Stack space="calc(var(--spacing) * 6)">
+          {
+            otherItems.map((item) => (
               <div class="group">
                 <h3 class="font-medium mb-2">
                   <a
