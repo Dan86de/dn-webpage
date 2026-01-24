@@ -62,7 +62,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
       <title>Daniel Noworyta</title>
     </slot>
   </head>
-  <body>
+  <body class="flex flex-col min-h-screen">
     <div class="px-(--inline-padding)">
       <header
         class="mx-auto max-w-4xl flex items-center justify-between h-16 laptop:h-20"
@@ -137,7 +137,14 @@ import SpeedInsights from "@vercel/speed-insights/astro";
         </div>
       </nav>
     </div>
-    <slot />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <footer class="px-(--inline-padding) py-8 mt-16">
+      <div class="mx-auto max-w-4xl text-center text-sm text-(--text-secondary)">
+        <p>© 2026 Daniel Noworyta</p>
+      </div>
+    </footer>
     <TailwindIndicator />
     <script>
       const menuToggle = document.getElementById("menu-toggle");
