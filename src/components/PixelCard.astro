@@ -38,6 +38,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#f8fafc,#f1f5f9,#cbd5e1",
+    colorsLight: "#475569,#64748b,#94a3b8", // slate-600/500/400 for light mode
+    colorsDark: "#f8fafc,#f1f5f9,#cbd5e1", // slate-50/100/300 for dark mode
     noFocus: false,
   },
   tanstack: {
@@ -45,6 +47,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#6BDAFF,#FFA770,#f7ca1e",
+    colorsLight: "#0891B2,#C2410C,#CA8A04",
+    colorsDark: "#6BDAFF,#FFA770,#f7ca1e",
     noFocus: false,
   },
   motion: {
@@ -52,6 +56,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#FFF312,#0f0f0f,#cbd5e1",
+    colorsLight: "#CA8A04,#0f0f0f,#64748b",
+    colorsDark: "#FFF312,#0f0f0f,#cbd5e1",
     noFocus: false,
   },
   tailwindcss: {
@@ -59,6 +65,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#38bdf8,#22d3ee,#0ea5e9",
+    colorsLight: "#0284c7,#0891b2,#0369a1",
+    colorsDark: "#38bdf8,#22d3ee,#0ea5e9",
     noFocus: false,
   },
   bun: {
@@ -66,6 +74,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#ff6164,#ccbea7,#f6dece",
+    colorsLight: "#dc2626,#92827a,#ca9a7c",
+    colorsDark: "#ff6164,#ccbea7,#f6dece",
     noFocus: false,
   },
   react: {
@@ -73,6 +83,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#58C4DC,#2D98B4,#087EA4",
+    colorsLight: "#0e7490,#155e75,#164e63",
+    colorsDark: "#58C4DC,#2D98B4,#087EA4",
     noFocus: false,
   },
   nodejs: {
@@ -80,6 +92,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#6CC04A,#419637,#418B3D",
+    colorsLight: "#15803d,#166534,#14532d",
+    colorsDark: "#6CC04A,#419637,#418B3D",
     noFocus: false,
   },
   ts: {
@@ -87,6 +101,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#3178C6,#358EF1,#235A97",
+    colorsLight: "#1e40af,#1d4ed8,#1e3a8a",
+    colorsDark: "#3178C6,#358EF1,#235A97",
     noFocus: false,
   },
   js: {
@@ -94,6 +110,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#f7df1e,#f7ca1e,#f7b81e",
+    colorsLight: "#ca8a04,#a16207,#854d0e",
+    colorsDark: "#f7df1e,#f7ca1e,#f7b81e",
     noFocus: false,
   },
   blue: {
@@ -101,6 +119,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#e0f2fe,#7dd3fc,#0ea5e9",
+    colorsLight: "#0284c7,#0369a1,#075985",
+    colorsDark: "#e0f2fe,#7dd3fc,#0ea5e9",
     noFocus: false,
   },
   yellow: {
@@ -108,6 +128,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#fef08a,#fde047,#eab308",
+    colorsLight: "#a16207,#854d0e,#713f12",
+    colorsDark: "#fef08a,#fde047,#eab308",
     noFocus: false,
   },
   pink: {
@@ -115,6 +137,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#fecdd3,#fda4af,#e11d48",
+    colorsLight: "#be123c,#9f1239,#881337",
+    colorsDark: "#fecdd3,#fda4af,#e11d48",
     noFocus: false,
   },
   openai: {
@@ -122,6 +146,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#10a37f,#1a7f64,#0d8a6f",
+    colorsLight: "#047857,#065f46,#064e3b",
+    colorsDark: "#10a37f,#1a7f64,#0d8a6f",
     noFocus: false,
   },
   redis: {
@@ -129,6 +155,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#DC382D,#A41E11,#C6302B",
+    colorsLight: "#b91c1c,#991b1b,#7f1d1d",
+    colorsDark: "#DC382D,#A41E11,#C6302B",
     noFocus: false,
   },
   claude: {
@@ -136,6 +164,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#D97757,#CC8B6A,#E08B6D",
+    colorsLight: "#c2410c,#9a3412,#7c2d12",
+    colorsDark: "#D97757,#CC8B6A,#E08B6D",
     noFocus: false,
   },
   sql: {
@@ -143,6 +173,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#336791,#295F7E,#4A7BA7",
+    colorsLight: "#1e3a8a,#1e40af,#1d4ed8",
+    colorsDark: "#336791,#295F7E,#4A7BA7",
     noFocus: false,
   },
   pnpm: {
@@ -150,6 +182,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#f9ad00,#FFC331,#FFB800",
+    colorsLight: "#ca8a04,#a16207,#854d0e",
+    colorsDark: "#f9ad00,#FFC331,#FFB800",
     noFocus: false,
   },
   docker: {
@@ -157,6 +191,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#008fe2,#0DB7ED,#066DA5",
+    colorsLight: "#0369a1,#075985,#0c4a6e",
+    colorsDark: "#008fe2,#0DB7ED,#066DA5",
     noFocus: false,
   },
   reactnative: {
@@ -164,6 +200,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#61DAFB,#2D98B4,#1AACD8",
+    colorsLight: "#0e7490,#155e75,#164e63",
+    colorsDark: "#61DAFB,#2D98B4,#1AACD8",
     noFocus: false,
   },
   prisma: {
@@ -171,6 +209,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#e0234e,#C41E44,#F52858",
+    colorsLight: "#be123c,#9f1239,#881337",
+    colorsDark: "#e0234e,#C41E44,#F52858",
     noFocus: false,
   },
   nestjs: {
@@ -178,6 +218,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#e0234e,#C41E44,#F52858",
+    colorsLight: "#be123c,#9f1239,#881337",
+    colorsDark: "#e0234e,#C41E44,#F52858",
     noFocus: false,
   },
   python: {
@@ -185,6 +227,8 @@ const VARIANTS = {
     gap: 5,
     speed: 35,
     colors: "#387EB8,#366994,#FFE052,#FFC331",
+    colorsLight: "#1e40af,#1e3a8a,#a16207,#854d0e",
+    colorsDark: "#387EB8,#366994,#FFE052,#FFC331",
     noFocus: false,
   },
 };
@@ -204,6 +248,8 @@ const variantCfg = VARIANTS[variant] || VARIANTS.default;
 const finalGap = gap ?? variantCfg.gap;
 const finalSpeed = speed ?? variantCfg.speed;
 const finalColors = colors ?? variantCfg.colors;
+const finalColorsLight = variantCfg.colorsLight ?? variantCfg.colors;
+const finalColorsDark = variantCfg.colorsDark ?? variantCfg.colors;
 const finalNoFocus = noFocus ?? variantCfg.noFocus;
 ---
 
@@ -252,6 +298,8 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
   data-gap={finalGap}
   data-speed={finalSpeed}
   data-colors={finalColors}
+  data-colors-light={finalColorsLight}
+  data-colors-dark={finalColorsDark}
   data-no-focus={finalNoFocus}
   tabindex={finalNoFocus ? -1 : 0}
   data-tooltip={tooltipText}
@@ -394,8 +442,11 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
     finalGap: number;
     finalSpeed: number;
     finalColors: string;
+    finalColorsLight: string;
+    finalColorsDark: string;
     finalNoFocus: boolean;
     resizeObserver: ResizeObserver | null = null;
+    themeObserver: MutationObserver | null = null;
 
     constructor(container: HTMLElement) {
       this.container = container;
@@ -407,15 +458,23 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
       this.finalGap = parseInt(container.dataset.gap || "5");
       this.finalSpeed = parseInt(container.dataset.speed || "35");
       this.finalColors = container.dataset.colors || "#f8fafc,#f1f5f9,#cbd5e1";
+      this.finalColorsLight = container.dataset.colorsLight || this.finalColors;
+      this.finalColorsDark = container.dataset.colorsDark || this.finalColors;
       this.finalNoFocus = container.dataset.noFocus === "true";
 
       this.init();
+    }
+
+    getThemeColors(): string {
+      const isDark = document.documentElement.classList.contains("dark");
+      return isDark ? this.finalColorsDark : this.finalColorsLight;
     }
 
     init() {
       this.initPixels();
       this.setupEventListeners();
       this.setupResizeObserver();
+      this.setupThemeObserver();
     }
 
     initPixels() {
@@ -431,7 +490,7 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
       this.canvas.style.width = `${width}px`;
       this.canvas.style.height = `${height}px`;
 
-      const colorsArray = this.finalColors.split(",");
+      const colorsArray = this.getThemeColors().split(",");
       const pxs: Pixel[] = [];
 
       for (let x = 0; x < width; x += this.finalGap) {
@@ -522,12 +581,25 @@ const finalNoFocus = noFocus ?? variantCfg.noFocus;
       this.resizeObserver.observe(this.container);
     }
 
+    setupThemeObserver() {
+      this.themeObserver = new MutationObserver(() => {
+        this.initPixels();
+      });
+      this.themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+    }
+
     destroy() {
       if (this.animationFrame !== null) {
         cancelAnimationFrame(this.animationFrame);
       }
       if (this.resizeObserver) {
         this.resizeObserver.disconnect();
+      }
+      if (this.themeObserver) {
+        this.themeObserver.disconnect();
       }
     }
   }
