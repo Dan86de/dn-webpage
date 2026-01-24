@@ -1,8 +1,32 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import SEO from "@/components/SEO.astro";
+import Stack from "@/components/Stack.astro";
 
 const siteUrl = "http://localhost:4321";
+
+const hardwareItems = [
+  {
+    name: "MacBook Pro 14\" M3 Max",
+    url: "https://www.apple.com/macbook-pro/",
+    description: "My primary development machine. The M3 Max chip handles everything I throw at it, from heavy TypeScript builds to running multiple Docker containers."
+  },
+  {
+    name: "LG UltraFine 27\" 4K Monitor",
+    url: "https://www.lg.com/us/monitors/lg-27ul850-w-4k-uhd-led-monitor",
+    description: "Perfect companion display for development. USB-C connectivity makes it seamless with my MacBook Pro."
+  },
+  {
+    name: "Sony WH-1000XM5",
+    url: "https://electronics.sony.com/audio/headphones/headband/p/wh1000xm5-b",
+    description: "Best noise-cancelling headphones for deep focus work. Battery lasts all day and the audio quality is exceptional."
+  },
+  {
+    name: "Keychron K3 Pro",
+    url: "https://www.keychron.com/products/keychron-k3-pro-qmk-via-wireless-custom-mechanical-keyboard",
+    description: "Low-profile mechanical keyboard that's perfect for coding. Hot-swappable switches and wireless connectivity."
+  }
+];
 ---
 
 <Layout>
@@ -36,6 +60,30 @@ const siteUrl = "http://localhost:4321";
           extra cost to you. I only recommend tools I genuinely use and trust.
         </p>
       </div>
+
+      <!-- Hardware Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-medium mb-6">Hardware</h2>
+        <Stack space="calc(var(--spacing) * 6)">
+          {
+            hardwareItems.map((item) => (
+              <div class="group">
+                <h3 class="font-medium mb-2">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-orange-600 hover:text-orange-700 transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                </h3>
+                <p class="text-gray-1100">{item.description}</p>
+              </div>
+            ))
+          }
+        </Stack>
+      </section>
     </div>
   </div>
 </Layout>
