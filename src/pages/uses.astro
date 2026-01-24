@@ -7,37 +7,52 @@ const siteUrl = "http://localhost:4321";
 
 const hardwareItems = [
   {
-    name: "MacBook Pro 14\" M3 Max",
+    name: "MacBook Pro 16\" (2021)",
     url: "https://www.apple.com/macbook-pro/",
-    description: "My primary development machine. The M3 Max chip handles everything I throw at it, from heavy TypeScript builds to running multiple Docker containers."
+    description: "My primary development machine with M1 Max and 32GB RAM. Handles everything from coding to video editing without breaking a sweat."
   },
   {
-    name: "LG UltraFine 27\" 4K Monitor",
-    url: "https://www.lg.com/us/monitors/lg-27ul850-w-4k-uhd-led-monitor",
-    description: "Perfect companion display for development. USB-C connectivity makes it seamless with my MacBook Pro."
+    name: "Apple Studio Display",
+    url: "https://www.apple.com/studio-display/",
+    description: "27-inch 5K display that serves as my main monitor. Crisp text and accurate colors make it perfect for development and content work."
   },
   {
-    name: "Sony WH-1000XM5",
-    url: "https://electronics.sony.com/audio/headphones/headband/p/wh1000xm5-b",
-    description: "Best noise-cancelling headphones for deep focus work. Battery lasts all day and the audio quality is exceptional."
+    name: "Canon EOS 5D Mark IV",
+    url: "https://www.usa.canon.com/shop/p/eos-5d-mark-iv",
+    description: "Professional full-frame camera for high-quality content creation. The 30MP sensor and dual pixel autofocus deliver exceptional results."
   },
   {
-    name: "Keychron K3 Pro",
-    url: "https://www.keychron.com/products/keychron-k3-pro-qmk-via-wireless-custom-mechanical-keyboard",
-    description: "Low-profile mechanical keyboard that's perfect for coding. Hot-swappable switches and wireless connectivity."
+    name: "Shure SM7B",
+    url: "https://www.shure.com/en-US/products/microphones/sm7b",
+    description: "Broadcast-quality microphone for recordings and calls. Mounted on a Rode PSA1 arm for easy positioning."
+  },
+  {
+    name: "NuPhy Air75 V3",
+    url: "https://nuphy.com/collections/keyboards/products/nuphy-air75-v3-page?_fid=7ad66f9b3",
+    description: "Ultra-slim mechanical keyboard with low-profile switches. The perfect balance of portability and typing feel for daily coding."
+  },
+  {
+    name: "Elgato Stream Deck",
+    url: "https://www.elgato.com/us/en/p/stream-deck",
+    description: "Customizable control panel with LCD keys for quick access to workflows, shortcuts, and automation."
+  },
+  {
+    name: "Bose QuietComfort Headphones",
+    url: "https://www.bose.com/p/headphones/bose-quietcomfort-headphones/QC-HEADPHONEARN.html",
+    description: "Premium noise-cancelling headphones for focused work sessions. Comfortable for all-day wear with excellent sound quality."
   }
 ];
 
 const softwareItems = [
   {
-    name: "VS Code",
-    url: "https://code.visualstudio.com/",
-    description: "My main code editor with carefully selected extensions. Fast, customizable, and integrates perfectly with my workflow."
+    name: "Claude Code",
+    url: "https://claude.com/product/claude-code",
+    description: "AI coding agent that helps me write code, refactor, and explore codebases. Invaluable for complex tasks and boosting productivity."
   },
   {
-    name: "Claude Code",
-    url: "https://github.com/anthropics/claude-code",
-    description: "AI coding assistant that helps me write better code faster. Invaluable for complex refactorings and exploring new codebases."
+    name: "Zed Editor",
+    url: "https://zed.dev/",
+    description: "Lightning-fast code editor built in Rust. Great for quick edits and collaborative coding sessions."
   },
   {
     name: "Arc Browser",
@@ -45,9 +60,14 @@ const softwareItems = [
     description: "My primary browser for development and research. The Space organization and command bar make it incredibly productive."
   },
   {
-    name: "iTerm2",
-    url: "https://iterm2.com/",
-    description: "Terminal emulator with split panes, search, and tmux integration. Much more powerful than the default Terminal app."
+    name: "Warp Terminal",
+    url: "https://www.warp.dev/",
+    description: "Modern terminal with AI command suggestions and block-based output. Makes command-line work much more efficient."
+  },
+  {
+    name: "Figma",
+    url: "https://www.figma.com/",
+    description: "Design tool for UI/UX work and prototyping. The collaboration features make it perfect for working with designers."
   },
   {
     name: "Raycast",
@@ -55,17 +75,14 @@ const softwareItems = [
     description: "Productivity launcher that replaced Spotlight for me. Extensions for everything from clipboard history to GitHub PRs."
   },
   {
-    name: "Figma",
-    url: "https://www.figma.com/",
-    description: "Design tool for UI/UX work and prototyping. The collaboration features make it perfect for working with designers."
-  }
-];
-
-const otherItems = [
-  {
     name: "Notion",
     url: "https://www.notion.so/",
-    description: "My second brain for notes, documentation, and project management. I use it for tracking learning goals and organizing content ideas."
+    description: "My second brain for notes, documentation, and project management. Essential for organizing thoughts and tracking goals."
+  },
+  {
+    name: "Notion Calendar",
+    url: "https://www.notion.so/product/calendar",
+    description: "Calendar app integrated with Notion. Keeps my schedule and tasks in sync across all my planning systems."
   },
   {
     name: "1Password",
@@ -73,16 +90,32 @@ const otherItems = [
     description: "Password manager that I trust with all my credentials. The developer tools integration is excellent."
   },
   {
-    name: "CleanShot X",
-    url: "https://cleanshot.com/",
-    description: "Screenshot and screen recording tool for creating tutorials and documentation. Much better than the built-in macOS tools."
-  },
-  {
     name: "Spotify",
     url: "https://www.spotify.com/",
     description: "Music streaming for focus and productivity. I have curated playlists for different types of work."
+  },
+  {
+    name: "CleanMyMac",
+    url: "https://macpaw.com/cleanmymac",
+    description: "Mac maintenance and optimization tool. Keeps my system running smoothly with regular cleanups and monitoring."
+  },
+  {
+    name: "Todoist",
+    url: "https://todoist.com/",
+    description: "Task management app for tracking todos and projects. Natural language input and cross-platform sync make it indispensable."
+  },
+  {
+    name: "iA Presenter",
+    url: "https://ia.net/presenter",
+    description: "Markdown-based presentation software for creating beautiful slides. Focuses on content over design distractions."
+  },
+  {
+    name: "iA Writer",
+    url: "https://ia.net/writer",
+    description: "Distraction-free writing app with excellent typography. Perfect for drafting blog posts and long-form content."
   }
 ];
+
 ---
 
 <Layout>
@@ -119,23 +152,21 @@ const otherItems = [
 
       <!-- Hardware Section -->
       <section class="mb-12">
-        <h2 class="text-2xl font-medium mb-6">Hardware</h2>
+        <h2 class="pb-6 bg-brand-gradient bg-clip-text text-transparent transition-colors">Hardware</h2>
         <Stack space="calc(var(--spacing) * 6)">
           {
             hardwareItems.map((item) => (
-              <div class="group">
-                <h3 class="font-medium mb-2">
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-orange-600 hover:text-orange-700 transition-colors"
-                  >
-                    {item.name}
-                  </a>
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block"
+              >
+                <h3 class="body-large mb-2 text-gray-1200 group-hover:text-gray-1100 transition-colors">
+                  {item.name}
                 </h3>
                 <p class="text-gray-1100">{item.description}</p>
-              </div>
+              </a>
             ))
           }
         </Stack>
@@ -143,51 +174,26 @@ const otherItems = [
 
       <!-- Software Section -->
       <section class="mb-12">
-        <h2 class="text-2xl font-medium mb-6">Software</h2>
+        <h2 class="pb-6 bg-brand-gradient bg-clip-text text-transparent transition-colors">Software</h2>
         <Stack space="calc(var(--spacing) * 6)">
           {
             softwareItems.map((item) => (
-              <div class="group">
-                <h3 class="font-medium mb-2">
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-orange-600 hover:text-orange-700 transition-colors"
-                  >
-                    {item.name}
-                  </a>
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block"
+              >
+                <h3 class="body-large mb-2 text-gray-1200 group-hover:text-gray-1100 transition-colors">
+                  {item.name}
                 </h3>
                 <p class="text-gray-1100">{item.description}</p>
-              </div>
+              </a>
             ))
           }
         </Stack>
       </section>
 
-      <!-- Other Section -->
-      <section class="mb-12">
-        <h2 class="text-2xl font-medium mb-6">Other</h2>
-        <Stack space="calc(var(--spacing) * 6)">
-          {
-            otherItems.map((item) => (
-              <div class="group">
-                <h3 class="font-medium mb-2">
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-orange-600 hover:text-orange-700 transition-colors"
-                  >
-                    {item.name}
-                  </a>
-                </h3>
-                <p class="text-gray-1100">{item.description}</p>
-              </div>
-            ))
-          }
-        </Stack>
-      </section>
     </div>
   </div>
 </Layout>
