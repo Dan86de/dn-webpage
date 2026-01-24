@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 plans
 .vercel
+.zed/
+.zed/settings.json
