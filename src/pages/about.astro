@@ -11,13 +11,14 @@ import { cn } from "@/lib/utils";
 ---
 
 <Layout>
-  <div class="px-(--inline-padding) pb-[100vh]">
+  <div class="px-(--inline-padding)">
     <Sidebar
       class={cn(
-      "mx-auto max-w-4xl",
-      "tablet:[--sidebar-width:var(--container-2xl)]",
-      "tablet:[--sidebar-content-min:100px]",
-      "tablet:[--sidebar-gap:4rem]")}
+        "mx-auto max-w-4xl",
+        "tablet:[--sidebar-width:var(--container-2xl)]",
+        "tablet:[--sidebar-content-min:100px]",
+        "tablet:[--sidebar-gap:4rem]",
+      )}
     >
       <!-- CONTENT -->
       <div class="max-w-2xl">
@@ -27,7 +28,9 @@ import { cn } from "@/lib/utils";
         >
           Developer.<br /> Father. Creator.
         </h1>
-        <div class="laptop:hidden relative py-4 border-y border-orange-600 pl-4 mt-4 laptop:mt-10">
+        <div
+          class="laptop:hidden relative py-4 border-y border-orange-600 pl-4 mt-4 laptop:mt-10"
+        >
           <div class="sticky top-20">
             <p class="caption pb-4">Table of contents</p>
             <ul id="toc-list" class="flex flex-col gap-1">
@@ -95,9 +98,7 @@ import { cn } from "@/lib/utils";
               experiences in learning programming, transitioning to new fields,
               and advancing my career in IT.
             </p>
-            <p
-              class="[@media(min-width:702px)]:pb-4"
-            >
+            <p class="[@media(min-width:702px)]:pb-4">
               I love dark mode and side projects. When I'm not working, I like
               playing football, reading books, and eating pizza.
             </p>

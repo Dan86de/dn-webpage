@@ -62,7 +62,16 @@ import SpeedInsights from "@vercel/speed-insights/astro";
       <title>Daniel Noworyta</title>
     </slot>
   </head>
-  <body class="flex flex-col min-h-screen">
+  <body class="flex flex-col min-h-screen relative">
+    <div
+      class="absolute inset-0 -z-1 max-h-svh"
+      style={{
+        background:
+          "radial-gradient(ellipse 70% 15% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 75%), transparent",
+      }}
+    >
+    </div>
+
     <div class="px-(--inline-padding)">
       <header
         class="mx-auto max-w-4xl flex items-center justify-between h-16 laptop:h-20"
@@ -141,7 +150,9 @@ import SpeedInsights from "@vercel/speed-insights/astro";
       <slot />
     </main>
     <footer class="px-(--inline-padding) py-8 mt-16">
-      <div class="mx-auto max-w-4xl text-center text-sm text-(--text-secondary)">
+      <div
+        class="mx-auto max-w-4xl text-center text-sm text-(--text-secondary)"
+      >
         <p>© 2026 Daniel Noworyta</p>
       </div>
     </footer>
