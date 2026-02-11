@@ -56,15 +56,14 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
   <div class="px-(--inline-padding) pb-[100vh]">
     <Sidebar
       class={cn(
-      "mx-auto max-w-4xl",
-      "tablet:[--sidebar-width:var(--container-2xl)]",
-      "tablet:[--sidebar-content-min:100px]",
-      "tablet:[--sidebar-gap:4rem]")}
+        "mx-auto max-w-4xl",
+        "tablet:[--sidebar-width:var(--container-2xl)]",
+        "tablet:[--sidebar-content-min:100px]",
+        "tablet:[--sidebar-gap:4rem]",
+      )}
     >
-
       <!-- CONTENT -->
       <article class="max-w-xl">
-
         <!-- Post header with metadata -->
         <header class="pb-8 mt-10">
           <h1
@@ -196,6 +195,28 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
 
     & li {
       margin-bottom: calc(var(--spacing) * 2);
+    }
+
+    /* Orange dot markers for unordered lists */
+    & ul {
+      list-style: none;
+      padding-left: calc(var(--spacing) * 2);
+    }
+
+    & ul > li {
+      position: relative;
+      padding-left: calc(var(--spacing) * 4);
+    }
+
+    & ul > li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: calc(var(--spacing) * 2.25); /* Vertically center with text */
+      width: 0.5rem; /* size-2 = 0.5rem */
+      height: 0.5rem; /* size-2 = 0.5rem */
+      background-color: var(--color-orange-500);
+      border-radius: 9999px;
     }
 
     /* Code blocks */
