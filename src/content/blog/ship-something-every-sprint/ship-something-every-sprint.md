@@ -1,12 +1,12 @@
 ---
 isDraft: false
-title: Ship something every sprint — not for the team, for yourself.
+title: Ship something every sprint - not for the team, for yourself.
 description: AI is fundamentally reshaping software engineering. Learn how to evolve from code writer to conductor, why garage experience matters for juniors, and strategic steps to thrive in an era where judgment beats typing speed.
 author: Daniel Noworyta
 tags: ["programming", "career"]
 publishDate: 2026-02-17
 authorContact: daniel.noworyta@gmail.com
-canonicalURL: 
+canonicalURL: https://www.linkedin.com/posts/danielnoworyta_before-your-next-sprint-try-this-close-activity-7439555653574090752-BMgY?utm_source=share&utm_medium=member_desktop&rcm=ACoAAA9byfoB5Jp_Yrzk_dIiQSsM2Nw6kzRUIUw
 slug: ship-something-every-sprint
 ---
 
