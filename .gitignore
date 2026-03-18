@@ -27,3 +27,9 @@ plans
 .vercel
 .zed/
 .zed/settings.json
+.claude
+
+# sandcastle
+.env.example
+.sandcastle/
+sandcastle.json
