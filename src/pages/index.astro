@@ -12,8 +12,9 @@ import Layout from "@/layouts/Layout.astro";
   }
 
   /*
-   * Chrome always forces a light-blue autofill background that can't
-   * be reliably overridden, so always use dark text to stay readable.
+   * Chrome forces a light-blue autofill background that can't be
+   * reliably overridden — use dark text in light mode, light text
+   * in dark mode so filled values stay readable.
    */
   input.newsletter-input:-webkit-autofill,
   input.newsletter-input:-webkit-autofill:hover,
@@ -21,6 +22,14 @@ import Layout from "@/layouts/Layout.astro";
   input.newsletter-input:-webkit-autofill:active {
     -webkit-text-fill-color: #1a1a1a !important;
     caret-color: #1a1a1a !important;
+  }
+  .dark input.newsletter-input:-webkit-autofill,
+  .dark input.newsletter-input:-webkit-autofill:hover,
+  .dark input.newsletter-input:-webkit-autofill:focus,
+  .dark input.newsletter-input:-webkit-autofill:active {
+    -webkit-text-fill-color: #f0f0f0 !important;
+    caret-color: #f0f0f0 !important;
+    -webkit-box-shadow: 0 0 0px 1000px oklch(21% 0 0) inset !important;
   }
 </style>
 
@@ -46,7 +55,7 @@ import Layout from "@/layouts/Layout.astro";
               id="sp-name"
               name="fields[first_name]"
               placeholder="Name"
-              class="newsletter-input rounded-lg ring-1 ring-gray-500 dark:ring-gray-400 bg-white dark:bg-white/5 px-4 py-3 max-tablet:text-base/6 text-sm/6 text-gray-1200 placeholder:text-gray-800 focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
+              class="newsletter-input rounded-lg ring-1 ring-black/10 dark:ring-white/10 bg-white dark:bg-gray-200 px-4 py-3 max-tablet:text-base/6 text-sm/6 text-gray-1200 placeholder:text-gray-800 focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
             />
           </div>
           <div class="flex flex-col gap-1.5">
@@ -57,7 +66,7 @@ import Layout from "@/layouts/Layout.astro";
               name="email_address"
               placeholder="you@example.com"
               required
-              class="newsletter-input rounded-lg ring-1 ring-gray-500 dark:ring-gray-400 bg-white dark:bg-white/5 px-4 py-3 max-tablet:text-base/6 text-sm/6 text-gray-1200 placeholder:text-gray-800 focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
+              class="newsletter-input rounded-lg ring-1 ring-black/10 dark:ring-white/10 bg-white dark:bg-gray-200 px-4 py-3 max-tablet:text-base/6 text-sm/6 text-gray-1200 placeholder:text-gray-800 focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
             />
           </div>
           <button
