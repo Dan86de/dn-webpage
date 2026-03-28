@@ -1,337 +1,73 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import VaillantLogo from "@/images/vaillant_logo.svg";
-import BechtleLogo from "@/images/bechtle_logo.svg";
-import CodeIcon from "@/images/icons/code.svg";
-import ReactIcon from "@/images/icons/react.svg";
-import NextJSIcon from "@/images/icons/nextjs.svg";
-import VercelIcon from "@/images/icons/vercel.svg";
-import TypeScriptIcon from "@/images/icons/ts.svg";
-import JavaScriptIcon from "@/images/icons/js.svg";
-import NodeJsIcon from "@/images/icons/nodejs.svg";
-import BunIcon from "@/images/icons/bun.svg";
-import TailwindCSSIcon from "@/images/icons/tailwindcss.svg";
-import ShadCnUIIcon from "@/images/icons/shadcnui.svg";
-import RadixUIIcon from "@/images/icons/radixui.svg";
-import MotionIcon from "@/images/icons/motion.svg";
-import TanstackIcon from "@/images/icons/tanstack.svg";
-import OpenAIIcon from "@/images/icons/openai.svg";
-import RedisIcon from "@/images/icons/redis.svg";
-import ClaudeIcon from "@/images/icons/claude.svg";
-import SQLIcon from "@/images/icons/sql.svg";
-import PNPMIcon from "@/images/icons/pnpm.svg";
-import DockerIcon from "@/images/icons/docker.svg";
-import ReactNativeIcon from "@/images/icons/reactnative.svg";
-import PrismaIcon from "@/images/icons/prisma.svg";
-import NestJSIcon from "@/images/icons/nestjs.svg";
-import PythonIcon from "@/images/icons/python.svg";
-import WorkExperience from "@/components/experience/WorkExperience.astro";
-import Position from "@/components/experience/Position.astro";
-import PixelCard from "@/components/PixelCard.astro";
-import BlogPostList from "@/components/BlogPostList.astro";
-
-// Fetch latest 5 blog posts
-const allPosts = await getCollection("blog");
-const latestPosts = allPosts
-  .filter((post) => !post.data.isDraft)
-  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
-  .slice(0, 5);
 ---
 
+<style is:inline>
+  /* Tell browsers & extensions to use appropriate color scheme for inputs */
+  input.newsletter-input {
+    color-scheme: light;
+  }
+  .dark input.newsletter-input {
+    color-scheme: dark;
+  }
+
+  /*
+   * Chrome always forces a light-blue autofill background that can't
+   * be reliably overridden, so always use dark text to stay readable.
+   */
+  input.newsletter-input:-webkit-autofill,
+  input.newsletter-input:-webkit-autofill:hover,
+  input.newsletter-input:-webkit-autofill:focus,
+  input.newsletter-input:-webkit-autofill:active {
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+  }
+</style>
+
 <Layout>
-  <div class="px-(--inline-padding)">
-    <div class="mx-auto max-w-4xl">
-      <div>
-        <h2 class="bg-brand-gradient bg-clip-text text-transparent transition-colors">Recent Articles</h2>
-        <BlogPostList posts={latestPosts}  />
-
-        <h2 class="pb-10 bg-brand-gradient bg-clip-text text-transparent transition-colors" id="experience">Experience</h2>
-        <!-- Vaillant -->
-        <div class="max-w-4xl border-b border-b-gray-200 mb-3">
-          <WorkExperience companyName="Vaillant Group" isCurrentJob={true}>
-            <VaillantLogo width={24} height={32} slot="logo" />
-            <Position
-              slot="positions"
-              title="React Native Developer"
-              employmentType="Full-Time"
-              startDate="05-2024"
-              endDate="now"
-            >
-              <CodeIcon width={18} slot="icon" />
-              <div class="pl-8 pb-4 max-w-3xl" slot="description">
-                <p class="text-gray-1200 underline pb-2 text-sm">
-                  Making better myVaillantPRO web and mobile experience
-                </p>
-                <ul class="list-disc pl-5 text-gray-1100 text-sm">
-                  <li>Develop Web and Native myVaillant PRO App.</li>
-                  <li>
-                    Cooperate with business and design in creating new features.
-                  </li>
-                  <li>
-                    Analyze technical capabilities and provide optimal
-                    solutions.
-                  </li>
-                  <li>Ensure UI/UX consistency and adherence to standards.</li>
-                  <li>Spreading knowledge and usage of AI tools in daily work.</li>
-                </ul>
-              </div>
-            </Position>
-          </WorkExperience>
-        </div>
-
-        <!-- Bechtle -->
-        <div class="max-w-4xl border-b border-b-gray-200 mb-8">
-          <WorkExperience companyName="Bechtle / AV360" isCurrentJob={false}>
-            <BechtleLogo width={24} height={32} slot="logo" />
-            <Position
-              slot="positions"
-              title="Software Developer"
-              employmentType="Full-Time"
-              startDate="12-2020"
-              endDate="05-2024"
-            >
-              <CodeIcon width={18} slot="icon" />
-              <div class="pl-8 pb-4 max-w-3xl" slot="description">
-                <p class="text-gray-1200 underline pb-2 text-sm">
-                  Develop interface for document management platform
-                </p>
-                <ul class="list-disc pl-5 text-gray-1100 pb-3 text-sm">
-                  <li>
-                    Developed interface for a document management platform using
-                    ReactJS, FluentUI, and TypeScript.
-                  </li>
-                  <li>
-                    Designed and applied a testing strategy with Jest and
-                    snapshot tests to improve software reliability.
-                  </li>
-                  <li>
-                    Devised and executed more effective solutions for large data
-                    tables using infinite scrolling and pagination.
-                  </li>
-                  <li>
-                    Collaborated closely with UI/UX Design Team to enhance
-                    interface usability and aesthetics.
-                  </li>
-                </ul>
-                <p class="text-gray-1200 underline pb-2 text-sm">
-                  Ideated and implemented a multi-platform chat messaging app in
-                  Tauri, boosting the company’s product portfolio and revenue
-                </p>
-                <ul class="list-disc pl-5 text-gray-1100 text-sm pb-4">
-                  <li>
-                    Constructed interfaces and logic for system management and
-                    chat messaging applications.
-                  </li>
-                  <li>
-                    Incorporated the open-source Matrix Protocol for enhanced
-                    communication capabilities.
-                  </li>
-                  <li>
-                    Created an advanced editor using the Lexical Framework,
-                    contributing to the expansion of the company’s software
-                    capabilities.
-                  </li>
-                  <li>
-                    Implemented CI/CD pipeline on Azure for Tauri and Rust,
-                    streamlining the development and deployment process.
-                  </li>
-                </ul>
-                <p class="max-w-3xl text-gray-1200 text-sm font-medium">
-                  Throughout my tenure, I have successfully tackled complex
-                  challenges, innovated solutions, and developed impactful
-                  software. My contributions have played a key role in enhancing
-                  product quality and user experience, ultimately leading to
-                  increased customer satisfaction and revenue growth for the
-                  company.
-                </p>
-              </div>
-            </Position>
-          </WorkExperience>
-        </div>
-
-        <h2 class="pb-6 bg-brand-gradient bg-clip-text text-transparent transition-colors" id="stack">Stack</h2>
-        <div class="cluster" style={{ "--cluster-space": "0" }}>
-          <PixelCard
-            to="https://react.dev"
-            variant="react"
-            className="hover:z-10 w-20 aspect-square"
-            tooltipText="React"
+  <div class="flex flex-col grow px-(--inline-padding)">
+    <div class="flex flex-col grow mx-auto max-w-4xl w-full">
+      <div class="flex flex-col items-center justify-center grow">
+        <h1 class="font-medium tracking-tight text-center text-balance">
+          Join engineers who are <span class="bg-brand-gradient bg-clip-text text-transparent">thriving</span> in the AI era
+        </h1>
+        <p class="mx-auto mt-4 max-w-[48ch] text-lg text-pretty text-center text-gray-900">
+          Practical insights on using AI to write better code, ship faster, and grow your career — delivered weekly.
+        </p>
+        <form
+          class="mt-10 flex flex-col gap-4 w-full max-w-xs"
+          action="https://app.kit.com/forms/527f5ae25d/subscriptions"
+          method="post"
+        >
+          <div class="flex flex-col gap-1.5">
+            <label for="sp-name" class="text-sm font-medium text-gray-1100">First Name</label>
+            <input
+              type="text"
+              id="sp-name"
+              name="fields[first_name]"
+              placeholder="Name"
+              class="newsletter-input rounded-lg ring-1 ring-gray-500 dark:ring-gray-400 bg-white dark:bg-white/5 px-4 py-3 max-tablet:text-base/6 text-sm/6 text-gray-1200 placeholder:text-gray-800 focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
+            />
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="sp-email" class="text-sm font-medium text-gray-1100">Email<span class="text-orange-500">*</span></label>
+            <input
+              type="email"
+              id="sp-email"
+              name="email_address"
+              placeholder="you@example.com"
+              required
+              class="newsletter-input rounded-lg ring-1 ring-gray-500 dark:ring-gray-400 bg-white dark:bg-white/5 px-4 py-3 max-tablet:text-base/6 text-sm/6 text-gray-1200 placeholder:text-gray-800 focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
+            />
+          </div>
+          <button
+            type="submit"
+            class="mt-1 rounded-lg bg-brand-gradient px-4 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 cursor-pointer"
           >
-            <ReactIcon class="dark:text-[#58C4DC] text-[#087EA4] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="TypeScript"
-            to="https://www.typescriptlang.org/"
-            variant="ts"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <TypeScriptIcon class="text-[#3178C6] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="NextJS"
-            to="https://nextjs.org/"
-            variant="default"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <NextJSIcon class="text-gray-950 size-10" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Vercel"
-            to="https://vercel.com/"
-            variant="default"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <VercelIcon class="text-gray-950 size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="JavaScript"
-            to="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-            variant="js"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <JavaScriptIcon class="text-[#f7df1e] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="NodeJS"
-            to="https://nodejs.org/en/"
-            variant="nodejs"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <NodeJsIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Bun"
-            to="https://bun.sh/"
-            variant="bun"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <BunIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Tailwind CSS"
-            to="https://tailwindcss.com/"
-            variant="tailwindcss"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <TailwindCSSIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Shadcn UI"
-            to="https://ui.shadcn.com/"
-            variant="default"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <ShadCnUIIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Radix UI"
-            to="https://www.radix-ui.com/"
-            variant="default"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <RadixUIIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Motion"
-            to="https://motion.dev"
-            variant="motion"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <MotionIcon class="size-10" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="TanStack"
-            to="https://tanstack.com"
-            variant="tanstack"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <TanstackIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="OpenAI"
-            to="https://openai.com"
-            variant="default"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <OpenAIIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Redis"
-            to="https://redis.io"
-            variant="redis"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <RedisIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Claude Code"
-            to="https://claude.ai"
-            variant="claude"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <ClaudeIcon class="text-[#D97757] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="PostgreSQL"
-            to="https://www.postgresql.org"
-            variant="sql"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <SQLIcon class="text-[#336791] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="PNPM"
-            to="https://pnpm.io"
-            variant="pnpm"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <PNPMIcon class="size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Docker"
-            to="https://www.docker.com"
-            variant="docker"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <DockerIcon class="text-[#008fe2] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="React Native"
-            to="https://reactnative.dev"
-            variant="reactnative"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <ReactNativeIcon class="dark:text-[#58C4DC] text-[#087EA4] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Prisma"
-            to="https://www.prisma.io"
-            variant="default"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <PrismaIcon class="text-gray-950 size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="NestJS"
-            to="https://nestjs.com"
-            variant="nestjs"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <NestJSIcon class="text-[#e0234e] size-8" />
-          </PixelCard>
-          <PixelCard
-            tooltipText="Python"
-            to="https://www.python.org"
-            variant="python"
-            className="hover:z-10 w-20 aspect-square"
-          >
-            <PythonIcon class="size-8" />
-          </PixelCard>
-        </div>
-
-        <!-- <h2 class="font-medium pb-6" id="blog">Blog</h2>
-        <h2 class="font-medium pb-6" id="certifications">Certifications</h2> -->
+            Subscribe
+          </button>
+        </form>
+        <p class="mt-3 text-gray-800 text-sm">I respect your privacy. Unsubscribe at any time.</p>
       </div>
     </div>
   </div>

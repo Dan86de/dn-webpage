@@ -88,6 +88,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
         <nav class="hidden laptop:block">
           <ul class="flex items-baseline justify-between gap-8">
             <li><a href="/about">About</a></li>
+            <li><a href="/experience">Experience</a></li>
             <li><a href="/blog">Blog</a></li>
             <li><a href="/uses">Uses</a></li>
           </ul>
@@ -133,6 +134,11 @@ import SpeedInsights from "@vercel/speed-insights/astro";
               >About</a
             >
             <a
+              href="/experience"
+              class="-ml-(--inline-padding) px-(--inline-padding) block rounded-md py-2 text-2xl font-medium"
+              >Experience</a
+            >
+            <a
               href="/blog"
               class="-ml-(--inline-padding) px-(--inline-padding) block rounded-md py-2 text-2xl font-medium"
               >Blog</a
@@ -146,7 +152,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
         </div>
       </nav>
     </div>
-    <main class="flex-grow">
+    <main class="flex flex-col grow">
       <slot />
     </main>
     <footer class="px-(--inline-padding) py-8 mt-16">

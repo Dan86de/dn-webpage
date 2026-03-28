@@ -1,0 +1,24 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="flex flex-col grow px-(--inline-padding)">
+    <div class="flex flex-col grow mx-auto max-w-4xl w-full">
+      <div class="flex flex-col items-center justify-center grow">
+        <h1 class="font-medium tracking-tight text-center text-balance">
+          You're <span class="bg-brand-gradient bg-clip-text text-transparent">confirmed</span>
+        </h1>
+        <p class="mx-auto mt-4 max-w-[44ch] text-lg text-pretty text-center text-gray-900">
+          Your subscription is active. Expect the next issue in your inbox soon.
+        </p>
+        <a
+          href="/"
+          class="mt-8 rounded-lg bg-brand-gradient px-4 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          Back to home
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
