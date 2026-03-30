@@ -15,7 +15,7 @@ Astro 5 website with Tailwind CSS 4, deployed to Vercel with ISR.
 
 ## Detailed Docs
 
-- [Styling System](docs/styling.md) - Tailwind theme, colors, breakpoints, utilities
-- [Content](docs/content.md) - Blog collections, schemas
-- [Components](docs/components.md) - Layout patterns, theme toggle
-- [Project Structure](docs/structure.md) - Directory organization
+- Styling System @docs/styling.md - Tailwind theme, colors, breakpoints, utilities
+- Content @docs/content.md - Blog collections, schemas
+- Components @docs/components.md - Layout patterns, theme toggle
+- Project Structure @docs/structure.md - Directory organization
