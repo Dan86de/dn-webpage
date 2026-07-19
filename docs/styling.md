@@ -1,5 +1,16 @@
 # Styling System
 
+## Fonts (brand guide)
+
+Self-hosted woff2 in `public/fonts/`, declared in `src/styles/typography.css`.
+
+- `--font-display` - Geomanist (400/500/700/900): headings (h1-h6 via base layer), wordmark, buttons
+- `--font-sans` - Atkinson Hyperlegible (400/700 + italics, latin + latin-ext): body default
+- `--font-mono` - Silka Mono (300/400/500): `caption` utility, mono accents
+
+Atkinson has no 500 weight - `font-medium` on body text silently renders 400.
+Use `font-display font-medium` (Geomanist) or `font-bold` instead.
+
 ## Tailwind Configuration
 
 - Custom theme defined in `src/styles/global.css` using `@theme` directive

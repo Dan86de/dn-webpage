@@ -1,75 +1,166 @@
+/* Brand fonts (see Daniel Noworyta HQ / visual-identity-preview.html)
+   Display: Geomanist - Body: Atkinson Hyperlegible - Mono accent: Silka Mono */
+
+/* Geomanist (display / headings) */
 @font-face {
   font-family: "Geomanist";
-  src: url("/fonts/Geomanist/Geomanist-Regular-Webfont/geomanist-regular-webfont.eot");
-  src:
-    url("/fonts/Geomanist/Geomanist-Regular-Webfont/geomanist-regular-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("/fonts/Geomanist/Geomanist-Regular-Webfont/geomanist-regular-webfont.woff2")
-      format("woff2"),
-    url("/fonts/Geomanist/Geomanist-Regular-Webfont/geomanist-regular-webfont.woff")
-      format("woff"),
-    url("/fonts/Geomanist/Geomanist-Regular-Webfont/geomanist-regular-webfont.ttf")
-      format("truetype"),
-    url("/fonts/Geomanist/Geomanist-Regular-Webfont/geomanist-regular-webfont.svg#geomanistregular")
-      format("svg");
+  src: url("/fonts/Geomanist/geomanist-regular-webfont.woff2") format("woff2");
   font-weight: 400;
-  font-display: swap;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Geomanist";
-  src: url("/fonts/Geomanist/Geomanist-Regular-Italic-Webfont/geomanist-regular-italic-webfont.eot");
-  src:
-    url("/fonts/Geomanist/Geomanist-Regular-Italic-Webfont/geomanist-regular-italic-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("/fonts/Geomanist/Geomanist-Regular-Italic-Webfont/geomanist-regular-italic-webfont.woff2")
-      format("woff2"),
-    url("/fonts/Geomanist/Geomanist-Regular-Italic-Webfont/geomanist-regular-italic-webfont.woff")
-      format("woff"),
-    url("/fonts/Geomanist/Geomanist-Regular-Italic-Webfont/geomanist-regular-italic-webfont.ttf")
-      format("truetype"),
-    url("/fonts/Geomanist/Geomanist-Regular-Italic-Webfont/geomanist-regular-italic-webfont.svg#geomanistitalic")
-      format("svg");
+  src: url("/fonts/Geomanist/geomanist-regular-italic-webfont.woff2")
+    format("woff2");
   font-weight: 400;
-  font-display: swap;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Geomanist";
-  src: url("/fonts/Geomanist/Geomanist-Medium-Webfont/geomanist-medium-webfont.eot");
-  src:
-    url("/fonts/Geomanist/Geomanist-Medium-Webfont/geomanist-medium-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("/fonts/Geomanist/Geomanist-Medium-Webfont/geomanist-medium-webfont.woff2")
-      format("woff2"),
-    url("/fonts/Geomanist/Geomanist-Medium-Webfont/geomanist-medium-webfont.woff")
-      format("woff"),
-    url("/fonts/Geomanist/Geomanist-Medium-Webfont/geomanist-medium-webfont.ttf")
-      format("truetype"),
-    url("/fonts/Geomanist/Geomanist-Medium-Webfont/geomanist-medium-webfont.svg#geomanistregular")
-      format("svg");
+  src: url("/fonts/Geomanist/geomanist-medium-webfont.woff2") format("woff2");
   font-weight: 500;
-  font-display: swap;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Geomanist";
-  src: url("/fonts/Geomanist/Geomanist-Light-Webfont/geomanist-light-webfont.eot");
-  src:
-    url("/fonts/Geomanist/Geomanist-Light-Webfont/geomanist-light-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("/fonts/Geomanist/Geomanist-Light-Webfont/geomanist-light-webfont.woff2")
-      format("woff2"),
-    url("/fonts/Geomanist/Geomanist-Light-Webfont/geomanist-light-webfont.woff")
-      format("woff"),
-    url("/fonts/Geomanist/Geomanist-Light-Webfont/geomanist-light-webfont.ttf")
-      format("truetype"),
-    url("/fonts/Geomanist/Geomanist-Light-Webfont/geomanist-light-webfont.svg#geomanistregular")
-      format("svg");
-  font-weight: 300;
-  font-display: swap;
+  src: url("/fonts/Geomanist/geomanist-bold-webfont.woff2") format("woff2");
+  font-weight: 700;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geomanist";
+  src: url("/fonts/Geomanist/geomanist-black-webfont.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Atkinson Hyperlegible (body) */
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular-latin.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular-latin-ext.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Italic-latin.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Italic-latin-ext.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold-latin.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold-latin-ext.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-BoldItalic-latin.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-BoldItalic-latin-ext.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Silka Mono (mono accent: eyebrows, labels, code) */
+@font-face {
+  font-family: "Silka Mono";
+  src: url("/fonts/SilkaMono/silkamono-light-webfont.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Silka Mono";
+  src: url("/fonts/SilkaMono/silkamono-regular-webfont.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Silka Mono";
+  src: url("/fonts/SilkaMono/silkamono-medium-webfont.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }

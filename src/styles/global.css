@@ -1,15 +1,21 @@
 @import "tailwindcss";
-@import "./reset.css";
+@import "./reset.css" layer(base);
 @import "./typography.css";
 @plugin "@tailwindcss/typography";
 
 @theme {
   /* TYPOGRAPHY */
+  /* Body */
   --font-sans:
+    "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* Display (headings, wordmark) */
+  --font-display:
     "Geomanist", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif:
-    "Geomanist", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  /* Mono accent (eyebrows, labels, code) */
+  --font-mono:
+    "Silka Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* BREAKPOINTS */
   /* Reset breakpoints */
@@ -123,6 +129,15 @@
     text-wrap: pretty;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+
   h1 {
     font-size: var(--text-4xl); /* 36px */
     line-height: calc(var(--spacing) * 10); /* 40px */
@@ -202,11 +217,12 @@
 }
 
 @utility caption {
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   line-height: calc(var(--spacing) * 4);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /*TODO: Not really footnote*/
