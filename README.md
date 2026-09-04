@@ -1,43 +1,57 @@
-# Astro Starter Kit: Minimal
+# danielnoworyta.com
+
+Personal website and blog of Daniel Noworyta, built with Astro and deployed on Vercel.
+
+## Stack
+
+- [Astro 5](https://astro.build) with the Vercel adapter (ISR enabled)
+- [Tailwind CSS 4](https://tailwindcss.com) via the Vite plugin, themed inline in `src/styles/global.css`
+- React 19 for interactive islands
+- MDX for blog content, plus RSS and sitemap generation
+
+## Getting started
+
+Requires Node.js 22 (the runtime used by Vercel) and pnpm.
 
 ```sh
-npm create astro@latest -- --template minimal
+pnpm install
+pnpm dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The dev server runs at `http://localhost:4321`.
 
-## 🚀 Project Structure
+## Commands
 
-Inside of your Astro project, you'll see the following folders and files:
+| Command            | Action                                     |
+| ------------------ | ------------------------------------------ |
+| `pnpm dev`         | Start the development server               |
+| `pnpm build`       | Build the production site into `dist/`     |
+| `pnpm preview`     | Preview the production build locally       |
+| `pnpm astro check` | Type-check `.astro` and TypeScript sources |
+
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── pages/          File-based routes (index, about, experience, uses, blog/)
+├── components/     Astro and React components
+├── layouts/        Page and blog post layouts
+├── content/blog/   Blog posts (Markdown / MDX with frontmatter)
+├── styles/         Global CSS, reset, typography, Tailwind theme
+├── images/         SVG and image assets
+└── lib/            Shared utilities
+public/
+├── fonts/          Self-hosted web fonts
+└── favicon-*.ico   Light and dark favicons
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Writing a blog post
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Add a folder under `src/content/blog/<slug>/` containing `<slug>.md` (or `.mdx`).
+The frontmatter schema is defined in `src/content.config.ts`.
+Posts with `isDraft: true` are excluded from the published site.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Documentation
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Detailed notes on the styling system, content collections, components, and structure live in `docs/`.
+`AGENTS.md` links them together for coding agents.
