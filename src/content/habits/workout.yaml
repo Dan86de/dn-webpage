@@ -1,7 +1,0 @@
-# Workout log. Add a day with: pnpm habit workout [YYYY-MM-DD]
-name: Workout
-description: CrossFit, run, or bike. At least 30 minutes, no matter how tired.
-order: 1
-days:
-  - 2026-09-01
-  - 2026-09-03

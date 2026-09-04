@@ -29,6 +29,9 @@ const habits = defineCollection({
     name: z.string(),
     description: z.string(),
     order: z.number().default(0),
+    // Sessions per week for habits that are not daily. Daily habits omit it
+    // and get day streaks instead of weekly stats.
+    weeklyTarget: z.number().int().positive().optional(),
     // Days the habit was done, as YYYY-MM-DD. Unquoted YAML dates parse as
     // Date objects, quoted ones as strings, so accept both and normalize.
     days: z
@@ -37,4 +40,24 @@ const habits = defineCollection({
   }),
 });
 
-export const collections = { blog, habits };
+const weight = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/weight" }),
+  schema: z.object({
+    unit: z.enum(["kg", "lb"]).default("kg"),
+    entries: z
+      .array(
+        z.object({
+          date: z.coerce.date().transform(isoDate),
+          value: z.number().positive(),
+        }),
+      )
+      // One reading per day, oldest first. A later duplicate wins.
+      .transform((entries) =>
+        [...new Map(entries.map((e) => [e.date, e])).values()].sort((a, b) =>
+          a.date.localeCompare(b.date),
+        ),
+      ),
+  }),
+});
+
+export const collections = { blog, habits, weight };

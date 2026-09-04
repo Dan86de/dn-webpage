@@ -28,7 +28,8 @@ The dev server runs at `http://localhost:4321`.
 | `pnpm build`       | Build the production site into `dist/`     |
 | `pnpm preview`     | Preview the production build locally       |
 | `pnpm astro check` | Type-check `.astro` and TypeScript sources |
-| `pnpm habit <name> [date]` | Log a habit day (defaults to today), e.g. `pnpm habit workout` |
+| `pnpm habit <name> [date]` | Log a habit day (defaults to today), e.g. `pnpm habit crossfit` |
+| `pnpm weight <value> [date]` | Log a weight reading (defaults to today), e.g. `pnpm weight 84.3` |
 
 ## Project structure
 
@@ -39,6 +40,7 @@ src/
 ├── layouts/        Page and blog post layouts
 ├── content/blog/   Blog posts (Markdown / MDX with frontmatter)
 ├── content/habits/ Habit logs (one YAML file per habit)
+├── content/weight/ Weight log (log.yaml)
 ├── styles/         Global CSS, reset, typography, Tailwind theme
 ├── images/         SVG and image assets
 └── lib/            Shared utilities

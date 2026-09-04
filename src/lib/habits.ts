@@ -19,12 +19,7 @@ export type MonthLabel = {
   column: number;
 };
 
-export type HabitStats = {
-  currentStreak: number;
-  longestStreak: number;
-  last30: number;
-  yearTotal: number;
-};
+export type Stat = { label: string; value: number; unit: string };
 
 /** Today's date as YYYY-MM-DD in the site's home timezone. */
 export function todayISO(now: Date = new Date()): string {
@@ -44,7 +39,7 @@ export function addDays(iso: string, days: number): string {
 }
 
 /** ISO weekday, Monday = 0 ... Sunday = 6. */
-function weekdayIndex(iso: string): number {
+export function weekdayIndex(iso: string): number {
   return (toUTC(iso).getUTCDay() + 6) % 7;
 }
 
@@ -109,7 +104,27 @@ export function monthLabels(weeks: DayCell[][]): MonthLabel[] {
   );
 }
 
-export function computeStats(days: string[], today: string): HabitStats {
+function countBetween(days: string[], from: string, to: string): number {
+  return days.filter((d) => d >= from && d <= to).length;
+}
+
+function windowStats(days: string[], today: string): Stat[] {
+  return [
+    {
+      label: "Last 30",
+      value: countBetween(days, addDays(today, -29), today),
+      unit: "/ 30",
+    },
+    {
+      label: "Year",
+      value: countBetween(days, addDays(today, -364), today),
+      unit: "days",
+    },
+  ];
+}
+
+/** Stats for a daily habit: day streaks plus rolling windows. */
+export function dailyStats(days: string[], today: string): Stat[] {
   const done = new Set(days);
 
   let currentStreak = 0;
@@ -130,10 +145,36 @@ export function computeStats(days: string[], today: string): HabitStats {
     previous = day;
   }
 
-  const thirtyDaysAgo = addDays(today, -29);
-  const yearAgo = addDays(today, -364);
-  const last30 = days.filter((d) => d >= thirtyDaysAgo && d <= today).length;
-  const yearTotal = days.filter((d) => d >= yearAgo && d <= today).length;
+  return [
+    { label: "Streak", value: currentStreak, unit: "days" },
+    { label: "Best", value: longestStreak, unit: "days" },
+    ...windowStats(days, today),
+  ];
+}
 
-  return { currentStreak, longestStreak, last30, yearTotal };
+/**
+ * Stats for a habit with a weekly target: progress this week and how many
+ * consecutive weeks (Monday to Sunday) hit the target.
+ */
+export function weeklyStats(
+  days: string[],
+  today: string,
+  target: number,
+): Stat[] {
+  const weekStart = addDays(today, -weekdayIndex(today));
+  const thisWeek = countBetween(days, weekStart, today);
+
+  let weekStreak = 0;
+  // The current week only counts once it is already on target.
+  let cursor = thisWeek >= target ? weekStart : addDays(weekStart, -7);
+  while (countBetween(days, cursor, addDays(cursor, 6)) >= target) {
+    weekStreak++;
+    cursor = addDays(cursor, -7);
+  }
+
+  return [
+    { label: "This week", value: thisWeek, unit: `/ ${target}` },
+    { label: "Weeks on target", value: weekStreak, unit: "in a row" },
+    ...windowStats(days, today),
+  ];
 }

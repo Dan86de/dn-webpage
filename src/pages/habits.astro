@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import SEO from "@/components/SEO.astro";
 import HabitGrid from "@/components/HabitGrid.astro";
+import WeightChart from "@/components/WeightChart.tsx";
 import { todayISO } from "@/lib/habits";
 
 const siteUrl = "http://localhost:4321";
@@ -11,13 +12,14 @@ const habits = (await getCollection("habits")).sort(
   (a, b) => a.data.order - b.data.order,
 );
 const today = todayISO();
+const weight = (await getCollection("weight"))[0]?.data;
 ---
 
 <Layout>
   <SEO
     slot="head"
     title="Habits - Daniel Noworyta"
-    description="A public log of the daily habits I am trying to keep: training and eating clean."
+    description="A public log of my habits: CrossFit twice a week, football once a week, clean eating every day."
     canonicalURL={`${siteUrl}/habits`}
     type="website"
   />
@@ -30,10 +32,33 @@ const today = todayISO();
           Habits
         </h1>
         <p class="text-gray-1100 text-lg">
-          Two things I am trying to do every single day. Logged by hand, shown
-          in public, so I have no place to hide.
+          Since 1 September: CrossFit twice a week, football once a week,
+          clean eating every day. Logged by hand, in public, because a streak
+          nobody can see is easy to quietly drop.
         </p>
       </header>
+
+      {
+        weight && weight.entries.length > 0 && (
+          <section class="mb-16" aria-labelledby="weight">
+            <h2
+              id="weight"
+              class="text-2xl! leading-7! tablet:text-3xl! tablet:leading-8.5! font-medium"
+            >
+              Weight
+            </h2>
+            <p class="text-gray-1100 mt-1 mb-6">
+              Weighed every morning, before coffee. Hover the chart to scrub
+              through the days.
+            </p>
+            <WeightChart
+              client:visible
+              points={weight.entries}
+              unit={weight.unit}
+            />
+          </section>
+        )
+      }
 
       <div class="flex flex-col gap-16">
         {
@@ -43,12 +68,13 @@ const today = todayISO();
               description={habit.data.description}
               days={habit.data.days}
               today={today}
+              weeklyTarget={habit.data.weeklyTarget}
             />
           ))
         }
       </div>
 
-      <div class="mt-12 flex items-center gap-5 caption text-gray-1000">
+      <div class="mt-8 flex items-center gap-5 caption text-gray-1000">
         <span class="flex items-center gap-2">
           <span class="size-3 rounded-[3px] bg-orange-500"></span> Done
         </span>

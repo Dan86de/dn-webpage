@@ -1,9 +1,10 @@
 ---
 import {
   buildWeeks,
-  computeStats,
+  dailyStats,
   formatLong,
   monthLabels,
+  weeklyStats,
   WEEKS,
 } from "@/lib/habits";
 import { cn } from "@/lib/utils";
@@ -13,20 +14,24 @@ interface Props {
   description: string;
   days: string[];
   today: string;
+  weeklyTarget?: number;
 }
 
-const { name, description, days, today } = Astro.props;
+const { name, description, days, today, weeklyTarget } = Astro.props;
 
 const weeks = buildWeeks(days, today);
 const labels = monthLabels(weeks);
-const stats = computeStats(days, today);
+const statItems = weeklyTarget
+  ? weeklyStats(days, today, weeklyTarget)
+  : dailyStats(days, today);
+const yearTotal = statItems[statItems.length - 1].value;
 
-const statItems = [
-  { label: "Streak", value: stats.currentStreak, unit: "days" },
-  { label: "Best", value: stats.longestStreak, unit: "days" },
-  { label: "Last 30", value: stats.last30, unit: "/ 30" },
-  { label: "Year", value: stats.yearTotal, unit: "days" },
-];
+// A skipped day only counts as "missed" for a daily habit.
+const dayStatus = (cell: { done: boolean; isFuture: boolean }) => {
+  if (cell.done) return " · done";
+  if (cell.isFuture || weeklyTarget) return "";
+  return " · missed";
+};
 
 const weekdays = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
 ---
@@ -62,9 +67,9 @@ const weekdays = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
     The scroll container is RTL so it opens scrolled to the end (today) on
     narrow screens without any JavaScript. The grid inside is LTR again.
   -->
-  <div class="mt-5 flex">
+  <div class="habit-frame mt-5 flex">
     <div
-      class="habit-rows shrink-0 pr-2"
+      class="habit-rows w-10 shrink-0"
       style="grid-template-columns: auto"
       aria-hidden="true"
     >
@@ -86,7 +91,7 @@ const weekdays = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
         class="habit-rows [direction:ltr] w-max"
         style={{ "--weeks": WEEKS }}
         role="img"
-        aria-label={`${name}: ${stats.yearTotal} days in the last year`}
+        aria-label={`${name}: ${yearTotal} days in the last year`}
       >
         {
           labels.map((month) => (
@@ -103,14 +108,14 @@ const weekdays = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
             week.map((cell, row) => (
               <span
                 class={cn(
-                  "size-3 rounded-[3px]",
+                  "size-(--cell) rounded-[3px]",
                   cell.done && "bg-orange-500",
                   !cell.done && !cell.isFuture && "bg-gray-400",
                   cell.isFuture && "bg-transparent",
                   cell.isToday && "outline-2 outline-offset-1 outline-orange-500",
                 )}
                 style={{ gridColumn: column + 1, gridRow: row + 2 }}
-                title={`${formatLong(cell.date)}${cell.isFuture ? "" : cell.done ? " · done" : " · missed"}`}
+                title={`${formatLong(cell.date)}${dayStatus(cell)}`}
               />
             )),
           )
@@ -121,11 +126,21 @@ const weekdays = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
 </section>
 
 <style>
+  /*
+    Cells are 12px and the grid scrolls on narrow screens. Once the frame is
+    wide enough, cells grow so the grid spans the full width: the 40px label
+    column plus 53 cells and 52 gaps of 3px.
+  */
+  .habit-frame {
+    container-type: inline-size;
+    --cell: max(12px, calc((100cqw - 40px - 52 * 3px) / 53));
+  }
+
   /* Shared row template so the label column and the grid line up. */
   .habit-rows {
     display: grid;
-    grid-template-columns: repeat(var(--weeks), 12px);
-    grid-template-rows: 20px repeat(7, 12px);
+    grid-template-columns: repeat(var(--weeks), var(--cell));
+    grid-template-rows: 20px repeat(7, var(--cell));
     gap: 3px;
   }
 </style>
