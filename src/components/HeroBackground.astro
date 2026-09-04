@@ -1,0 +1,114 @@
+---
+/**
+ * Decorative hero background. Pure CSS: no JS, no images, so it never
+ * touches first contentful paint.
+ *
+ * - "dots": a fine dot grid, masked so it fades toward the viewport edges.
+ * - "glow": the dot grid plus two slow-drifting brand-orange glows.
+ *
+ * The glows are radial gradients with soft falloff instead of
+ * `filter: blur()`, and only `transform` is animated, so the browser can
+ * composite them on the GPU without repainting.
+ */
+interface Props {
+  variant?: "dots" | "glow";
+}
+
+const { variant = "dots" } = Astro.props;
+---
+
+<div
+  class:list={["hero-bg", { "hero-bg--glow": variant === "glow" }]}
+  aria-hidden="true"
+>
+  <div class="hero-bg__dots"></div>
+  {
+    variant === "glow" && (
+      <>
+        <div class="hero-bg__glow hero-bg__glow--a" />
+        <div class="hero-bg__glow hero-bg__glow--b" />
+      </>
+    )
+  }
+</div>
+
+<style>
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    contain: strict;
+  }
+
+  .hero-bg__dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      var(--color-gray-700) 1px,
+      transparent 1.5px
+    );
+    background-size: 24px 24px;
+    background-position: center;
+    mask-image: radial-gradient(
+      ellipse 55% 60% at 50% 50%,
+      black 10%,
+      transparent 100%
+    );
+  }
+
+  .hero-bg__glow {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+    animation: hero-drift var(--drift-duration) ease-in-out infinite alternate;
+  }
+
+  .hero-bg__glow--a {
+    --drift-duration: 28s;
+    --drift-x: 6vw;
+    --drift-y: -3vh;
+    width: min(60vw, 720px);
+    height: min(60vw, 720px);
+    top: 4%;
+    left: 8%;
+    background: radial-gradient(
+      circle at center,
+      color-mix(in oklch, var(--color-orange-400) 26%, transparent) 0%,
+      color-mix(in oklch, var(--color-orange-400) 8%, transparent) 40%,
+      transparent 70%
+    );
+  }
+
+  .hero-bg__glow--b {
+    --drift-duration: 36s;
+    --drift-x: -5vw;
+    --drift-y: 4vh;
+    width: min(50vw, 600px);
+    height: min(50vw, 600px);
+    bottom: 6%;
+    right: 6%;
+    background: radial-gradient(
+      circle at center,
+      color-mix(in oklch, var(--color-orange-500) 20%, transparent) 0%,
+      color-mix(in oklch, var(--color-orange-500) 6%, transparent) 40%,
+      transparent 70%
+    );
+  }
+
+  @keyframes hero-drift {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(var(--drift-x), var(--drift-y), 0) scale(1.08);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg__glow {
+      animation: none;
+    }
+  }
+</style>

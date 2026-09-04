@@ -21,6 +21,11 @@ Includes:
 
 Canvas-based component with pixel animation on hover/focus states.
 
+### HeroBackground
+
+Pure CSS decorative background for the homepage hero, no JS or images.
+`variant="dots"` renders a masked dot grid; `variant="glow"` adds two slow-drifting brand glows animated via `transform` only.
+
 ## Utilities
 
 **File**: `src/lib/utils.ts`

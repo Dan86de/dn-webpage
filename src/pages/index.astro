@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import HeroBackground from "@/components/HeroBackground.astro";
 ---
 
 <style is:inline>
@@ -79,6 +80,7 @@ import Layout from "@/layouts/Layout.astro";
 </style>
 
 <Layout>
+  <HeroBackground variant="dots" />
   <div class="flex flex-col grow px-(--inline-padding)">
     <div class="flex flex-col grow mx-auto max-w-4xl w-full">
       <div class="flex flex-col items-center justify-center grow">
