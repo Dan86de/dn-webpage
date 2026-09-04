@@ -19,3 +19,17 @@
 ## File Format
 
 Blog posts use markdown format with frontmatter.
+
+## Habits Collection
+
+**Location**: `src/content/habits/*.yaml` (one file per habit, file name is the habit id)
+
+**Schema**:
+- `name` - Display name
+- `description` - One-line rule for the habit
+- `order` - Sort order on the page
+- `days` - List of `YYYY-MM-DD` dates the habit was done (deduplicated and sorted by the schema)
+
+**Logging**: `pnpm habit <id> [YYYY-MM-DD]` appends a day to the file.
+Days are rendered by `src/components/HabitGrid.astro` as a rolling 53-week grid with streak stats.
+"Today" is computed in `Europe/Warsaw` (see `src/lib/habits.ts`).

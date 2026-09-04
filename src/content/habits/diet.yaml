@@ -1,0 +1,9 @@
+# Clean eating log. Add a day with: pnpm habit diet [YYYY-MM-DD]
+name: Diet
+description: A clean day. Real food, no sugar, no snacking after dinner.
+order: 2
+days:
+  - 2026-09-01
+  - 2026-09-02
+  - 2026-09-03
+  - 2026-09-04

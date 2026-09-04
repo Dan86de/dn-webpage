@@ -1,0 +1,131 @@
+---
+import {
+  buildWeeks,
+  computeStats,
+  formatLong,
+  monthLabels,
+  WEEKS,
+} from "@/lib/habits";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  name: string;
+  description: string;
+  days: string[];
+  today: string;
+}
+
+const { name, description, days, today } = Astro.props;
+
+const weeks = buildWeeks(days, today);
+const labels = monthLabels(weeks);
+const stats = computeStats(days, today);
+
+const statItems = [
+  { label: "Streak", value: stats.currentStreak, unit: "days" },
+  { label: "Best", value: stats.longestStreak, unit: "days" },
+  { label: "Last 30", value: stats.last30, unit: "/ 30" },
+  { label: "Year", value: stats.yearTotal, unit: "days" },
+];
+
+const weekdays = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
+---
+
+<section class="habit" aria-labelledby={`habit-${name.toLowerCase()}`}>
+  <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+    <div class="max-w-md">
+      <h2
+        id={`habit-${name.toLowerCase()}`}
+        class="text-2xl! leading-7! tablet:text-3xl! tablet:leading-8.5! font-medium"
+      >
+        {name}
+      </h2>
+      <p class="text-gray-1100 mt-1">{description}</p>
+    </div>
+    <dl class="flex gap-6 tablet:gap-8">
+      {
+        statItems.map((stat) => (
+          <div>
+            <dt class="caption text-gray-1000">{stat.label}</dt>
+            <dd class="font-display font-medium text-2xl leading-8 tabular-nums">
+              {stat.value}
+              <span class="caption text-gray-1000 ml-0.5">{stat.unit}</span>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+
+  <!--
+    Weekday labels sit outside the scroll area so they never scroll away.
+    The scroll container is RTL so it opens scrolled to the end (today) on
+    narrow screens without any JavaScript. The grid inside is LTR again.
+  -->
+  <div class="mt-5 flex">
+    <div
+      class="habit-rows shrink-0 pr-2"
+      style="grid-template-columns: auto"
+      aria-hidden="true"
+    >
+      {
+        weekdays.map((day, row) => (
+          <span
+            class="caption text-gray-1000 self-center"
+            style={{ gridRow: row + 2 }}
+          >
+            {day}
+          </span>
+        ))
+      }
+    </div>
+    <div
+      class="min-w-0 overflow-x-auto [direction:rtl] [scrollbar-width:none] py-1 -my-1 pr-(--inline-padding) -mr-(--inline-padding) tablet:pr-1 tablet:-mr-1 max-tablet:[mask-image:linear-gradient(to_right,transparent,black_1.5rem)]"
+    >
+      <div
+        class="habit-rows [direction:ltr] w-max"
+        style={{ "--weeks": WEEKS }}
+        role="img"
+        aria-label={`${name}: ${stats.yearTotal} days in the last year`}
+      >
+        {
+          labels.map((month) => (
+            <span
+              class="caption text-gray-1000 self-end"
+              style={{ gridColumn: month.column + 1, gridRow: 1 }}
+            >
+              {month.label}
+            </span>
+          ))
+        }
+        {
+          weeks.map((week, column) =>
+            week.map((cell, row) => (
+              <span
+                class={cn(
+                  "size-3 rounded-[3px]",
+                  cell.done && "bg-orange-500",
+                  !cell.done && !cell.isFuture && "bg-gray-400",
+                  cell.isFuture && "bg-transparent",
+                  cell.isToday && "outline-2 outline-offset-1 outline-orange-500",
+                )}
+                style={{ gridColumn: column + 1, gridRow: row + 2 }}
+                title={`${formatLong(cell.date)}${cell.isFuture ? "" : cell.done ? " · done" : " · missed"}`}
+              />
+            )),
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Shared row template so the label column and the grid line up. */
+  .habit-rows {
+    display: grid;
+    grid-template-columns: repeat(var(--weeks), 12px);
+    grid-template-rows: 20px repeat(7, 12px);
+    gap: 3px;
+  }
+</style>

@@ -28,15 +28,17 @@ The dev server runs at `http://localhost:4321`.
 | `pnpm build`       | Build the production site into `dist/`     |
 | `pnpm preview`     | Preview the production build locally       |
 | `pnpm astro check` | Type-check `.astro` and TypeScript sources |
+| `pnpm habit <name> [date]` | Log a habit day (defaults to today), e.g. `pnpm habit workout` |
 
 ## Project structure
 
 ```text
 src/
-├── pages/          File-based routes (index, about, experience, uses, blog/)
+├── pages/          File-based routes (index, about, experience, uses, habits, blog/)
 ├── components/     Astro and React components
 ├── layouts/        Page and blog post layouts
 ├── content/blog/   Blog posts (Markdown / MDX with frontmatter)
+├── content/habits/ Habit logs (one YAML file per habit)
 ├── styles/         Global CSS, reset, typography, Tailwind theme
 ├── images/         SVG and image assets
 └── lib/            Shared utilities
