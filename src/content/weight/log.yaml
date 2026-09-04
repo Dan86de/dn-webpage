@@ -3,5 +3,7 @@ unit: kg
 entries:
   - date: 2026-09-01
     value: 111.4
+  - date: 2026-09-02
+    value: 111.7
   - date: 2026-09-04
     value: 111
