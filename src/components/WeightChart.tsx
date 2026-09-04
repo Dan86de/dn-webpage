@@ -106,7 +106,7 @@ export default function WeightChart({ points, unit }: Props) {
   return (
     <div>
       <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
-        <div>
+        <div className="whitespace-nowrap">
           <p className="caption text-gray-1000">
             {hovered ? formatDate(shown.date) : "Current"}
           </p>
@@ -115,7 +115,7 @@ export default function WeightChart({ points, unit }: Props) {
             <span className="caption text-gray-1000 ml-0.5">{unit}</span>
           </p>
         </div>
-        <dl className="flex gap-6 tablet:gap-8">
+        <dl className="flex gap-6 tablet:gap-8 whitespace-nowrap">
           <div>
             <dt className="caption text-gray-1000">Since {formatDate(first.date)}</dt>
             <dd className="font-display font-medium text-2xl leading-8 tabular-nums">
