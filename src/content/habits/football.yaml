@@ -3,4 +3,5 @@ name: Football
 description: Once a week. Ninety minutes of chasing a ball with the guys.
 order: 3
 weeklyTarget: 1
-days: []
+days:
+  - 2026-08-30
