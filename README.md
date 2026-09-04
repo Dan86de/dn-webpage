@@ -4,7 +4,7 @@ Personal website and blog of Daniel Noworyta, built with Astro and deployed on V
 
 ## Stack
 
-- [Astro 5](https://astro.build) with the Vercel adapter (ISR enabled)
+- [Astro 7](https://astro.build) with the Vercel adapter (ISR enabled)
 - [Tailwind CSS 4](https://tailwindcss.com) via the Vite plugin, themed inline in `src/styles/global.css`
 - React 19 for interactive islands
 - MDX for blog content, plus RSS and sitemap generation

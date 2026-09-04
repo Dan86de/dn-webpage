@@ -1,6 +1,7 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 
-import { glob, file } from "astro/loaders";
+import { glob } from "astro/loaders";
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
@@ -14,8 +15,8 @@ const blog = defineCollection({
     author: z.string().default("Anonymous"),
     tags: z.array(z.string()),
     publishDate: z.date(),
-    authorContact: z.string().email(),
-    canonicalURL: z.string().url(),
+    authorContact: z.email(),
+    canonicalURL: z.url(),
     slug: z.string().default(""),
   }),
 });

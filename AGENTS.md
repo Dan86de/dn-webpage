@@ -1,6 +1,6 @@
 # Project Overview
 
-Astro 5 website with Tailwind CSS 4, deployed to Vercel with ISR.
+Astro 7 website with Tailwind CSS 4, deployed to Vercel with ISR.
 
 ## Commands
 

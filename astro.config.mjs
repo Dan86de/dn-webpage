@@ -8,6 +8,9 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://danielnoworyta.com",
+  // Keep pre-v7 whitespace handling. The v7 default ("jsx") drops spaces
+  // between newline-separated inline elements, e.g. the date · read time line.
+  compressHTML: true,
   markdown: {
     shikiConfig: {
       theme: "github-dark",
