@@ -28,12 +28,28 @@ import PythonIcon from "@/images/icons/python.svg";
 import WorkExperience from "@/components/experience/WorkExperience.astro";
 import Position from "@/components/experience/Position.astro";
 import PixelCard from "@/components/PixelCard.astro";
+import SEO from "@/components/SEO.astro";
+import CarIcon from "@/images/icons/car.svg";
+
+const canonicalURL = new URL("/experience", Astro.site).href;
 ---
 
 <Layout>
+  <SEO
+    slot="head"
+    title="Experience - Daniel Noworyta"
+    description="Two jobs in software and the decade in automotive before them. What I actually built at each, not the CV version."
+    canonicalURL={canonicalURL}
+    type="website"
+  />
   <div class="px-(--inline-padding)">
     <div class="mx-auto max-w-4xl">
-      <h2 class="pb-10 bg-brand-gradient bg-clip-text text-transparent transition-colors" id="experience">Experience</h2>
+      <h2 class="pb-4 bg-brand-gradient bg-clip-text text-transparent transition-colors" id="experience">Experience</h2>
+      <p class="pb-10 text-gray-1100 text-lg max-w-2xl text-pretty">
+        Two jobs in software, and the decade before them that explains why I
+        take the work seriously. What I actually built at each, not the CV
+        version.
+      </p>
       <!-- Vaillant -->
       <div class="max-w-4xl border-b border-b-gray-200 mb-3">
         <WorkExperience companyName="Vaillant Group" isCurrentJob={true}>
@@ -48,19 +64,30 @@ import PixelCard from "@/components/PixelCard.astro";
             <CodeIcon width={18} slot="icon" />
             <div class="pl-8 pb-4 max-w-3xl" slot="description">
               <p class="text-gray-1200 underline pb-2 text-sm">
-                Making better myVaillantPRO web and mobile experience
+                myVaillantPRO, the web and mobile app that heat pump and boiler
+                installers use every day
               </p>
-              <ul class="list-disc pl-5 text-gray-1100 text-sm">
-                <li>Develop Web and Native myVaillant PRO App.</li>
+              <ul class="list-disc pl-5 text-gray-1100 text-sm stack" style="--stack-space: 0.5rem">
                 <li>
-                  Cooperate with business and design in creating new features.
+                  I build it in React and React Native. One codebase, two
+                  platforms, and the bugs that only show up on one of them.
                 </li>
                 <li>
-                  Analyze technical capabilities and provide optimal
-                  solutions.
+                  The features I am proudest of are the small ones nobody
+                  planned. Drag and drop for a step installers repeated every
+                  day went in on top of a sprint goal, not instead of it, and
+                  saved them minutes a day.
+                  <a href="/blog/ship-something-every-sprint" class="underline underline-offset-4 decoration-orange-500 hover:text-orange-500 transition-colors">That one became a post.</a>
                 </li>
-                <li>Ensure UI/UX consistency and adherence to standards.</li>
-                <li>Spreading knowledge and usage of AI tools in daily work.</li>
+                <li>
+                  I sit between business and design while a feature is still
+                  being shaped, and I am the one saying what the platform can
+                  and cannot do before anyone commits to a date.
+                </li>
+                <li>
+                  I am also the person on the team pushing AI tools into daily
+                  work. Which ones, for what, and where they still guess.
+                </li>
               </ul>
             </div>
           </Position>
@@ -68,7 +95,7 @@ import PixelCard from "@/components/PixelCard.astro";
       </div>
 
       <!-- Bechtle -->
-      <div class="max-w-4xl border-b border-b-gray-200 mb-8">
+      <div class="max-w-4xl border-b border-b-gray-200 mb-3">
         <WorkExperience companyName="Bechtle / AV360" isCurrentJob={false}>
           <BechtleLogo width={24} height={32} slot="logo" />
           <Position
@@ -81,57 +108,69 @@ import PixelCard from "@/components/PixelCard.astro";
             <CodeIcon width={18} slot="icon" />
             <div class="pl-8 pb-4 max-w-3xl" slot="description">
               <p class="text-gray-1200 underline pb-2 text-sm">
-                Develop interface for document management platform
+                My first developer job, after two and a half years of learning
+                before and after an automotive day job
               </p>
-              <ul class="list-disc pl-5 text-gray-1100 pb-3 text-sm">
+              <ul class="list-disc pl-5 text-gray-1100 pb-3 text-sm stack" style="--stack-space: 0.5rem">
                 <li>
-                  Developed interface for a document management platform using
-                  ReactJS, FluentUI, and TypeScript.
+                  Built the interface for a document management platform in
+                  React, FluentUI, and TypeScript. The tables held more rows
+                  than the browser wanted to render, so I replaced the naive
+                  lists with infinite scrolling and pagination.
                 </li>
                 <li>
-                  Designed and applied a testing strategy with Jest and
-                  snapshot tests to improve software reliability.
-                </li>
-                <li>
-                  Devised and executed more effective solutions for large data
-                  tables using infinite scrolling and pagination.
-                </li>
-                <li>
-                  Collaborated closely with UI/UX Design Team to enhance
-                  interface usability and aesthetics.
+                  Set up the testing strategy with Jest and snapshot tests,
+                  because we kept breaking things we had already fixed.
                 </li>
               </ul>
               <p class="text-gray-1200 underline pb-2 text-sm">
-                Ideated and implemented a multi-platform chat messaging app in
-                Tauri, boosting the company's product portfolio and revenue
+                A chat app that started as my proposal and ended up in the
+                product catalogue
               </p>
-              <ul class="list-disc pl-5 text-gray-1100 text-sm pb-4">
+              <ul class="list-disc pl-5 text-gray-1100 text-sm pb-4 stack" style="--stack-space: 0.5rem">
                 <li>
-                  Constructed interfaces and logic for system management and
-                  chat messaging applications.
+                  Proposed, then built, a multi-platform chat app in Tauri on
+                  the open Matrix protocol, with a rich text editor on Lexical.
                 </li>
                 <li>
-                  Incorporated the open-source Matrix Protocol for enhanced
-                  communication capabilities.
-                </li>
-                <li>
-                  Created an advanced editor using the Lexical Framework,
-                  contributing to the expansion of the company's software
-                  capabilities.
-                </li>
-                <li>
-                  Implemented CI/CD pipeline on Azure for Tauri and Rust,
-                  streamlining the development and deployment process.
+                  Put the Tauri and Rust builds on an Azure CI/CD pipeline so a
+                  release stopped depending on one person's laptop.
                 </li>
               </ul>
-              <p class="max-w-3xl text-gray-1200 text-sm">
-                Throughout my tenure, I have successfully tackled complex
-                challenges, innovated solutions, and developed impactful
-                software. My contributions have played a key role in enhancing
-                product quality and user experience, ultimately leading to
-                increased customer satisfaction and revenue growth for the
-                company.
+            </div>
+          </Position>
+        </WorkExperience>
+      </div>
+
+      <!-- Automotive -->
+      <div class="max-w-4xl border-b border-b-gray-200 mb-8">
+        <WorkExperience companyName="Automotive" isCurrentJob={false}>
+          <Position
+            slot="positions"
+            title="Class A Surface Modeler"
+            employmentType="Full-Time"
+            startDate="2012"
+            endDate="2020"
+          >
+            <CarIcon width={18} slot="icon" />
+            <div class="pl-8 pb-4 max-w-3xl" slot="description">
+              <p class="text-gray-1200 underline pb-2 text-sm">
+                Ten years before the code, and the most important line on this
+                page
               </p>
+              <ul class="list-disc pl-5 text-gray-1100 text-sm stack" style="--stack-space: 0.5rem">
+                <li>
+                  Class A surfacing is the visible skin of a car, built to a
+                  tolerance you can feel with a fingertip, in software most
+                  developers have never heard of.
+                </li>
+                <li>
+                  Long stretches on site in Detroit, Turin, Sweden, and
+                  Germany. That is where the discipline came from, and also
+                  why I left.
+                  <a href="/about#detroit" class="underline underline-offset-4 decoration-orange-500 hover:text-orange-500 transition-colors">The longer story.</a>
+                </li>
+              </ul>
             </div>
           </Position>
         </WorkExperience>
