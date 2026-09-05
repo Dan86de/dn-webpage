@@ -3,7 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import SEO from "@/components/SEO.astro";
 import Stack from "@/components/Stack.astro";
 
-const siteUrl = "http://localhost:4321";
+const canonicalURL = new URL("/uses", Astro.site).href;
 
 const hardwareItems = [
   {
@@ -143,7 +143,7 @@ const softwareItems = [
     slot="head"
     title="Uses - Daniel Noworyta"
     description="Hardware, software, and tools I use daily for development and content creation."
-    canonicalURL={`${siteUrl}/uses`}
+    canonicalURL={canonicalURL}
     type="website"
   />
   <div class="px-(--inline-padding)">

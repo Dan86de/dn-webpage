@@ -24,23 +24,31 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
   process.exit(1);
 }
 
-const source = readFileSync(file, "utf8");
-const [head, list] = source.split(/^days:\s*$/m);
-if (list === undefined) {
+// Rewrite only the `days:` block, line by line, so the comments and metadata
+// above it survive untouched. A habit with no days yet is written as the flow
+// form `days: []`, so match that too.
+const lines = readFileSync(file, "utf8").split("\n");
+const start = lines.findIndex((line) => /^days:/.test(line));
+if (start === -1) {
   console.error("Could not find a `days:` list in the file");
   process.exit(1);
 }
 
-const days = new Set(list.match(/\d{4}-\d{2}-\d{2}/g) ?? []);
+let end = start + 1;
+while (end < lines.length && /^\s+-\s/.test(lines[end])) end++;
+
+const days = new Set(
+  lines.slice(start, end).join("\n").match(/\d{4}-\d{2}-\d{2}/g) ?? [],
+);
 if (days.has(date)) {
   console.log(`${habit}: ${date} is already logged`);
   process.exit(0);
 }
 
 days.add(date);
-const body = [...days]
-  .sort()
-  .map((d) => `  - ${d}`)
-  .join("\n");
-writeFileSync(file, `${head}days:\n${body}\n`);
+const body = [...days].sort().map((d) => `  - ${d}`);
+writeFileSync(
+  file,
+  [...lines.slice(0, start), "days:", ...body, ...lines.slice(end)].join("\n"),
+);
 console.log(`${habit}: logged ${date} (${days.size} days total)`);

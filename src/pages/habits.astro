@@ -6,7 +6,7 @@ import HabitGrid from "@/components/HabitGrid.astro";
 import WeightChart from "@/components/WeightChart.tsx";
 import { todayISO } from "@/lib/habits";
 
-const siteUrl = "http://localhost:4321";
+const canonicalURL = new URL("/habits", Astro.site).href;
 
 const habits = (await getCollection("habits")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -20,7 +20,7 @@ const weight = (await getCollection("weight"))[0]?.data;
     slot="head"
     title="Habits - Daniel Noworyta"
     description="A public log of my habits: CrossFit twice a week, football once a week, clean eating every day."
-    canonicalURL={`${siteUrl}/habits`}
+    canonicalURL={canonicalURL}
     type="website"
   />
   <div class="px-(--inline-padding)">
@@ -50,11 +50,20 @@ const weight = (await getCollection("weight"))[0]?.data;
             <p class="text-gray-1100 mt-1 mb-6">
               Weighed every morning, before coffee. Hover the chart to scrub
               through the days.
+              {weight.projection && (
+                <>
+                  {" "}
+                  The dashed line is the projection to {weight.projection.goal}{" "}
+                  {weight.unit} at a {weight.projection.intake} kcal cap. Below
+                  it is ahead of plan.
+                </>
+              )}
             </p>
             <WeightChart
               client:visible
               points={weight.entries}
               unit={weight.unit}
+              projection={weight.projection}
             />
           </section>
         )
