@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: "Daniel Noworyta's Blog",
-    description: "Articles about web development, TypeScript, React, and software engineering.",
+    description: "What it is like to do this job while AI rewrites it. Written from inside the work, not from above it.",
     site: context.site || "http://localhost:4321",
     items: posts.map((post) => ({
       title: post.data.title,

@@ -31,16 +31,15 @@ const allTags = Array.from(tagCounts.entries()).sort((a, b) =>
   a[0].localeCompare(b[0])
 );
 
-// Site URL for SEO
-const siteUrl = "http://localhost:4321";
+const canonicalURL = new URL("/blog", Astro.site).href;
 ---
 
 <Layout>
   <SEO
     slot="head"
     title="Blog - Daniel Noworyta"
-    description="Articles about web development, TypeScript, React, and software engineering."
-    canonicalURL={`${siteUrl}/blog`}
+    description="What it is like to be a self-taught developer while AI rewrites the job. Written from inside the work, not from above it."
+    canonicalURL={canonicalURL}
     type="website"
   />
   <div class="px-(--inline-padding)">
@@ -51,9 +50,9 @@ const siteUrl = "http://localhost:4321";
         >
           Blog
         </h1>
-        <p class="text-gray-1100 text-lg">
-          Articles about web development, TypeScript, React, and software
-          engineering with AI.
+        <p class="text-gray-1100 text-lg max-w-2xl text-pretty">
+          What it is like to do this job while AI rewrites it. Written from
+          inside the work, not from above it.
         </p>
       </header>
 
