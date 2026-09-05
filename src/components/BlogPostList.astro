@@ -37,7 +37,15 @@ const { posts } = Astro.props;
               </p>
             </div>
             <div class="hidden text-right text-sm shrink-0 laptop:block tabular-nums">
-              <div class="mb-1">Article</div>
+              <div class="mb-1">
+                {post.data.isDraft ? (
+                  <span class="px-1.5 py-0.5 rounded-sm bg-orange-500 text-white text-xs caption">
+                    Draft
+                  </span>
+                ) : (
+                  "Article"
+                )}
+              </div>
               <div>{formattedDate}</div>
             </div>
           </article>

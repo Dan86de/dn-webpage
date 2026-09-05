@@ -24,6 +24,8 @@ Pages live in `src/pages/writing/`; `/blog` and `/blog/[slug]` redirect there (s
 
 **Writing**: `pnpm post:new "Title" [--category issue|essay]` scaffolds a draft from `scripts/templates/issue.md` (the three ingredients as comments, `isDraft: true`).
 `pnpm post <file> [--date YYYY-MM-DD] [--slug slug] [--force]` publishes it: a draft inside the collection gets `isDraft: false` and today's date; a file from anywhere else (an Obsidian note) is copied in with title from the frontmatter or first H1, description from the frontmatter or first paragraph, tags from the frontmatter.
+Drafts (`isDraft: true`) are listed with a Draft badge on the dev server only; production and RSS never show them.
+The dev server does not notice a brand-new post folder until restarted.
 Template comments are stripped on publish. Relative image links are warned about, never fixed.
 `category` is `issue` for the weekly letter and `essay` for longer pieces.
 

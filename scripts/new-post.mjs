@@ -31,3 +31,4 @@ mkdirSync(dir, { recursive: true });
 writeFileSync(file, content);
 console.log(`Draft created: src/content/blog/${slug}/${slug}.md`);
 console.log(`Publish with:  pnpm post src/content/blog/${slug}/${slug}.md`);
+console.log("Preview:       restart `pnpm dev` once so it sees the new folder, then open /writing");
