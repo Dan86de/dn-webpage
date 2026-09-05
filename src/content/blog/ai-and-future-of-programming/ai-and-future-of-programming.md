@@ -6,7 +6,9 @@ author: Daniel Noworyta
 tags: ["ai", "programming", "career", "technology"]
 publishDate: 2026-01-13
 authorContact: daniel.noworyta@gmail.com
-canonicalURL: https://www.linkedin.com/pulse/ai-future-programming-daniel-noworyta-fmklf/
+alsoPublishedOn:
+  - name: LinkedIn
+    url: https://www.linkedin.com/pulse/ai-future-programming-daniel-noworyta-fmklf/
 slug: ai-and-future-of-programming
 ---
 

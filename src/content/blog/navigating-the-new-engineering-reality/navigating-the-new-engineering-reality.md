@@ -6,7 +6,9 @@ author: Daniel Noworyta
 tags: ["ai", "programming", "career"]
 publishDate: 2026-02-11
 authorContact: daniel.noworyta@gmail.com
-canonicalURL: https://www.linkedin.com/pulse/from-coder-conductor-navigating-new-engineering-reality-noworyta-yw2uf/
+alsoPublishedOn:
+  - name: LinkedIn
+    url: https://www.linkedin.com/pulse/from-coder-conductor-navigating-new-engineering-reality-noworyta-yw2uf/
 slug: navigating-the-new-engineering-reality
 ---
 

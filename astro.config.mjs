@@ -18,6 +18,11 @@ export default defineConfig({
       wrap: true,
     },
   },
+  // The writing section used to live at /blog. Keep old links alive.
+  redirects: {
+    "/blog": "/writing",
+    "/blog/[slug]": "/writing/[slug]",
+  },
   integrations: [react(), mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

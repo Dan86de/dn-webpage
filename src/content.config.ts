@@ -16,7 +16,12 @@ const blog = defineCollection({
     tags: z.array(z.string()),
     publishDate: z.date(),
     authorContact: z.email(),
-    canonicalURL: z.url(),
+    // The site is the source. Omit to canonicalise to /writing/<slug>.
+    canonicalURL: z.url().optional(),
+    // Where else the piece was published, linked from the post footer.
+    alsoPublishedOn: z
+      .array(z.object({ name: z.string(), url: z.url() }))
+      .default([]),
     slug: z.string().default(""),
   }),
 });

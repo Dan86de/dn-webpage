@@ -1,6 +1,6 @@
 # Content Collections
 
-## Blog Collection
+## Blog Collection (rendered at `/writing`)
 
 **Location**: `src/content/blog/**/*.md`
 
@@ -13,12 +13,14 @@
 - `publishDate` - Publication date
 - `isDraft` - Draft status
 - `authorContact` - Author contact info
-- `canonicalURL` - Canonical URL
+- `canonicalURL` - Optional. Defaults to `/writing/<slug>` on the site; the site is the source
+- `alsoPublishedOn` - Optional list of `{ name, url }` places the piece was syndicated to, linked from the post footer
 - `slug` - URL slug
 
 ## File Format
 
 Blog posts use markdown format with frontmatter.
+Pages live in `src/pages/writing/`; `/blog` and `/blog/[slug]` redirect there (see `astro.config.mjs`).
 
 ## Habits Collection
 

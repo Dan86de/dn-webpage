@@ -17,6 +17,7 @@ interface Props {
   canonicalURL: string;
   image?: string;
   imageAlt?: string;
+  alsoPublishedOn?: { name: string; url: string }[];
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   canonicalURL,
   image,
   imageAlt,
+  alsoPublishedOn = [],
 } = Astro.props;
 
 // Format date as "Jan 19, 2026"
@@ -97,6 +99,16 @@ const formattedDate = publishDate.toLocaleDateString("en-US", {
         <div class="mdx-content mt-8 laptop:mt-0">
           <slot />
         </div>
+        {
+          alsoPublishedOn.length > 0 && (
+            <p class="mt-10 pt-6 border-t border-gray-300 text-sm text-gray-1000">
+              Also published on{" "}
+              {alsoPublishedOn.map((place, i) => (
+                <>{i > 0 && ", "}<a href={place.url} target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 decoration-orange-500 hover:text-orange-500 transition-colors">{place.name}</a></>
+              ))}.
+            </p>
+          )
+        }
       </article>
 
       <!-- TOC -->

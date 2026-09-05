@@ -13,6 +13,9 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
+const canonicalURL =
+  post.data.canonicalURL ??
+  new URL(`/writing/${post.data.slug}`, Astro.site).href;
 const readingTime = getReadingTime(post.body || "");
 const toc = generateToc(headings);
 ---
@@ -25,7 +28,8 @@ const toc = generateToc(headings);
   readingTime={readingTime}
   tags={post.data.tags}
   toc={toc}
-  canonicalURL={post.data.canonicalURL}
+  canonicalURL={canonicalURL}
+  alsoPublishedOn={post.data.alsoPublishedOn}
   image={post.data.image}
   imageAlt={post.data.imageAlt}
 >

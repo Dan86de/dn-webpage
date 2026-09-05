@@ -31,13 +31,13 @@ const allTags = Array.from(tagCounts.entries()).sort((a, b) =>
   a[0].localeCompare(b[0])
 );
 
-const canonicalURL = new URL("/blog", Astro.site).href;
+const canonicalURL = new URL("/writing", Astro.site).href;
 ---
 
 <Layout>
   <SEO
     slot="head"
-    title="Blog - Daniel Noworyta"
+    title="Writing - Daniel Noworyta"
     description="What it is like to be a self-taught developer while AI rewrites the job. Written from inside the work, not from above it."
     canonicalURL={canonicalURL}
     type="website"
@@ -48,7 +48,7 @@ const canonicalURL = new URL("/blog", Astro.site).href;
         <h1
           class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4"
         >
-          Blog
+          Writing
         </h1>
         <p class="text-gray-1100 text-lg max-w-2xl text-pretty">
           What it is like to do this job while AI rewrites it. Written from
@@ -60,7 +60,7 @@ const canonicalURL = new URL("/blog", Astro.site).href;
       <div class="mb-8">
         <div class="flex flex-wrap gap-2">
           <a
-            href="/blog"
+            href="/writing"
             class:list={[
               "px-3 py-1.5 text-sm rounded-md transition-colors",
               !selectedTag
@@ -73,7 +73,7 @@ const canonicalURL = new URL("/blog", Astro.site).href;
           {
             allTags.map(([tag, count]) => (
               <a
-                href={`/blog?tag=${encodeURIComponent(tag)}`}
+                href={`/writing?tag=${encodeURIComponent(tag)}`}
                 class:list={[
                   "px-3 py-1.5 text-sm rounded-md transition-colors",
                   selectedTag === tag
@@ -88,7 +88,7 @@ const canonicalURL = new URL("/blog", Astro.site).href;
         </div>
       </div>
 
-      <!-- Blog post list -->
+      <!-- Post list -->
       <BlogPostList posts={posts} />
     </div>
   </div>

@@ -6,7 +6,9 @@ author: Daniel Noworyta
 tags: ["programming", "career"]
 publishDate: 2026-02-17
 authorContact: daniel.noworyta@gmail.com
-canonicalURL: https://www.linkedin.com/posts/danielnoworyta_before-your-next-sprint-try-this-close-activity-7439555653574090752-BMgY?utm_source=share&utm_medium=member_desktop&rcm=ACoAAA9byfoB5Jp_Yrzk_dIiQSsM2Nw6kzRUIUw
+alsoPublishedOn:
+  - name: LinkedIn
+    url: https://www.linkedin.com/posts/danielnoworyta_before-your-next-sprint-try-this-close-activity-7439555653574090752-BMgY
 slug: ship-something-every-sprint
 ---
 
