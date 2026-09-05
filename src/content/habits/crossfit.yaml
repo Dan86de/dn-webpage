@@ -1,6 +1,6 @@
-# CrossFit log. Add a day with: pnpm habit crossfit [YYYY-MM-DD]
-name: CrossFit
-description: Twice a week. Show up, do the workout, go home.
+# CrossFit / gym log. Add a day with: pnpm habit crossfit [YYYY-MM-DD]
+name: CrossFit / Gym
+description: Twice a week. A CrossFit class or a gym session - show up, do the work, go home.
 order: 2
 weeklyTarget: 2
 days:
