@@ -3,6 +3,11 @@
  * 404. A Class-A surface with a hole in it: a curved dot-grid panel drawn in
  * 3D on a canvas, slowly turning, with the missing patch where the page should
  * be. No libraries; the projection is a few lines of maths in the script below.
+ *
+ * Two things hide in it. Pressing the panel dents it, and it springs back when
+ * you let go. Clicking the number (or pressing "z") switches the dots to
+ * highlight lines, the zebra stripes a surfacer reads a panel with, and a dent
+ * shows up the way it does in the studio: the lines bend.
  */
 import Layout from "@/layouts/Layout.astro";
 import HeroBackground from "@/components/HeroBackground.astro";
@@ -19,23 +24,24 @@ import HeroBackground from "@/components/HeroBackground.astro";
   </Fragment>
   <HeroBackground variant="dots" />
   <div
-    class="not-found relative flex flex-col grow overflow-hidden px-(--inline-padding)"
+    id="panel"
+    class="not-found relative flex flex-col grow overflow-hidden px-(--inline-padding) touch-pan-y select-none"
   >
     <canvas
       id="surface"
       class="pointer-events-none absolute inset-0 h-full w-full"
       aria-hidden="true"></canvas>
     <div
-      class="relative mx-auto flex w-full max-w-4xl grow flex-col items-center pt-[14vh] pb-16 text-center"
+      class="relative mx-auto flex w-full max-w-4xl grow flex-col items-center justify-center pt-[min(17rem,22vh)] pb-12 text-center"
     >
       <p
         id="big-number"
-        class="font-display font-black leading-none tracking-tight text-[7rem] tablet:text-[10rem] bg-brand-gradient bg-clip-text text-transparent select-none"
+        class="font-display font-black leading-none tracking-tight text-[7rem] tablet:text-[10rem] bg-brand-gradient bg-clip-text text-transparent cursor-pointer transition-transform duration-300 hover:scale-[1.03]"
         aria-hidden="true"
       >
         404
       </p>
-      <p class="caption text-gray-1000 mt-6">Page not found</p>
+      <p id="caption" class="caption text-gray-1000 mt-6">Page not found</p>
       <h1 class="mt-3 font-medium tracking-tight text-balance">
         There is a hole in this surface.
       </h1>
@@ -61,13 +67,22 @@ import HeroBackground from "@/components/HeroBackground.astro";
           Read the writing
         </a>
       </nav>
+      <p
+        id="hint"
+        class="footnote mt-6 min-h-[1.5em] text-gray-1000 transition-opacity duration-500 opacity-0"
+        aria-live="polite"
+      >
+      </p>
     </div>
   </div>
 </Layout>
 
 <script>
   const canvas = document.getElementById("surface") as HTMLCanvasElement;
+  const panel = document.getElementById("panel") as HTMLElement;
   const number = document.getElementById("big-number") as HTMLElement;
+  const caption = document.getElementById("caption") as HTMLElement;
+  const hint = document.getElementById("hint") as HTMLElement;
   const ctx = canvas.getContext("2d");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -96,18 +111,70 @@ import HeroBackground from "@/components/HeroBackground.astro";
       grid.push(row);
     }
 
-    const height = (u: number, v: number, t: number) =>
-      0.22 * (1 - u * u) - 0.12 * v * v + 0.02 * Math.sin(u * 4 + t);
+    // ---- The dent ------------------------------------------------------------
+    // A gaussian pushed into the surface under the pointer. `depth` follows
+    // `target` on a spring: stiff on the way in, loose on the way out so the
+    // panel pops back and wobbles once.
+    const DENT_RADIUS = 0.3;
+    const DENT_HOVER = 0.03;
+    const DENT_PRESS = 0.26;
+    const dent = { x: 0, z: 0, tx: 0, tz: 0, depth: 0, vel: 0, target: 0 };
+    let pressed = false;
+    let hovering = false;
+    let pointerOnCanvasX = -1;
+    let pointerOnCanvasY = -1;
+
+    const height = (u: number, v: number, t: number) => {
+      let h = 0.22 * (1 - u * u) - 0.12 * v * v + 0.02 * Math.sin(u * 4 + t);
+      if (dent.depth > 0.0005) {
+        const dx = u * 1.5 - dent.x;
+        const dz = v - dent.z;
+        h -=
+          dent.depth *
+          Math.exp(-(dx * dx + dz * dz) / (2 * DENT_RADIUS * DENT_RADIUS));
+      }
+      return h;
+    };
+
+    // ---- Highlight lines -------------------------------------------------------
+    // Zebra stripes: the reflection of a striped environment in the surface.
+    // Where the surface is fair the stripes flow; where it is not, they kink.
+    const ZEBRA_FREQ = 22;
+    let zebra = false;
+    let zebraAmount = 0; // eased 0..1 so the switch is a crossfade
+
+    const setZebra = (on: boolean) => {
+      zebra = on;
+      caption.textContent = on ? "Highlight check" : "Page not found";
+      hint.textContent = on
+        ? "Highlight lines, the way a panel gets checked. Press the surface and watch them bend."
+        : "";
+      hint.classList.toggle("opacity-0", !on);
+      if (reduceMotion.matches) {
+        zebraAmount = on ? 1 : 0;
+        draw(0);
+      }
+    };
+    number.addEventListener("click", () => setZebra(!zebra));
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "z" && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        setZebra(!zebra);
+      }
+    });
 
     // ---- Colours, from the theme so the toggle is respected ----------------
     let dot = "";
     let line = "";
     let accent = "";
+    let lit = "";
+    let dim = "";
     const readColours = () => {
       const style = getComputedStyle(document.documentElement);
       dot = style.getPropertyValue("--color-gray-800").trim();
       line = style.getPropertyValue("--color-gray-500").trim();
       accent = style.getPropertyValue("--color-orange-500").trim();
+      lit = style.getPropertyValue("--color-gray-1200").trim();
+      dim = style.getPropertyValue("--color-gray-600").trim();
     };
     readColours();
     new MutationObserver(readColours).observe(document.documentElement, {
@@ -147,19 +214,32 @@ import HeroBackground from "@/components/HeroBackground.astro";
       if (reduceMotion.matches) draw(0);
     });
 
-    // Pointer parallax, eased. On touch devices there is none, only the drift.
+    // ---- Pointer --------------------------------------------------------------
+    // Parallax, eased. Pressing dents the panel; hovering barely touches it.
     let targetX = 0;
     let targetY = 0;
     let pointerX = 0;
     let pointerY = 0;
-    window.addEventListener(
-      "pointermove",
-      (e) => {
-        targetX = (e.clientX / window.innerWidth) * 2 - 1;
-        targetY = (e.clientY / window.innerHeight) * 2 - 1;
-      },
-      { passive: true },
-    );
+    const track = (e: PointerEvent) => {
+      targetX = (e.clientX / window.innerWidth) * 2 - 1;
+      targetY = (e.clientY / window.innerHeight) * 2 - 1;
+      const c = canvas.getBoundingClientRect();
+      pointerOnCanvasX = e.clientX - c.left;
+      pointerOnCanvasY = e.clientY - c.top;
+    };
+    window.addEventListener("pointermove", track, { passive: true });
+    panel.addEventListener("pointerenter", () => (hovering = true));
+    panel.addEventListener("pointerleave", () => (hovering = false));
+    panel.addEventListener("pointerdown", (e) => {
+      if ((e.target as Element).closest("a, button")) return;
+      track(e);
+      hovering = true;
+      pressed = true;
+    });
+    const release = () => (pressed = false);
+    window.addEventListener("pointerup", release);
+    window.addEventListener("pointercancel", release);
+    window.addEventListener("blur", release);
 
     const project = (
       x: number,
@@ -186,6 +266,35 @@ import HeroBackground from "@/components/HeroBackground.astro";
       };
     };
 
+    // How lit a point is under the striped environment, 0..1. The surface
+    // normal comes from the height field, gets the same rotation as the
+    // points, and is reflected towards the camera.
+    const stripe = (u: number, v: number, t: number, yaw: number, pitch: number) => {
+      const e = 0.01;
+      const hx = (height(u + e, v, t) - height(u - e, v, t)) / (2 * e * 1.5);
+      const hz = (height(u, v + e, t) - height(u, v - e, t)) / (2 * e);
+      const len = Math.hypot(hx, 1, hz);
+      const nx0 = -hx / len;
+      const ny0 = 1 / len;
+      const nz0 = -hz / len;
+      const cy = Math.cos(yaw);
+      const sy = Math.sin(yaw);
+      const cx = Math.cos(pitch);
+      const sx = Math.sin(pitch);
+      const nx = nx0 * cy - nz0 * sy;
+      const nz1 = nx0 * sy + nz0 * cy;
+      const nz = ny0 * sx + nz1 * cx;
+      // Reflect the view vector (0, 0, -1): r = 2 (n · v) n - v.
+      const rx = -2 * nz * nx;
+      const rz = -2 * nz * nz + 1;
+      const angle = Math.atan2(rx, -rz);
+      const s = Math.sin(angle * ZEBRA_FREQ);
+      return Math.min(1, Math.max(0, (s + 0.2) / 0.4));
+    };
+
+    type Point = { x: number; y: number; depth: number; rim: boolean; u: number; v: number };
+    let points: (Point | null)[][] = [];
+
     const draw = (time: number) => {
       const t = time / 1000;
       pointerX += (targetX - pointerX) * 0.04;
@@ -194,22 +303,52 @@ import HeroBackground from "@/components/HeroBackground.astro";
       const yaw = Math.sin(t * 0.18) * 0.22 + pointerX * 0.28;
       const pitch = -0.95 + pointerY * 0.12;
 
+      // Dent: find the grid point under the pointer, then spring towards it.
+      if (hovering && pointerOnCanvasX >= 0 && points.length) {
+        let best = Infinity;
+        for (const row of points) {
+          for (const p of row) {
+            if (!p) continue;
+            const d = Math.hypot(p.x - pointerOnCanvasX, p.y - pointerOnCanvasY);
+            if (d < best) {
+              best = d;
+              dent.tx = p.u * 1.5;
+              dent.tz = p.v;
+            }
+          }
+        }
+      }
+      dent.target = pressed ? DENT_PRESS : hovering ? DENT_HOVER : 0;
+      const follow = dent.depth < 0.02 ? 1 : 0.18;
+      dent.x += (dent.tx - dent.x) * follow;
+      dent.z += (dent.tz - dent.z) * follow;
+      const stiff = pressed ? 0.22 : 0.08;
+      const damping = pressed ? 0.7 : 0.86;
+      dent.vel = (dent.vel + (dent.target - dent.depth) * stiff) * damping;
+      dent.depth += dent.vel;
+
+      zebraAmount += ((zebra ? 1 : 0) - zebraAmount) * 0.08;
+      const z = zebraAmount < 0.005 ? 0 : zebraAmount;
+
       ctx.clearRect(0, 0, width, height_);
 
-      const points = grid.map((row) =>
+      points = grid.map((row) =>
         row.map((s) =>
           s
             ? {
                 ...project(s.u * 1.5, height(s.u, s.v, t), s.v, yaw, pitch),
                 rim: s.rim,
+                u: s.u,
+                v: s.v,
               }
             : null,
         ),
       );
 
-      // Lines along the rows, broken at the hole.
+      // Lines along the rows, broken at the hole. Fainter under the stripes.
       ctx.lineWidth = 1;
       ctx.strokeStyle = line;
+      ctx.globalAlpha = 1 - z * 0.6;
       for (const row of points) {
         let open = false;
         ctx.beginPath();
@@ -225,16 +364,27 @@ import HeroBackground from "@/components/HeroBackground.astro";
         ctx.stroke();
       }
 
-      // Dots, smaller and fainter the further away they are.
+      // Dots, smaller and fainter the further away they are. With the
+      // highlight on, each dot is as big and bright as the stripe under it.
       for (const row of points) {
         for (const p of row) {
           if (!p) continue;
           const near = 1 - (p.depth - 2.2) / 2;
           const alpha = Math.max(0.15, Math.min(1, near));
-          ctx.globalAlpha = p.rim ? Math.min(1, alpha + 0.3) : alpha;
-          ctx.fillStyle = p.rim ? accent : dot;
+          if (p.rim) {
+            ctx.globalAlpha = Math.min(1, alpha + 0.3);
+            ctx.fillStyle = accent;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2.4, 0, Math.PI * 2);
+            ctx.fill();
+            continue;
+          }
+          const s = z ? stripe(p.u, p.v, t, yaw, pitch) : 0;
+          const radius = 1.4 + z * (0.9 + 1.8 * s - 1.4);
+          ctx.globalAlpha = alpha * (1 - z * 0.5 * (1 - s));
+          ctx.fillStyle = z > 0.5 ? (s > 0.5 ? lit : dim) : dot;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.rim ? 2.4 : 1.4, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -274,5 +424,10 @@ import HeroBackground from "@/components/HeroBackground.astro";
       black 30%,
       transparent 100%
     );
+  }
+  /* The whole panel is pressable, but the copy stays copyable. */
+  .not-found h1,
+  .not-found p:not(#big-number):not(#caption):not(#hint) {
+    user-select: text;
   }
 </style>
