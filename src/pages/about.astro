@@ -1,16 +1,43 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import SEO from "@/components/SEO.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import Stack from "@/components/Stack.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import LazyThemedImage from "@/components/LazyThemedImage.astro";
+import type { TocItem } from "@/lib/toc";
+import { cn } from "@/lib/utils";
 import avatar from "@/images/avatar_1.webp";
 import signature from "@/images/signature.webp";
 import signatureDark from "@/images/signature-dark.webp";
-import Sidebar from "@/components/Sidebar.astro";
-import Stack from "@/components/Stack.astro";
-import LazyThemedImage from "@/components/LazyThemedImage.astro";
-import { cn } from "@/lib/utils";
+
+const canonicalURL = new URL("/about", Astro.site).href;
+
+const weight = (await getCollection("weight"))[0]?.data;
+const lastWeighIn = weight?.entries.at(-1);
+const goal = weight?.projection?.goal;
+
+const toc: TocItem[] = [
+  { slug: "looked-fine", text: "The life that looked fine from the outside", children: [] },
+  { slug: "detroit", text: "Detroit", children: [] },
+  { slug: "changing", text: "The job I fought for is changing", children: [] },
+  { slug: "now", text: "Now", children: [] },
+];
+
+const sectionHeading =
+  "text-2xl! leading-7! tablet:text-3xl! tablet:leading-8.5! font-medium pb-6";
 ---
 
 <Layout>
+  <SEO
+    slot="head"
+    title="About - Daniel Noworyta"
+    description="Ten years in automotive, two and a half years of 4:30 alarms, a first dev job in 2020. Now the job is changing under me and I am writing about it from inside."
+    canonicalURL={canonicalURL}
+    type="website"
+  />
   <div class="px-(--inline-padding)">
     <Sidebar
       class={cn(
@@ -26,54 +53,16 @@ import { cn } from "@/lib/utils";
           id="introduction"
           class="bg-brand-gradient bg-clip-text text-transparent font-medium laptop:pb-12 mt-10"
         >
-          Developer.<br /> Father. Creator.
+          Still in it.
         </h1>
-        <div
-          class="laptop:hidden relative py-4 border-y border-orange-600 pl-4 mt-4 laptop:mt-10"
-        >
-          <div class="sticky top-20">
-            <p class="caption pb-4">Table of contents</p>
-            <ul id="toc-list" class="flex flex-col gap-1">
-              <li
-                data-section="introduction"
-                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-              >
-                <span
-                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-                ></span><a href="#introduction">Introduction</a>
-              </li>
-              <li
-                data-section="my-story"
-                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-              >
-                <span
-                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-                ></span><a href="#my-story">My Story</a>
-              </li>
-              <li
-                data-section="rock-bottom"
-                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-              >
-                <span
-                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-                ></span><a href="#rock-bottom">My "rock bottom" moment</a>
-              </li>
-              <li
-                data-section="today"
-                class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-              >
-                <span
-                  class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-                ></span><a href="#today">What I'm doing today</a>
-              </li>
-            </ul>
-          </div>
+        <div class="laptop:hidden relative py-4 border-y border-orange-600 mt-4">
+          <TableOfContents toc={toc} />
         </div>
-        <p class="pb-6 mt-4 laptop:mt-0">
-          From dreaming of becoming a programmer to making it a reality in 2020,
-          I'm now sharing my journey through teaching and creating. I help
-          others transition into tech while building useful things along the
-          way.
+        <p class="pb-6 mt-4 laptop:mt-0 text-lg text-pretty">
+          I'm Daniel. I write code for a living, which is a sentence I waited
+          most of my adult life to say. This page is the long version of how
+          that happened, and what it looks like now that the job is changing
+          under me.
         </p>
         <Sidebar sidebarWidth="312px" class="mb-10 tablet:[--sidebar-gap:1rem]">
           <div>
@@ -89,109 +78,125 @@ import { cn } from "@/lib/utils";
             class="text-pretty [@media(min-width:702px)]:text-gray-1200 italic [@media(min-width:702px)]:pt-4"
           >
             <p>
-              Hey, I'm Daniel Noworyta. For most of my life, I pushed aside my
-              dream of becoming a programmer and doing what I love. In 2020, I
-              fulfilled that dream and became a programmer.
+              Full-stack developer, self-taught, working from home in Poland
+              for a German company.
             </p>
-            <p>
-              I have a channel on YouTube where I share my insights and
-              experiences in learning programming, transitioning to new fields,
-              and advancing my career in IT.
-            </p>
+            <p>Father of one. Weekend footballer, slower than I used to be.</p>
             <p class="[@media(min-width:702px)]:pb-4">
-              I love dark mode and side projects. When I'm not working, I like
-              playing football, reading books, and eating pizza.
+              I like dark mode, side projects, and pizza, in that order on a
+              bad day.
             </p>
           </Stack>
         </Sidebar>
-        <h3 id="my-story" class="font-medium `max-w-168.75 pb-6">My Story</h3>
-        <Stack class="pb-8">
+
+        <h2 id="looked-fine" class={sectionHeading}>
+          The life that looked fine from the outside
+        </h2>
+        <Stack class="pb-10">
           <p>
-            I used to live a life that, on the surface, looked successful but
-            felt deeply unfulfilling. As a Class A surface modeler in the
-            automotive industry, I spent my days working long hours in front of
-            a computer, creating 3D models in specialized software. My routine
-            was grueling: waking up at 6:00 AM, working from 8:00 AM to 5:00 PM,
-            and frequently traveling to production facilities in places like
-            Detroit, Turin, Sweden, and Germany.
+            For ten years I was a Class A surface modeler in automotive. If you
+            have ever run your hand along a car door and felt nothing catch,
+            that was someone like me, staring at curvature plots in software
+            most people have never heard of. Up at six, at the desk eight to
+            five, and on a plane more often than not. Detroit, Turin, Sweden,
+            Germany. On paper it was a good career. I had also hit the ceiling
+            of it, and I knew it.
           </p>
           <p>
-            The constant delegations kept me away from home, which became
-            unbearable when I met my wife and dreamed of starting a family. I
-            felt trapped, knowing I'd hit the ceiling of my career with no room
-            to grow or earn more, and my true passion—creating web pages and
-            solving problems through coding—was just a distant dream I lacked
-            the courage to pursue.
-          </p>
-          <p>
-            My mindset back then was a mix of hope and frustration. I believed I
-            could change my life, inspired by YouTube creators and tech blogs,
-            but I wasn't sure if I could pull it off. I felt excited about the
-            possibility of becoming a software developer, yet the demands of my
-            job and the fear of failure held me back.
+            The thing I actually wanted was on the other side of the same
+            screen. I read tech blogs at night. I watched people build web
+            pages on YouTube and thought, I could do that. Then I closed the
+            laptop and got up at six again. For years.
           </p>
         </Stack>
-        <h4 id="rock-bottom" class="font-medium max-w-168.75 pb-6">
-          My "rock bottom" moment
-        </h4>
-        <Stack class="pb-8">
+
+        <h2 id="detroit" class={sectionHeading}>Detroit</h2>
+        <Stack class="pb-10">
           <p>
-            The lowest point came when my son was born, and my company sent me
-            to Detroit for a six-month project. Missing those precious early
-            months with my newborn son was heartbreaking—it was my rock bottom.
-            I knew I couldn't keep living a life that kept me away from my
-            family and my true calling. That moment, coupled with my desire to
-            return to Poland and raise my son there, was the spark that pushed
-            me to act.
+            My son was born, and my company sent me to Detroit for six months.
+            I missed the part of his life you don't get back. I am not going
+            to dress that up. It was the lowest I have been, and it was also
+            the moment the fear of failing finally weighed less than the fear
+            of staying.
           </p>
           <p>
-            Determined to change my life, I committed to learning how to code. I
-            started with online courses from Udemy and YouTube, focusing on
-            HTML, CSS, and JavaScript. To make progress, I reshaped my routine,
-            waking up at 5:30 AM—or even 4:30 AM—to study before my 8-to-5 job,
-            then coding again in the evenings. It wasn't easy.
-          </p>
-          <p>
-            As a self-taught developer, I faced imposter syndrome and struggled
-            to find well-structured resources. I often redid courses multiple
-            times to solidify my knowledge, and without a mentor, I had to rely
-            on sheer persistence. But my dream of working from home, building a
-            SaaS product, and achieving financial independence kept me going.
-            After two and a half years of relentless effort, I landed my first
-            job as a full-stack developer in the TypeScript ecosystem.
+            I started with Udemy and YouTube. HTML, CSS, JavaScript. The alarm
+            moved to 5:30, then 4:30, so I could study before the
+            eight-to-five, and I coded again after my son was asleep. I redid
+            the same courses two and three times because nobody was there to
+            tell me what I was missing. Imposter syndrome is a polite name for
+            it. Two and a half years of that, and in December 2020 someone paid
+            me to write TypeScript for the first time.
           </p>
         </Stack>
-        <h4 id="today" class="font-medium max-w-168.75 pb-6">
-          What I'm doing today
-        </h4>
-        <Stack class="mb-10">
+
+        <h2 id="changing" class={sectionHeading}>
+          The job I fought for is changing
+        </h2>
+        <Stack class="pb-10">
           <p>
-            Today, I work remotely for a German company, building applications
-            for installers of heat pumps and gas boilers using React and React
-            Native. With six years of professional coding experience, I earn a
-            good living and have the freedom to be with my family in Poland. My
-            life has transformed—I'm no longer tethered to constant travel or a
-            career ceiling.
+            Since 2024 I've been at Vaillant, building the web and mobile app
+            that heat pump installers use, in React and React Native. I work
+            from home in Poland. I see my son every day. On the surface, this
+            is the ending.
           </p>
           <p>
-            I also run a YouTube channel with over 5,500 subscribers, where I
-            share my coding journey and inspire others, recently switching to
-            English to reach a broader audience. The key lesson I've learned is
-            that with enough will and dedication, anyone can make a significant
-            life change, no matter their circumstances. Two and a half years may
-            seem long, but it's a small price to pay for a lifetime of
-            fulfillment.
-          </p>
-          <p>
-            This journey fuels my current mission: to show others that they,
-            too, can transform their lives by pursuing their passions,
-            especially in the IT industry. In an era where AI is changing the
-            landscape, I want to inspire people to embrace challenges, learn to
-            code, and build careers that offer freedom and impact. My story is
-            proof that with persistence, anyone can turn their dreams into
-            reality.
+            It is not the ending, because the craft I gave a decade of mornings
+            for is being rewritten while I hold it. I built a full-stack
+            finance tracker with AI in an afternoon that would have taken me
+            weeks in 2020. I love handcrafted code, and I can no longer pretend
+            we have time for it. I don't know what a self-taught path into this
+            industry looks like in three years. I don't know whether the ladder
+            I climbed still exists. I don't have easy answers, and I'm not
+            going to invent them for a nicer paragraph.
           </p>
         </Stack>
+
+        <h2 id="now" class={sectionHeading}>Now</h2>
+        <Stack class="pb-10">
+          <p>What I'm doing about it, in public.</p>
+          <ul class="stack list-disc pl-5" style="--stack-space: 0.75rem">
+            <li>
+              Building <a href="https://github.com/Dan86de/opti" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 decoration-orange-500 hover:text-orange-500 transition-colors">OPTI</a>, my own MCP server, and a content CLI on top of it, so the
+              AI I write with knows my voice and my backlog instead of guessing.
+            </li>
+            <li>
+              One email a week about what I built with AI, what broke, and
+              what I'm changing about how I work.
+              <a href="/#newsletter" class="underline underline-offset-4 decoration-orange-500 hover:text-orange-500 transition-colors">Get the next one.</a>
+            </li>
+            <li>
+              The same things on
+              <a href="https://youtube.com/@danielnoworyta" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 decoration-orange-500 hover:text-orange-500 transition-colors">YouTube</a>,
+              in English since this year, after years in Polish.
+            </li>
+            <li>
+              My habits and my weight,
+              <a href="/habits" class="underline underline-offset-4 decoration-orange-500 hover:text-orange-500 transition-colors">logged on this site</a>.
+              {
+                lastWeighIn && (
+                  <>
+                    <span class="tabular-nums">{lastWeighIn.value} {weight?.unit}</span>
+                    {" "}today{goal ? `, aiming for ${goal}` : ""}.
+                  </>
+                )
+              }
+              A streak nobody can see is easy to drop.
+            </li>
+          </ul>
+          <p>
+            If you are where I was in 2018, reading this at midnight with an
+            alarm set for six: the alarm is not the hard part. The hard part is
+            the two and a half years where nothing visible happens. I'll show
+            you what mine looked like.
+          </p>
+          <p>
+            I still get to say I write code for a living. I'm just no longer
+            sure what it will mean in three years, and I'd rather figure that
+            out in public.
+          </p>
+        </Stack>
+
         <LazyThemedImage
           lightSrc={signature}
           darkSrc={signatureDark}
@@ -202,169 +207,8 @@ import { cn } from "@/lib/utils";
       </div>
       <!-- TOC -->
       <div class="hidden laptop:block mt-49 relative">
-        <div class="sticky top-20">
-          <p class="caption pb-4">Table of contents</p>
-          <ul id="toc-list" class="flex flex-col gap-1">
-            <li
-              data-section="introduction"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#introduction">Introduction</a>
-            </li>
-            <li
-              data-section="my-story"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#my-story">My Story</a>
-            </li>
-            <li
-              data-section="rock-bottom"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#rock-bottom">My "rock bottom" moment</a>
-            </li>
-            <li
-              data-section="today"
-              class="toc-item footnote cursor-pointer flex gap-2 items-center -ml-4 transition-colors"
-            >
-              <span
-                class="toc-indicator block size-2 bg-orange-500 rounded-full opacity-0 transition-opacity"
-              ></span><a href="#today">What I'm doing today</a>
-            </li>
-          </ul>
-        </div>
+        <TableOfContents toc={toc} />
       </div>
     </Sidebar>
   </div>
 </Layout>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll("h1[id], h3[id], h4[id]");
-    const tocItems = document.querySelectorAll(".toc-item");
-
-    // Function to update active TOC item
-    function updateActiveSection() {
-      const scrollPosition = window.scrollY + 100; // Offset for better UX
-
-      let activeSection: string | null = null;
-
-      // Find which section is currently in view
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const sectionTop = rect.top + window.scrollY;
-
-        if (scrollPosition >= sectionTop) {
-          activeSection = section.id;
-        }
-      });
-
-      // Update TOC styling
-      tocItems.forEach((item) => {
-        const sectionId = item.getAttribute("data-section");
-        const indicator = item.querySelector(".toc-indicator");
-        const link = item.querySelector("a");
-
-        if (sectionId === activeSection) {
-          // Active state
-          item.classList.add("text-orange-500");
-          item.classList.remove("text-current");
-          if (indicator) {
-            indicator.classList.remove("opacity-0");
-            indicator.classList.add("opacity-100");
-          }
-        } else {
-          // Inactive state
-          item.classList.remove("text-orange-500");
-          item.classList.add("text-current");
-          if (indicator) {
-            indicator.classList.add("opacity-0");
-            indicator.classList.remove("opacity-100");
-          }
-        }
-      });
-    }
-
-    // Add smooth scrolling for TOC links
-    tocItems.forEach((item) => {
-      const link = item.querySelector("a");
-      if (link) {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute("href")?.substring(1);
-          const targetSection = document.getElementById(targetId ?? "");
-
-          if (targetSection) {
-            const offset = 80; // Adjust this value based on your header height
-            const targetPosition =
-              targetSection.getBoundingClientRect().top +
-              window.scrollY -
-              offset;
-
-            window.scrollTo({
-              top: targetPosition,
-              behavior: "smooth",
-            });
-          }
-        });
-      }
-    });
-
-    // Use Intersection Observer for better performance
-    const observerOptions = {
-      rootMargin: "-20% 0% -70% 0%",
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id;
-
-          // Update TOC styling
-          tocItems.forEach((item) => {
-            const itemSectionId = item.getAttribute("data-section");
-            const indicator = item.querySelector(".toc-indicator");
-
-            if (itemSectionId === sectionId) {
-              item.classList.add("text-orange-500");
-              item.classList.remove("text-current");
-              if (indicator) {
-                indicator.classList.remove("opacity-0");
-                indicator.classList.add("opacity-100");
-              }
-            } else {
-              item.classList.remove("text-orange-500");
-              item.classList.add("text-current");
-              if (indicator) {
-                indicator.classList.add("opacity-0");
-                indicator.classList.remove("opacity-100");
-              }
-            }
-          });
-        }
-      });
-    }, observerOptions);
-
-    // Observe all sections
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    // Initial check
-    updateActiveSection();
-
-    // Fallback scroll listener for edge cases
-    let scrollTimeout: NodeJS.Timeout;
-    window.addEventListener("scroll", () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(updateActiveSection, 10);
-    });
-  });
-</script>
