@@ -7,46 +7,52 @@ const canonicalURL = new URL("/uses", Astro.site).href;
 
 const hardwareItems = [
   {
-    name: 'MacBook Pro 16" (2021)',
+    name: 'MacBook Pro 16" (2021), M1 Max, 32 GB',
     url: "https://www.apple.com/macbook-pro/",
     description:
-      "My primary development machine with M1 Max and 32GB RAM. Handles everything from coding to video editing without breaking a sweat.",
+      "Four years in and it still edits video and runs the whole dev stack without the fans coming on. It is not the bottleneck. I am.",
   },
   {
     name: "Apple Studio Display",
     url: "https://www.apple.com/studio-display/",
     description:
-      "27-inch 5K display that serves as my main monitor. Crisp text and accurate colors make it perfect for development and content work.",
+      "One 5K screen, no second monitor. Text is sharp enough that I stopped thinking about it, which is the whole point of a monitor.",
   },
   {
     name: "Canon EOS 5D Mark IV",
     url: "https://www.usa.canon.com/shop/p/eos-5d-mark-iv",
     description:
-      "Professional full-frame camera for high-quality content creation. The 30MP sensor and dual pixel autofocus deliver exceptional results.",
+      "A photo camera on video duty for YouTube. Overkill for a talking head, and the skin tones are why I have not replaced it with something smaller.",
   },
   {
     name: "Shure SM7B",
     url: "https://www.shure.com/en-US/products/microphones/sm7b",
     description:
-      "Broadcast-quality microphone for recordings and calls. Mounted on a Rode PSA1 arm for easy positioning.",
+      "The microphone every YouTuber buys, and for once the crowd is right. It ignores the room, and my room is not treated. On a Rode PSA1 arm.",
+  },
+  {
+    name: "Elgato Wave XLR",
+    url: "https://www.elgato.com/us/en/p/wave-xlr",
+    description:
+      "The box between the SM7B and the Mac. Enough gain for that mic without a separate preamp, and Clipguard means I can get loud about something and the recording does not clip.",
   },
   {
     name: "NuPhy Air75 V3",
-    url: "https://nuphy.com/collections/keyboards/products/nuphy-air75-v3-page?_fid=7ad66f9b3",
+    url: "https://nuphy.com/collections/keyboards/products/nuphy-air75-v3-page",
     description:
-      "Ultra-slim mechanical keyboard with low-profile switches. The perfect balance of portability and typing feel for daily coding.",
+      "Low-profile mechanical, and the first keyboard I did not swap out after a month. Flat enough for eight hours, loud enough to know the key went down.",
   },
   {
     name: "Elgato Stream Deck",
     url: "https://www.elgato.com/us/en/p/stream-deck",
     description:
-      "Customizable control panel with LCD keys for quick access to workflows, shortcuts, and automation.",
+      "A grid of buttons I mapped once and now cannot record without. Scene switch, mute, timer. One job per button is the appeal.",
   },
   {
     name: "Bose QuietComfort Headphones",
     url: "https://www.bose.com/p/headphones/bose-quietcomfort-headphones/QC-HEADPHONEARN.html",
     description:
-      "Premium noise-cancelling headphones for focused work sessions. Comfortable for all-day wear with excellent sound quality.",
+      "Bought for the noise cancelling, not the sound. When they go on, the house knows I am working.",
   },
 ];
 
@@ -55,85 +61,87 @@ const softwareItems = [
     name: "Claude Code",
     url: "https://claude.com/product/claude-code",
     description:
-      "AI coding agent that helps me write code, refactor, and explore codebases. Invaluable for complex tasks and boosting productivity.",
+      "The tool this whole site is about. It writes most of my first drafts of code now, and the habits and weight logging on this site came out of it. What it does not do is know what should be built. That part is still me, and that is the point.",
   },
   {
-    name: "Zed Editor",
+    name: "Zed",
     url: "https://zed.dev/",
     description:
-      "Lightning-fast code editor built in Rust. Great for quick edits and collaborative coding sessions.",
+      "Fast enough that I notice VS Code now. I open it to read and for quick edits. The heavy lifting happens in the terminal with Claude Code.",
   },
   {
-    name: "Arc Browser",
+    name: "WezTerm",
+    url: "https://wezterm.org/",
+    description:
+      "A terminal configured in a text file, and nothing in it that phones home. Since Claude Code lives in the terminal, this is where most of my day happens now.",
+  },
+  {
+    name: "OBS",
+    url: "https://obsproject.com/",
+    description:
+      "Free, ugly, and it records every video on the channel. Scenes switch from the Stream Deck, the camera and the screen come in as sources, and I have not found a reason to pay for anything else.",
+  },
+  {
+    name: "Arc",
     url: "https://arc.net/",
     description:
-      "My primary browser for development and research. The Space organization and command bar make it incredibly productive.",
-  },
-  {
-    name: "Warp Terminal",
-    url: "https://www.warp.dev/",
-    description:
-      "Modern terminal with AI command suggestions and block-based output. Makes command-line work much more efficient.",
-  },
-  {
-    name: "Figma",
-    url: "https://www.figma.com/",
-    description:
-      "Design tool for UI/UX work and prototyping. The collaboration features make it perfect for working with designers.",
+      "Spaces keep the work tabs away from the YouTube tabs, which for me is the difference between a focused day and a lost one.",
   },
   {
     name: "Raycast",
     url: "https://www.raycast.com/",
     description:
-      "Productivity launcher that replaced Spotlight for me. Extensions for everything from clipboard history to GitHub PRs.",
-  },
-  {
-    name: "Notion",
-    url: "https://www.notion.so/",
-    description:
-      "My second brain for notes, documentation, and project management. Essential for organizing thoughts and tracking goals.",
+      "Replaced Spotlight and half a dozen small utilities. Clipboard history alone earned its place.",
   },
   {
     name: "Notion Calendar",
     url: "https://www.notion.so/product/calendar",
     description:
-      "Calendar app integrated with Notion. Keeps my schedule and tasks in sync across all my planning systems.",
-  },
-  {
-    name: "1Password",
-    url: "https://1password.com/",
-    description:
-      "Password manager that I trust with all my credentials. The developer tools integration is excellent.",
-  },
-  {
-    name: "Spotify",
-    url: "https://www.spotify.com/",
-    description:
-      "Music streaming for focus and productivity. I have curated playlists for different types of work.",
-  },
-  {
-    name: "CleanMyMac",
-    url: "https://macpaw.com/cleanmymac",
-    description:
-      "Mac maintenance and optimization tool. Keeps my system running smoothly with regular cleanups and monitoring.",
+      "Notion itself left my stack. The calendar stayed, because it is the one calendar app that shows the week the way I think about it.",
   },
   {
     name: "Todoist",
     url: "https://todoist.com/",
     description:
-      "Task management app for tracking todos and projects. Natural language input and cross-platform sync make it indispensable.",
+      'A task app has to be fast, and this one is. Type "gym thursday" and it lands on Thursday.',
   },
   {
-    name: "iA Presenter",
-    url: "https://ia.net/presenter",
+    name: "1Password",
+    url: "https://1password.com/",
     description:
-      "Markdown-based presentation software for creating beautiful slides. Focuses on content over design distractions.",
+      "Non-negotiable. The CLI means secrets get pulled at runtime instead of copied into files.",
   },
   {
     name: "iA Writer",
     url: "https://ia.net/writer",
     description:
-      "Distraction-free writing app with excellent typography. Perfect for drafting blog posts and long-form content.",
+      "Where posts and the newsletter get drafted. Plain text, one font, nothing to fiddle with, which is the only way I finish a draft.",
+  },
+  {
+    name: "iA Presenter",
+    url: "https://ia.net/presenter",
+    description:
+      "Slides from the same markdown. I write the talk and it becomes the deck.",
+  },
+  {
+    name: "Figma",
+    url: "https://www.figma.com/",
+    description:
+      "I am not a designer, but I open Figma before the editor for anything with a UI. Cheaper to move a rectangle than a component.",
+  },
+];
+
+const inProgressItems: { name: string; url?: string; description: string }[] = [
+  {
+    name: "Obsidian",
+    url: "https://obsidian.md/",
+    description:
+      "Where the notes went after Notion. I am still building the vault, and this time the notes are the point, not the setup. Everything my content tools draft lands here as plain markdown files I own.",
+  },
+  {
+    name: "content-cli",
+    description:
+      "My own command line tool for the content side: pulling what I have already said, in my voice, into the next post or video. Unfinished, and used anyway, which is the honest state of most tools I build for myself.",
   },
 ];
 ---
@@ -142,7 +150,7 @@ const softwareItems = [
   <SEO
     slot="head"
     title="Uses - Daniel Noworyta"
-    description="Hardware, software, and tools I use daily for development and content creation."
+    description="What is on my desk and in my dock, and why. Everything here I paid for and still open."
     canonicalURL={canonicalURL}
     type="website"
   />
@@ -154,21 +162,12 @@ const softwareItems = [
         >
           Uses
         </h1>
-        <p class="text-gray-1100 text-lg">
-          Hardware, software, and tools I use daily.
+        <p class="text-gray-1100 text-lg max-w-2xl text-pretty">
+          What is on my desk and in my dock, and why. Everything here I paid
+          for and still open. If it is on this page, I used it this week, not
+          in theory.
         </p>
       </header>
-
-      <!-- Affiliate Disclosure -->
-      <div
-        class="mb-8 p-4 bg-gray-200 border-l-4 border-orange-500 rounded-md max-w-2xl"
-      >
-        <p class="text-sm text-gray-1100">
-          <strong>Disclosure:</strong> Some links on this page may be affiliate links.
-          If you purchase through these links, I may earn a small commission at no
-          extra cost to you. I only recommend tools I genuinely use and trust.
-        </p>
-      </div>
 
       <!-- Hardware Section -->
       <section class="mb-12 max-w-2xl">
@@ -192,6 +191,42 @@ const softwareItems = [
                 <p class="text-gray-1100">{item.description}</p>
               </a>
             ))
+          }
+        </Stack>
+      </section>
+
+      <!-- In progress Section -->
+      <section class="mb-12 max-w-2xl">
+        <h2
+          class="pb-2 bg-brand-gradient bg-clip-text text-transparent transition-colors"
+        >
+          In progress
+        </h2>
+        <p class="text-gray-1100 pb-6">
+          Tools I am building, or building on, right now. Expect them to change.
+        </p>
+        <Stack space="calc(var(--spacing) * 6)">
+          {
+            inProgressItems.map((item) =>
+              item.url ? (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group block"
+                >
+                  <h3 class="body-large mb-2 text-gray-1200 group-hover:text-gray-1100 transition-colors">
+                    {item.name}
+                  </h3>
+                  <p class="text-gray-1100">{item.description}</p>
+                </a>
+              ) : (
+                <div>
+                  <h3 class="body-large mb-2 text-gray-1200">{item.name}</h3>
+                  <p class="text-gray-1100">{item.description}</p>
+                </div>
+              ),
+            )
           }
         </Stack>
       </section>
