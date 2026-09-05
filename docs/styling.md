@@ -21,6 +21,7 @@ Use `font-display font-medium` (Geomanist) or `font-bold` instead.
 
 - Custom OKLCH color system
 - Orange brand colors + gray scale
+- `green-500` / `red-500` status colors, only for ahead / behind cues (weight chart)
 - Automatic dark mode inversion
 
 ## Breakpoints

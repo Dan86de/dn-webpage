@@ -42,6 +42,9 @@ Days are rendered by `src/components/HabitGrid.astro` as a rolling 53-week grid 
 **Schema**:
 - `unit` - `kg` or `lb`
 - `entries` - List of `{ date, value }` readings, one per day (later duplicates win, sorted by date)
+- `projection` - Optional goal projection: `goal`, `intake` (daily kcal cap), `burn` (two `{ weight, kcal }` anchors the daily burn is interpolated between), `adherence` (share of the modelled deficit actually hit, in (0, 1])
 
 **Logging**: `pnpm weight <value> [YYYY-MM-DD]` adds or replaces a reading.
 Rendered by `src/components/WeightChart.tsx`, a React island with a spring-driven clip-path reveal on hover.
+The projection (`src/lib/weight.ts`) walks day by day from the first reading, losing `adherence * (burn - intake) / 7700` kg per day until it hits the goal.
+It is a fixed target line, so the gap between it and the latest reading shows whether the plan is ahead or behind.

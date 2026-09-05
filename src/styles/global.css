@@ -58,6 +58,10 @@
   --color-gray-1100: oklch(50% 0.01 0);
   --color-gray-1200: oklch(24% 0.01 0);
 
+  /* STATUS (ahead / behind) */
+  --color-green-500: oklch(62% 0.17 150);
+  --color-red-500: oklch(60% 0.2 25);
+
   /* GRADIENTS */
   --brand-gradient: linear-gradient(
     135deg,
@@ -105,6 +109,8 @@
   --color-gray-1000: oklch(58% 0.01 99.95);
   --color-gray-1100: oklch(77% 0.01 0);
   --color-gray-1200: oklch(95% 0 0);
+  --color-green-500: oklch(74% 0.18 150);
+  --color-red-500: oklch(70% 0.19 25);
 }
 
 @layer base {

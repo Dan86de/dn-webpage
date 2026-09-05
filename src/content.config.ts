@@ -40,10 +40,24 @@ const habits = defineCollection({
   }),
 });
 
+const burnAnchor = z.object({
+  weight: z.number().positive(),
+  kcal: z.number().positive(),
+});
+
 const weight = defineCollection({
   loader: glob({ pattern: "*.yaml", base: "./src/content/weight" }),
   schema: z.object({
     unit: z.enum(["kg", "lb"]).default("kg"),
+    // Optional projection to a goal weight, drawn past the latest reading.
+    projection: z
+      .object({
+        goal: z.number().positive(),
+        intake: z.number().positive(),
+        burn: z.tuple([burnAnchor, burnAnchor]),
+        adherence: z.number().gt(0).max(1),
+      })
+      .optional(),
     entries: z
       .array(
         z.object({

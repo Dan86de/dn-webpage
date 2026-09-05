@@ -1,5 +1,20 @@
 # Weight log. Add a reading with: pnpm weight <kg> [YYYY-MM-DD]
 unit: kg
+
+# Projection to the goal, drawn as a dashed target line from the first reading.
+# Daily loss = adherence * (burn - intake) / 7700 kcal per kg, where burn is
+# interpolated between the two anchors, so the line flattens as weight drops.
+projection:
+  goal: 94
+  intake: 2100
+  burn:
+    - weight: 111
+      kcal: 2900
+    - weight: 94
+      kcal: 2690
+  # Share of the modelled deficit actually hit on an average week.
+  adherence: 0.8
+
 entries:
   - date: 2026-09-01
     value: 111.4
