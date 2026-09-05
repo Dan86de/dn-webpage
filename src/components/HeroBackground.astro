@@ -36,6 +36,9 @@ const { variant = "dots" } = Astro.props;
   .hero-bg {
     position: absolute;
     inset: 0;
+    /* Only the top of the page: the dots belong behind the hero, not the
+       sections below it. */
+    max-height: min(85vh, 820px);
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
@@ -51,9 +54,10 @@ const { variant = "dots" } = Astro.props;
     );
     background-size: 24px 24px;
     background-position: center;
+    opacity: 0.4;
     mask-image: radial-gradient(
-      ellipse 55% 60% at 50% 50%,
-      black 10%,
+      ellipse 55% 60% at 50% 45%,
+      black 0%,
       transparent 100%
     );
   }

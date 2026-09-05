@@ -65,7 +65,10 @@ import SpeedInsights from "@vercel/speed-insights/astro";
       href="/rss.xml"
     />
     <slot name="head">
-      <meta name="description" content="Code to learn..." />
+      <meta
+        name="description"
+        content="Self-taught developer writing about building software with AI, from inside the work."
+      />
       <title>Daniel Noworyta</title>
     </slot>
   </head>
@@ -161,9 +164,40 @@ import SpeedInsights from "@vercel/speed-insights/astro";
     </main>
     <footer class="px-(--inline-padding) py-8 mt-16">
       <div
-        class="mx-auto max-w-4xl text-center text-sm text-(--text-secondary)"
+        class="mx-auto max-w-4xl flex flex-col tablet:flex-row items-center justify-between gap-3 text-sm text-(--text-secondary)"
       >
         <p>© 2026 Daniel Noworyta</p>
+        <ul class="flex items-center gap-5">
+          <li>
+            <a
+              href="https://youtube.com/@danielnoworyta"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-orange-500 transition-colors">YouTube</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://linkedin.com/in/danielnoworyta"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-orange-500 transition-colors">LinkedIn</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://x.com/danielnoworyta"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-orange-500 transition-colors">X</a
+            >
+          </li>
+          <li>
+            <a href="/rss.xml" class="hover:text-orange-500 transition-colors"
+              >RSS</a
+            >
+          </li>
+        </ul>
       </div>
     </footer>
     <TailwindIndicator />
@@ -214,6 +248,5 @@ import SpeedInsights from "@vercel/speed-insights/astro";
       });
     </script>
   </body>
-  <TailwindIndicator />
   <SpeedInsights />
 </html>

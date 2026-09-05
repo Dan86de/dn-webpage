@@ -1,6 +1,21 @@
 ---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
+import SEO from "@/components/SEO.astro";
 import HeroBackground from "@/components/HeroBackground.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import avatar from "@/images/avatar_1.webp";
+
+const canonicalURL = new URL("/", Astro.site).href;
+
+const [latest] = (await getCollection("blog"))
+  .filter((post) => !post.data.isDraft)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const weight = (await getCollection("weight"))[0]?.data;
+const lastWeighIn = weight?.entries.at(-1);
+const goal = weight?.projection?.goal;
 ---
 
 <style is:inline>
@@ -14,7 +29,7 @@ import HeroBackground from "@/components/HeroBackground.astro";
 
   /*
    * Chrome forces a light-blue autofill background that can't be
-   * reliably overridden — use dark text in light mode, light text
+   * reliably overridden. Use dark text in light mode, light text
    * in dark mode so filled values stay readable.
    */
   input.newsletter-input:-webkit-autofill,
@@ -80,26 +95,127 @@ import HeroBackground from "@/components/HeroBackground.astro";
 </style>
 
 <Layout>
+  <SEO
+    slot="head"
+    title="Daniel Noworyta"
+    description="Self-taught developer, ten years in automotive before that. Writing about building software with AI from inside the work, while it is still happening."
+    canonicalURL={canonicalURL}
+    type="website"
+  />
   <HeroBackground variant="dots" />
-  <div class="flex flex-col grow px-(--inline-padding)">
-    <div class="flex flex-col grow mx-auto max-w-4xl w-full">
-      <div class="flex flex-col items-center justify-center grow">
-        <h1
-          class="font-medium tracking-tight text-center text-balance max-w-[30ch]"
+  <div class="px-(--inline-padding)">
+    <div class="mx-auto max-w-4xl">
+      <!-- Hero: the person first -->
+      <Sidebar
+        sidebarWidth="240px"
+        noStretch
+        class="pt-6 tablet:pt-14 tablet:[--sidebar-gap:3.5rem]"
+      >
+        <div class="max-w-60 tablet:max-w-none">
+          <Image
+            loading="eager"
+            src={avatar}
+            alt="Daniel Noworyta"
+            class="aspect-square w-full rounded-lg block"
+          />
+        </div>
+        <div class="max-w-2xl">
+          <p class="caption text-gray-1000 mb-5">
+            Daniel Noworyta. Full-stack dev in Poland. Self-taught in 2020.
+          </p>
+          <h1 class="font-medium tracking-tight text-balance">
+            I started <span class="bg-brand-gradient bg-clip-text text-transparent">over once.</span>
+          </h1>
+          <p class="mt-6 text-lg text-pretty text-gray-1100 max-w-[52ch]">
+            Ten years modeling car surfaces. Then two and a half years of 4:30
+            alarms until someone paid me to write TypeScript. That was 2020.
+            Now I work full-stack, web and mobile, from home in Poland, and the craft I
+            fought for is being rewritten by AI faster than I expected. I write
+            about what that is actually like, from inside it, while it is still
+            happening.
+          </p>
+        </div>
+      </Sidebar>
+
+      <!-- Latest writing -->
+      {
+        latest && (
+          <section class="mt-16 tablet:mt-24 max-w-2xl" aria-labelledby="latest">
+            <p id="latest" class="caption text-gray-1000 mb-3">
+              Latest
+            </p>
+            <a href={`/blog/${latest.data.slug}`} class="group block">
+              <h2 class="text-2xl! leading-7! tablet:text-3xl! tablet:leading-8.5! font-medium group-hover:bg-brand-gradient group-hover:bg-clip-text group-hover:text-transparent transition-colors">
+                {latest.data.title}
+              </h2>
+              <p class="mt-3 text-gray-1100 text-pretty">
+                {latest.data.description}
+              </p>
+              <span class="mt-3 inline-block text-orange-500 font-display font-medium">
+                Read it
+              </span>
+            </a>
+          </section>
+        )
+      }
+
+      <!-- Right now: the pieces that prove the brand -->
+      <section class="mt-16 tablet:mt-20" aria-labelledby="now">
+        <p id="now" class="caption text-gray-1000 mb-4">Right now</p>
+        <ul class="grid gap-x-8 gap-y-6 tablet:grid-cols-3 text-pretty">
+          {
+            lastWeighIn && (
+              <li>
+                <p class="text-gray-1200">
+                  Weighing in every morning.
+                  <span class="tabular-nums">{lastWeighIn.value} {weight?.unit}</span>
+                  today{goal ? `, aiming for ${goal}` : ""}, logged in public.
+                </p>
+                <a href="/habits" class="mt-2 inline-block text-orange-500 font-display font-medium">
+                  See the habits log
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <p class="text-gray-1200">
+              Talking through all of this on YouTube, in English since this year.
+            </p>
+            <a
+              href="https://youtube.com/@danielnoworyta"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 inline-block text-orange-500 font-display font-medium"
+            >
+              Watch the channel
+            </a>
+          </li>
+          <li>
+            <p class="text-gray-1200">The longer story, Detroit included.</p>
+            <a href="/about" class="mt-2 inline-block text-orange-500 font-display font-medium">
+              About me
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Newsletter -->
+      <section
+        class="mt-16 tablet:mt-24 max-w-2xl"
+        aria-labelledby="newsletter"
+      >
+        <h2
+          id="newsletter"
+          class="text-2xl! leading-7! tablet:text-3xl! tablet:leading-8.5! font-medium text-balance"
         >
-          Join engineers who are <span
-            class="bg-brand-gradient bg-clip-text text-transparent"
-            >thriving</span
-          > in the AI era
-        </h1>
-        <p
-          class="mx-auto mt-4 max-w-[48ch] text-lg text-pretty text-center text-gray-900"
-        >
-          Practical insights on using AI to write better code, ship faster, and
-          grow your career — delivered weekly.
+          One email a week, from inside the work.
+        </h2>
+        <p class="mt-3 text-gray-1100 text-pretty max-w-[52ch]">
+          What I built with AI this week, what broke, and what I am changing
+          about how I work because of it. No roundups of other people's threads.
         </p>
         <form
-          class="mt-10 flex flex-col gap-3 w-full max-w-xs"
+          class="mt-8 flex flex-col gap-3 w-full max-w-xs"
           action="https://app.kit.com/forms/9259766/subscriptions"
           method="post"
         >
@@ -134,7 +250,7 @@ import HeroBackground from "@/components/HeroBackground.astro";
             type="submit"
             class="mt-1 rounded-lg bg-brand-gradient px-4 py-3.5 text-sm font-display font-medium text-white transition-opacity hover:opacity-90 cursor-pointer"
           >
-            Subscribe
+            Get the next one
           </button>
         </form>
         <script>
@@ -153,7 +269,7 @@ import HeroBackground from "@/components/HeroBackground.astro";
         <p class="mt-3 text-gray-800 text-sm">
           I respect your privacy. Unsubscribe at any time.
         </p>
-      </div>
+      </section>
     </div>
   </div>
 </Layout>

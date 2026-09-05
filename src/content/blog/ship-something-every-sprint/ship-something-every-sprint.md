@@ -1,7 +1,7 @@
 ---
 isDraft: false
 title: Ship something every sprint - not for the team, for yourself.
-description: AI is fundamentally reshaping software engineering. Learn how to evolve from code writer to conductor, why garage experience matters for juniors, and strategic steps to thrive in an era where judgment beats typing speed.
+description: Some sprints I ship nothing meaningful. The board looks clean and I feel hollow anyway. This last one was different, and it taught me what a good sprint actually is.
 author: Daniel Noworyta
 tags: ["programming", "career"]
 publishDate: 2026-02-17
