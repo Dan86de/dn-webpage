@@ -3,6 +3,7 @@ isDraft: false
 title: Ship something every sprint - not for the team, for yourself.
 description: Some sprints I ship nothing meaningful. The board looks clean and I feel hollow anyway. This last one was different, and it taught me what a good sprint actually is.
 author: Daniel Noworyta
+category: essay
 tags: ["programming", "career"]
 publishDate: 2026-02-17
 authorContact: daniel.noworyta@gmail.com

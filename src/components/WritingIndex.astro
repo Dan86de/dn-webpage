@@ -1,0 +1,115 @@
+---
+/**
+ * The Writing archive, optionally narrowed to one category. Rendered by the
+ * static /writing, /writing/issues and /writing/essays pages.
+ */
+import Layout from "@/layouts/Layout.astro";
+import SEO from "@/components/SEO.astro";
+import BlogPostList from "@/components/BlogPostList.astro";
+import { getVisiblePosts, withIssueNumbers, type Category } from "@/lib/posts";
+
+interface Props {
+  category?: Category;
+}
+
+const { category } = Astro.props;
+
+const all = withIssueNumbers(await getVisiblePosts());
+const posts = category
+  ? all.filter(({ post }) => post.data.category === category)
+  : all;
+
+const count = (c: Category) =>
+  all.filter(({ post }) => post.data.category === c).length;
+
+const filters = [
+  { href: "/writing", label: "All", count: all.length, active: !category },
+  {
+    href: "/writing/issues",
+    label: "Issues",
+    count: count("issue"),
+    active: category === "issue",
+  },
+  {
+    href: "/writing/essays",
+    label: "Essays",
+    count: count("essay"),
+    active: category === "essay",
+  },
+];
+
+const path = filters.find((f) => f.active)?.href ?? "/writing";
+const canonicalURL = new URL(path, Astro.site).href;
+
+const copy = {
+  issue: {
+    title: "Issues - Daniel Noworyta",
+    description:
+      "The weekly letter. What I built with AI this week, what broke, and what I am changing about how I work because of it.",
+    intro:
+      "The weekly letter, one issue at a time. What I built with AI, what broke, and what I am changing about how I work because of it.",
+  },
+  essay: {
+    title: "Essays - Daniel Noworyta",
+    description:
+      "Longer pieces on being a self-taught developer while AI rewrites the job.",
+    intro:
+      "The longer pieces. Written when something would not fit in a weekly issue.",
+  },
+  all: {
+    title: "Writing - Daniel Noworyta",
+    description:
+      "What it is like to be a self-taught developer while AI rewrites the job. Written from inside the work, not from above it.",
+    intro:
+      "What it is like to do this job while AI rewrites it. Written from inside the work, not from above it.",
+  },
+}[category ?? "all"];
+---
+
+<Layout>
+  <SEO
+    slot="head"
+    title={copy.title}
+    description={copy.description}
+    canonicalURL={canonicalURL}
+    type="website"
+  />
+  <div class="px-(--inline-padding)">
+    <div class="max-w-4xl mx-auto py-12">
+      <header class="mb-12">
+        <h1
+          class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4"
+        >
+          Writing
+        </h1>
+        <p class="text-gray-1100 text-lg max-w-2xl text-pretty">{copy.intro}</p>
+      </header>
+
+      <!-- Category switch -->
+      <nav class="mb-8" aria-label="Filter writing by category">
+        <ul class="flex flex-wrap gap-2">
+          {
+            filters.map((filter) => (
+              <li>
+                <a
+                  href={filter.href}
+                  aria-current={filter.active ? "page" : undefined}
+                  class:list={[
+                    "inline-block px-3 py-1.5 text-sm rounded-md transition-colors tabular-nums",
+                    filter.active
+                      ? "bg-orange-500 text-white"
+                      : "bg-gray-200 text-gray-900 hover:bg-gray-300",
+                  ]}
+                >
+                  {filter.label} ({filter.count})
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <BlogPostList posts={posts} />
+    </div>
+  </div>
+</Layout>

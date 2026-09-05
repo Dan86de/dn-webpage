@@ -38,125 +38,81 @@ const { toc } = Astro.props;
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll("h2[id], h3[id]");
-    const tocItems = document.querySelectorAll(".toc-item");
+  // Scroll spy. One source of truth (the scroll position) instead of an
+  // IntersectionObserver racing a scroll listener: the last heading whose top
+  // has passed the activation line is active, and once the page is scrolled
+  // to the bottom the last heading is active even if it never reaches that
+  // line. That is what lets the post end without a viewport of padding.
+  const ACTIVATION_OFFSET = 100; // px below the top of the viewport
+  const HEADER_OFFSET = 80; // sticky header height, for link scrolling
 
-    // Function to update active TOC item
-    function updateActiveSection() {
-      const scrollPosition = window.scrollY + 100; // Offset for better UX
+  const tocItems = Array.from(
+    document.querySelectorAll<HTMLElement>(".toc-item"),
+  );
+  // Only the headings the TOC lists. The page has other headings (the
+  // newsletter block after a post) that must not steal the active state.
+  const listed = new Set(tocItems.map((item) => item.dataset.section));
+  const sections = Array.from(
+    document.querySelectorAll<HTMLElement>("h2[id], h3[id]"),
+  ).filter((section) => listed.has(section.id));
 
-      let activeSection: string | null = null;
-
-      // Find which section is currently in view
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const sectionTop = rect.top + window.scrollY;
-
-        if (scrollPosition >= sectionTop) {
-          activeSection = section.id;
-        }
-      });
-
-      // Update TOC styling
-      tocItems.forEach((item) => {
-        const sectionId = item.getAttribute("data-section");
-        const indicator = item.querySelector(".toc-indicator");
-
-        if (sectionId === activeSection) {
-          // Active state
-          item.classList.add("text-orange-500");
-          item.classList.remove("text-current");
-          if (indicator) {
-            indicator.classList.remove("opacity-0");
-            indicator.classList.add("opacity-100");
-          }
-        } else {
-          // Inactive state
-          item.classList.remove("text-orange-500");
-          item.classList.add("text-current");
-          if (indicator) {
-            indicator.classList.add("opacity-0");
-            indicator.classList.remove("opacity-100");
-          }
-        }
-      });
-    }
-
-    // Add smooth scrolling for TOC links
+  function setActive(sectionId: string | null) {
     tocItems.forEach((item) => {
-      const link = item.querySelector("a");
-      if (link) {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute("href")?.substring(1);
-          const targetSection = document.getElementById(targetId ?? "");
+      const active = item.dataset.section === sectionId;
+      item.classList.toggle("text-orange-500", active);
+      const indicator = item.querySelector(".toc-indicator");
+      indicator?.classList.toggle("opacity-0", !active);
+      indicator?.classList.toggle("opacity-100", active);
+    });
+  }
 
-          if (targetSection) {
-            const offset = 80; // Adjust this value based on your header height
-            const targetPosition =
-              targetSection.getBoundingClientRect().top +
-              window.scrollY -
-              offset;
+  function currentSection(): string | null {
+    if (sections.length === 0) return null;
 
-            window.scrollTo({
-              top: targetPosition,
-              behavior: "smooth",
-            });
-          }
-        });
+    const atBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 2;
+    if (atBottom) return sections[sections.length - 1].id;
+
+    const line = window.scrollY + ACTIVATION_OFFSET;
+    let active: string | null = null;
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top + window.scrollY <= line) {
+        active = section.id;
       }
+    }
+    return active;
+  }
+
+  let ticking = false;
+  function update() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      setActive(currentSection());
+      ticking = false;
     });
+  }
 
-    // Use Intersection Observer for better performance
-    const observerOptions = {
-      rootMargin: "-20% 0% -70% 0%",
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id;
-
-          // Update TOC styling
-          tocItems.forEach((item) => {
-            const itemSectionId = item.getAttribute("data-section");
-            const indicator = item.querySelector(".toc-indicator");
-
-            if (itemSectionId === sectionId) {
-              item.classList.add("text-orange-500");
-              item.classList.remove("text-current");
-              if (indicator) {
-                indicator.classList.remove("opacity-0");
-                indicator.classList.add("opacity-100");
-              }
-            } else {
-              item.classList.remove("text-orange-500");
-              item.classList.add("text-current");
-              if (indicator) {
-                indicator.classList.add("opacity-0");
-                indicator.classList.remove("opacity-100");
-              }
-            }
-          });
-        }
+  tocItems.forEach((item) => {
+    const link = item.querySelector("a");
+    link?.addEventListener("click", (e) => {
+      const target = document.getElementById(
+        link.getAttribute("href")?.substring(1) ?? "",
+      );
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, "", `#${target.id}`);
+      window.scrollTo({
+        top:
+          target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET,
+        behavior: "smooth",
       });
-    }, observerOptions);
-
-    // Observe all sections
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    // Initial check
-    updateActiveSection();
-
-    // Fallback scroll listener for edge cases
-    let scrollTimeout: NodeJS.Timeout;
-    window.addEventListener("scroll", () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(updateActiveSection, 10);
     });
   });
+
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  // First paint synchronously; the frame callback is only for scrolling.
+  setActive(currentSection());
 </script>

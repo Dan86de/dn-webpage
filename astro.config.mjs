@@ -13,7 +13,10 @@ export default defineConfig({
   compressHTML: true,
   markdown: {
     shikiConfig: {
-      theme: "github-dark",
+      // Both themes are emitted as CSS variables and picked per theme in
+      // BlogPostLayout.astro, so code blocks follow the site's toggle.
+      themes: { light: "github-light", dark: "github-dark" },
+      defaultColor: false,
       langs: [],
       wrap: true,
     },

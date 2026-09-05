@@ -9,6 +9,8 @@ interface Props {
   author?: string;
   tags?: string[];
   type?: "website" | "article";
+  /** Also emit a Person schema. For the pages that are about Daniel. */
+  person?: boolean;
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   author,
   tags = [],
   type = "article",
+  person = false,
 } = Astro.props;
 
 // Default fallback image if none provided
@@ -30,20 +33,62 @@ const ogImageAlt = imageAlt || title;
 // Get site URL from canonical URL (extract origin)
 const siteUrl = new URL(canonicalURL).origin;
 
-// JSON-LD structured data for BlogPosting
-const structuredData = {
-  "@context": "https://schema.org",
+const absoluteImage = ogImage.startsWith("http")
+  ? ogImage
+  : `${siteUrl}${ogImage}`;
+
+// Stable ids so the schemas on different pages refer to the same person and
+// site instead of describing new ones each time.
+const personId = `${siteUrl}/#person`;
+const websiteId = `${siteUrl}/#website`;
+
+const personSchema = {
+  "@type": "Person",
+  "@id": personId,
+  name: "Daniel Noworyta",
+  url: siteUrl,
+  image: `${siteUrl}/og-default.jpg`,
+  jobTitle: "Full-stack developer",
+  description:
+    "Self-taught developer, ten years in automotive before that. Writing about building software with AI from inside the work.",
+  sameAs: [
+    "https://youtube.com/@danielnoworyta",
+    "https://linkedin.com/in/danielnoworyta",
+    "https://x.com/danielnoworyta",
+  ],
+};
+
+const websiteSchema = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: "Daniel Noworyta",
+  url: siteUrl,
+  inLanguage: "en",
+  publisher: { "@id": personId },
+};
+
+const articleSchema = {
   "@type": "BlogPosting",
   headline: title,
   description: description,
-  image: ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`,
+  image: absoluteImage,
   datePublished: publishDate?.toISOString(),
-  author: {
-    "@type": "Person",
-    name: author || "Anonymous",
-  },
+  author: { "@id": personId },
+  publisher: { "@id": personId },
+  isPartOf: { "@id": websiteId },
   keywords: tags.join(", "),
   url: canonicalURL,
+  mainEntityOfPage: canonicalURL,
+};
+
+// One graph per page: the site and the person always, the article on posts.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    websiteSchema,
+    ...(person || type === "article" ? [personSchema] : []),
+    ...(type === "article" && publishDate ? [articleSchema] : []),
+  ],
 };
 ---
 
@@ -58,10 +103,22 @@ const structuredData = {
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta
-  property="og:image"
-  content={ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`}
-/>
+<meta property="og:image" content={absoluteImage} />
+<meta property="og:site_name" content="Daniel Noworyta" />
+<meta property="og:locale" content="en_US" />
+{
+  type === "article" && publishDate && (
+    <meta
+      property="article:published_time"
+      content={publishDate.toISOString()}
+    />
+  )
+}
+{
+  type === "article" && author && (
+    <meta property="article:author" content={author} />
+  )
+}
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 {imageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
@@ -71,19 +128,12 @@ const structuredData = {
 <meta name="twitter:url" content={canonicalURL} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta
-  name="twitter:image"
-  content={ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`}
-/>
+<meta name="twitter:image" content={absoluteImage} />
 {imageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}
 
 <!-- Structured Data (JSON-LD) -->
-{
-  type === "article" && publishDate && (
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify(structuredData)}
-    />
-  )
-}
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(structuredData)}
+/>

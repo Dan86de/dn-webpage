@@ -1,0 +1,278 @@
+---
+/**
+ * 404. A Class-A surface with a hole in it: a curved dot-grid panel drawn in
+ * 3D on a canvas, slowly turning, with the missing patch where the page should
+ * be. No libraries; the projection is a few lines of maths in the script below.
+ */
+import Layout from "@/layouts/Layout.astro";
+import HeroBackground from "@/components/HeroBackground.astro";
+---
+
+<Layout>
+  <Fragment slot="head">
+    <title>Page not found - Daniel Noworyta</title>
+    <meta
+      name="description"
+      content="There is a hole in this surface. The page you asked for is not here."
+    />
+    <meta name="robots" content="noindex" />
+  </Fragment>
+  <HeroBackground variant="dots" />
+  <div
+    class="not-found relative flex flex-col grow overflow-hidden px-(--inline-padding)"
+  >
+    <canvas
+      id="surface"
+      class="pointer-events-none absolute inset-0 h-full w-full"
+      aria-hidden="true"></canvas>
+    <div
+      class="relative mx-auto flex w-full max-w-4xl grow flex-col items-center pt-[14vh] pb-16 text-center"
+    >
+      <p
+        id="big-number"
+        class="font-display font-black leading-none tracking-tight text-[7rem] tablet:text-[10rem] bg-brand-gradient bg-clip-text text-transparent select-none"
+        aria-hidden="true"
+      >
+        404
+      </p>
+      <p class="caption text-gray-1000 mt-6">Page not found</p>
+      <h1 class="mt-3 font-medium tracking-tight text-balance">
+        There is a hole in this surface.
+      </h1>
+      <p class="mt-5 max-w-[46ch] text-lg text-pretty text-gray-1100">
+        I spent ten years making sure car panels met without a gap. This page is
+        one. The link is old, or it never existed. Nothing below is broken
+        though.
+      </p>
+      <nav
+        class="mt-8 flex flex-wrap items-center justify-center gap-3"
+        aria-label="Where to go instead"
+      >
+        <a
+          href="/"
+          class="rounded-lg bg-brand-gradient px-4 py-3 text-sm font-display font-medium text-white transition-opacity hover:opacity-90"
+        >
+          Back to home
+        </a>
+        <a
+          href="/writing"
+          class="rounded-lg border border-gray-400 px-4 py-3 text-sm font-display font-medium text-gray-1200 transition-colors hover:border-gray-700"
+        >
+          Read the writing
+        </a>
+      </nav>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const canvas = document.getElementById("surface") as HTMLCanvasElement;
+  const number = document.getElementById("big-number") as HTMLElement;
+  const ctx = canvas.getContext("2d");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (ctx) {
+    // ---- The surface -------------------------------------------------------
+    // A grid of (u, v) samples in [-1, 1]². The height is a soft crown, like a
+    // bonnet seen from above, with a circular patch cut out of the middle.
+    const COLS = 46;
+    const ROWS = 30;
+    const HOLE = 0.42; // radius of the missing patch, in grid units
+    const RIM = 0.52; // points inside this radius belong to the cut edge
+    const HOLE_ASPECT = 1.4; // the hole is wider than tall, like the number
+    const DEPTH = 3.2; // camera distance
+
+    type Sample = { u: number; v: number; rim: boolean } | null;
+    const grid: Sample[][] = [];
+    for (let r = 0; r < ROWS; r++) {
+      const row: Sample[] = [];
+      for (let c = 0; c < COLS; c++) {
+        const u = (c / (COLS - 1)) * 2 - 1;
+        const v = (r / (ROWS - 1)) * 2 - 1;
+        // Grid x runs over [-1.5, 1.5]; the hole is an ellipse in those units.
+        const d = Math.hypot((u * 1.5) / HOLE_ASPECT, v);
+        row.push(d < HOLE ? null : { u, v, rim: d < RIM });
+      }
+      grid.push(row);
+    }
+
+    const height = (u: number, v: number, t: number) =>
+      0.22 * (1 - u * u) - 0.12 * v * v + 0.02 * Math.sin(u * 4 + t);
+
+    // ---- Colours, from the theme so the toggle is respected ----------------
+    let dot = "";
+    let line = "";
+    let accent = "";
+    const readColours = () => {
+      const style = getComputedStyle(document.documentElement);
+      dot = style.getPropertyValue("--color-gray-800").trim();
+      line = style.getPropertyValue("--color-gray-500").trim();
+      accent = style.getPropertyValue("--color-orange-500").trim();
+    };
+    readColours();
+    new MutationObserver(readColours).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    // ---- Camera -------------------------------------------------------------
+    // The surface is centred on the big number and scaled so the hole is a
+    // little wider than the glyphs, whatever the viewport.
+    let width = 0;
+    let height_ = 0;
+    let dpr = 1;
+    let centerX = 0;
+    let centerY = 0;
+    let scale = 0;
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = canvas.clientWidth;
+      height_ = canvas.clientHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height_ * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const n = number.getBoundingClientRect();
+      const c = canvas.getBoundingClientRect();
+      centerX = n.left + n.width / 2 - c.left;
+      centerY = n.top + n.height / 2 - c.top;
+      const holeHalfWidth = (n.width * 1.12) / 2;
+      scale = (holeHalfWidth / (HOLE * HOLE_ASPECT)) * DEPTH;
+      canvas.style.setProperty("--cx", `${centerX}px`);
+      canvas.style.setProperty("--cy", `${centerY}px`);
+    };
+    resize();
+    window.addEventListener("resize", () => {
+      resize();
+      if (reduceMotion.matches) draw(0);
+    });
+
+    // Pointer parallax, eased. On touch devices there is none, only the drift.
+    let targetX = 0;
+    let targetY = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        targetX = (e.clientX / window.innerWidth) * 2 - 1;
+        targetY = (e.clientY / window.innerHeight) * 2 - 1;
+      },
+      { passive: true },
+    );
+
+    const project = (
+      x: number,
+      y: number,
+      z: number,
+      yaw: number,
+      pitch: number,
+    ) => {
+      // Rotate around Y (yaw), then X (pitch), then a simple perspective.
+      const cy = Math.cos(yaw);
+      const sy = Math.sin(yaw);
+      const cx = Math.cos(pitch);
+      const sx = Math.sin(pitch);
+      const x1 = x * cy - z * sy;
+      const z1 = x * sy + z * cy;
+      const y2 = y * cx - z1 * sx;
+      const z2 = y * sx + z1 * cx;
+      const depth = DEPTH + z2;
+      const f = scale / depth;
+      return {
+        x: centerX + x1 * f,
+        y: centerY + y2 * f,
+        depth,
+      };
+    };
+
+    const draw = (time: number) => {
+      const t = time / 1000;
+      pointerX += (targetX - pointerX) * 0.04;
+      pointerY += (targetY - pointerY) * 0.04;
+
+      const yaw = Math.sin(t * 0.18) * 0.22 + pointerX * 0.28;
+      const pitch = -0.95 + pointerY * 0.12;
+
+      ctx.clearRect(0, 0, width, height_);
+
+      const points = grid.map((row) =>
+        row.map((s) =>
+          s
+            ? {
+                ...project(s.u * 1.5, height(s.u, s.v, t), s.v, yaw, pitch),
+                rim: s.rim,
+              }
+            : null,
+        ),
+      );
+
+      // Lines along the rows, broken at the hole.
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = line;
+      for (const row of points) {
+        let open = false;
+        ctx.beginPath();
+        for (const p of row) {
+          if (!p) {
+            open = false;
+            continue;
+          }
+          if (open) ctx.lineTo(p.x, p.y);
+          else ctx.moveTo(p.x, p.y);
+          open = true;
+        }
+        ctx.stroke();
+      }
+
+      // Dots, smaller and fainter the further away they are.
+      for (const row of points) {
+        for (const p of row) {
+          if (!p) continue;
+          const near = 1 - (p.depth - 2.2) / 2;
+          const alpha = Math.max(0.15, Math.min(1, near));
+          ctx.globalAlpha = p.rim ? Math.min(1, alpha + 0.3) : alpha;
+          ctx.fillStyle = p.rim ? accent : dot;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.rim ? 2.4 : 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    // ---- Loop ---------------------------------------------------------------
+    let frame = 0;
+    const loop = (time: number) => {
+      draw(time);
+      frame = requestAnimationFrame(loop);
+    };
+    const start = () => {
+      if (reduceMotion.matches) draw(0);
+      else if (!frame) frame = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+    document.addEventListener("visibilitychange", () =>
+      document.hidden ? stop() : start(),
+    );
+    reduceMotion.addEventListener("change", () => {
+      stop();
+      start();
+    });
+    start();
+  }
+</script>
+
+<style>
+  /* Fade the surface out towards the edges so it reads as a panel, not a box. */
+  .not-found canvas {
+    mask-image: radial-gradient(
+      ellipse 42rem 22rem at var(--cx, 50%) var(--cy, 40%),
+      black 30%,
+      transparent 100%
+    );
+  }
+</style>

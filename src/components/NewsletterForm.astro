@@ -1,0 +1,147 @@
+---
+/**
+ * The Kit sign-up form. The heading and copy around it belong to the page;
+ * this is only the fields, the button and the source tag.
+ */
+interface Props {
+  buttonLabel?: string;
+  class?: string;
+}
+
+const { buttonLabel = "Get the next one", class: className } = Astro.props;
+---
+
+<form
+  class:list={[
+    "newsletter-form flex flex-col gap-3 w-full max-w-xs",
+    className,
+  ]}
+  action="https://app.kit.com/forms/9259766/subscriptions"
+  method="post"
+>
+  <div class="newsletter-field">
+    <input
+      type="text"
+      id="sp-name"
+      name="fields[first_name]"
+      placeholder=" "
+      autocomplete="given-name"
+      class="newsletter-input rounded-lg focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
+    />
+    <label for="sp-name">First name</label>
+  </div>
+  <div class="newsletter-field">
+    <input
+      type="email"
+      id="sp-email"
+      name="email_address"
+      placeholder=" "
+      required
+      autocomplete="email"
+      inputmode="email"
+      class="newsletter-input rounded-lg focus:outline-2 focus:outline-orange-500 focus:-outline-offset-1"
+    />
+    <label for="sp-email">Email address</label>
+  </div>
+  <input type="hidden" name="tags[]" class="sp-source-tag" value="18401031" />
+  <button
+    type="submit"
+    class="mt-1 rounded-lg bg-brand-gradient px-4 py-3.5 text-sm font-display font-medium text-white transition-opacity hover:opacity-90 cursor-pointer"
+  >
+    {buttonLabel}
+  </button>
+</form>
+<p class="mt-3 text-gray-800 text-sm">
+  I respect your privacy. Unsubscribe at any time.
+</p>
+
+<script>
+  // Tag the subscriber with where they came from (?ref=youtube etc.).
+  const refToTag: Record<string, string> = {
+    linkedin: "18400332",
+    youtube: "18400334",
+    x: "18400335",
+  };
+  const ref = new URLSearchParams(window.location.search).get("ref");
+  if (ref && refToTag[ref]) {
+    document
+      .querySelectorAll<HTMLInputElement>(".sp-source-tag")
+      .forEach((input) => (input.value = refToTag[ref]));
+  }
+</script>
+
+<style is:global>
+  /* Tell browsers & extensions to use appropriate color scheme for inputs */
+  input.newsletter-input {
+    color-scheme: light;
+  }
+  .dark input.newsletter-input {
+    color-scheme: dark;
+  }
+
+  /*
+   * Chrome forces a light-blue autofill background that can't be
+   * reliably overridden. Use dark text in light mode, light text
+   * in dark mode so filled values stay readable.
+   */
+  input.newsletter-input:-webkit-autofill,
+  input.newsletter-input:-webkit-autofill:hover,
+  input.newsletter-input:-webkit-autofill:focus,
+  input.newsletter-input:-webkit-autofill:active {
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+  }
+  .dark input.newsletter-input:-webkit-autofill,
+  .dark input.newsletter-input:-webkit-autofill:hover,
+  .dark input.newsletter-input:-webkit-autofill:focus,
+  .dark input.newsletter-input:-webkit-autofill:active {
+    -webkit-text-fill-color: #f0f0f0 !important;
+    caret-color: #f0f0f0 !important;
+    -webkit-box-shadow: 0 0 0px 1000px oklch(21% 0 0) inset !important;
+  }
+
+  /* Floating labels: the label sits inside the field and floats up on
+     focus / when filled. Inputs use placeholder=" " so :not(:placeholder-shown)
+     can detect a filled value. */
+  .newsletter-field {
+    position: relative;
+  }
+  .newsletter-field input.newsletter-input {
+    width: 100%;
+    padding: 1.5rem 1rem 0.6rem; /* extra top room for the floated label */
+    font-size: 1rem;
+    line-height: 1.5;
+    /* Theme via the .dark class (the site's toggle), not Tailwind's dark:
+       variant, which is prefers-color-scheme based here and would not follow
+       a manual theme toggle. */
+    color: var(--color-gray-1200);
+    background: var(--color-white);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+  .dark .newsletter-field input.newsletter-input {
+    background: var(--color-gray-200);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  .newsletter-field label {
+    position: absolute;
+    left: 1rem;
+    top: 1.05rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-gray-800);
+    pointer-events: none;
+    transition: all 0.15s ease;
+  }
+  /* Float on focus, when filled, and on browser autofill. The autofill
+     selectors are essential: Chrome can fill a value without triggering
+     :placeholder-shown, which would leave the label overlapping the text. */
+  .newsletter-field input.newsletter-input:focus + label,
+  .newsletter-field input.newsletter-input:not(:placeholder-shown) + label,
+  .newsletter-field input.newsletter-input:-webkit-autofill + label,
+  .newsletter-field input.newsletter-input:autofill + label {
+    top: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--color-gray-1100);
+  }
+</style>

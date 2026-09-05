@@ -3,6 +3,12 @@ import { getCollection, render } from "astro:content";
 import BlogPostLayout from "@/layouts/BlogPostLayout.astro";
 import { getReadingTime } from "@/lib/readingTime";
 import { generateToc } from "@/lib/toc";
+import {
+  categoryLabel,
+  getVisiblePosts,
+  neighbours,
+  withIssueNumbers,
+} from "@/lib/posts";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -18,6 +24,11 @@ const canonicalURL =
   new URL(`/writing/${post.data.slug}`, Astro.site).href;
 const readingTime = getReadingTime(post.body || "");
 const toc = generateToc(headings);
+
+const visible = await getVisiblePosts();
+const listed = withIssueNumbers(visible).find((l) => l.post.id === post.id);
+const label = listed ? categoryLabel(listed) : undefined;
+const { previous, next } = neighbours(visible, post);
 ---
 
 <BlogPostLayout
@@ -32,6 +43,13 @@ const toc = generateToc(headings);
   alsoPublishedOn={post.data.alsoPublishedOn}
   image={post.data.image ?? `/og/${post.data.slug}.png`}
   imageAlt={post.data.imageAlt ?? post.data.title}
+  label={label}
+  isDraft={post.data.isDraft}
+  previous={previous && {
+    title: previous.data.title,
+    slug: previous.data.slug,
+  }}
+  next={next && { title: next.data.title, slug: next.data.slug }}
 >
   <Content />
 </BlogPostLayout>

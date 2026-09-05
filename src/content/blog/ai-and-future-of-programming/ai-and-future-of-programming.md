@@ -3,6 +3,7 @@ isDraft: false
 title: AI and the Future of Programming
 description: How AI is transforming software development and what it means for programmers. From building full-stack apps in hours to the shifting nature of programming skills in the age of AI assistance.
 author: Daniel Noworyta
+category: essay
 tags: ["ai", "programming", "career", "technology"]
 publishDate: 2026-01-13
 authorContact: daniel.noworyta@gmail.com

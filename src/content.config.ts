@@ -11,7 +11,9 @@ const blog = defineCollection({
     description: z.string(),
     image: z.string().optional(),
     imageAlt: z.string().optional(),
-    category: z.string().optional(),
+    // The weekly letter is an "issue" (numbered in the UI), longer pieces are
+    // "essays". Older posts predate the split and default to essay.
+    category: z.enum(["issue", "essay"]).default("essay"),
     author: z.string().default("Anonymous"),
     tags: z.array(z.string()),
     publishDate: z.date(),

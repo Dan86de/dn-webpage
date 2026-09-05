@@ -3,6 +3,7 @@ isDraft: false
 title: Navigating the New Engineering Reality
 description: AI is fundamentally reshaping software engineering. Learn how to evolve from code writer to conductor, why garage experience matters for juniors, and strategic steps to thrive in an era where judgment beats typing speed.
 author: Daniel Noworyta
+category: essay
 tags: ["ai", "programming", "career"]
 publishDate: 2026-02-11
 authorContact: daniel.noworyta@gmail.com
