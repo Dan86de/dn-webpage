@@ -30,6 +30,8 @@ The dev server runs at `http://localhost:4321`.
 | `pnpm astro check` | Type-check `.astro` and TypeScript sources |
 | `pnpm habit <name> [date]` | Log a habit day (defaults to today), e.g. `pnpm habit crossfit` |
 | `pnpm weight <value> [date]` | Log a weight reading (defaults to today), e.g. `pnpm weight 84.3` |
+| `pnpm post:new "Title"` | Scaffold a draft issue in `src/content/blog/<slug>/` from the template |
+| `pnpm post <file> [--date date]` | Publish a draft, or import an outside note (Obsidian etc.) into the collection |
 
 ## Project structure
 

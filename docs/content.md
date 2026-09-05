@@ -22,6 +22,11 @@
 Blog posts use markdown format with frontmatter.
 Pages live in `src/pages/writing/`; `/blog` and `/blog/[slug]` redirect there (see `astro.config.mjs`).
 
+**Writing**: `pnpm post:new "Title" [--category issue|essay]` scaffolds a draft from `scripts/templates/issue.md` (the three ingredients as comments, `isDraft: true`).
+`pnpm post <file> [--date YYYY-MM-DD] [--slug slug] [--force]` publishes it: a draft inside the collection gets `isDraft: false` and today's date; a file from anywhere else (an Obsidian note) is copied in with title from the frontmatter or first H1, description from the frontmatter or first paragraph, tags from the frontmatter.
+Template comments are stripped on publish. Relative image links are warned about, never fixed.
+`category` is `issue` for the weekly letter and `essay` for longer pieces.
+
 ## Habits Collection
 
 **Location**: `src/content/habits/*.yaml` (one file per habit, file name is the habit id)
