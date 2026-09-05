@@ -29,6 +29,11 @@ The dev server does not notice a brand-new post folder until restarted.
 Template comments are stripped on publish. Relative image links are warned about, never fixed.
 `category` is `issue` for the weekly letter and `essay` for longer pieces.
 
+**Share images**: every post gets `/og/<slug>.png` (1200x630), rendered at build time by `src/og/render.ts` with satori and resvg from the post title, in the same design as `public/og-default.jpg`.
+The fonts satori needs are TTF copies of the brand woff2 files in `src/og/fonts/` and the photo is `src/og/avatar.jpg`; none of them are served.
+A post with `image` in its frontmatter uses that instead.
+Facebook and LinkedIn cache the first scrape of a URL, so after changing an image re-scrape it in their debuggers.
+
 ## Habits Collection
 
 **Location**: `src/content/habits/*.yaml` (one file per habit, file name is the habit id)

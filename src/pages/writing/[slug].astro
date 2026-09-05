@@ -30,8 +30,8 @@ const toc = generateToc(headings);
   toc={toc}
   canonicalURL={canonicalURL}
   alsoPublishedOn={post.data.alsoPublishedOn}
-  image={post.data.image}
-  imageAlt={post.data.imageAlt}
+  image={post.data.image ?? `/og/${post.data.slug}.png`}
+  imageAlt={post.data.imageAlt ?? post.data.title}
 >
   <Content />
 </BlogPostLayout>
