@@ -1,6 +1,6 @@
-# Football log. Add a day with: pnpm habit football [YYYY-MM-DD]
-name: Football
-description: Once a week. Ninety minutes of chasing a ball with the guys.
+# Football / running log. Add a day with: pnpm habit football [YYYY-MM-DD]
+name: Football / Running
+description: Once a week. Ninety minutes with the guys, or a run when there is no match.
 order: 3
 weeklyTarget: 1
 days:
