@@ -97,7 +97,7 @@ const goal = weight?.projection?.goal;
       <!-- Right now: the pieces that prove the brand -->
       <section class="mt-16 tablet:mt-20" aria-labelledby="now">
         <p id="now" class="caption text-gray-1000 mb-4">Right now</p>
-        <ul class="grid gap-x-8 gap-y-6 tablet:grid-cols-3 text-pretty">
+        <ul class="grid gap-x-8 gap-y-6 tablet:grid-cols-2 text-pretty">
           {
             lastWeighIn && (
               <li>
@@ -117,6 +117,21 @@ const goal = weight?.projection?.goal;
               </li>
             )
           }
+          <li>
+            <p class="text-gray-1200">
+              Building gradus, a tool that runs coding agents one step at a
+              time and only grants the next step when the last one proved
+              itself. Not finished. Public anyway.
+            </p>
+            <a
+              href="https://github.com/Dan86de/gradus"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 inline-block text-orange-500 font-display font-medium"
+            >
+              See the repo
+            </a>
+          </li>
           <li>
             <p class="text-gray-1200">
               Talking through all of this on YouTube, in English since this
