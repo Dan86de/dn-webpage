@@ -41,6 +41,11 @@ export default defineConfig({
     },
     imageService: true,
     devImageService: "sharp",
-    isr: true,
+    // The smash counter has to run per request: served through ISR its
+    // response is cached for the life of the deployment, so the total would
+    // freeze at whatever the first visitor saw.
+    isr: {
+      exclude: ["/api/smash"],
+    },
   }),
 });

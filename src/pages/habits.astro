@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import SEO from "@/components/SEO.astro";
 import HabitGrid from "@/components/HabitGrid.astro";
 import WeightChart from "@/components/WeightChart.tsx";
+import SmashButton from "@/components/SmashButton.tsx";
 import { todayISO } from "@/lib/habits";
 
 const canonicalURL = new URL("/habits", Astro.site).href;
@@ -25,7 +26,7 @@ const weight = (await getCollection("weight"))[0]?.data;
   />
   <div class="px-(--inline-padding)">
     <div class="max-w-4xl mx-auto py-12">
-      <header class="mb-12 max-w-2xl">
+      <header class="mb-10 max-w-2xl">
         <h1
           class="bg-brand-gradient bg-clip-text text-transparent font-medium pb-4"
         >
@@ -37,6 +38,11 @@ const weight = (await getCollection("weight"))[0]?.data;
           nobody can see is easy to quietly drop.
         </p>
       </header>
+
+      <section class="mb-16 flex flex-col items-center" aria-label="Cheer me on">
+        <p class="caption text-gray-1000 mb-3">Rooting for me? Smash it.</p>
+        <SmashButton client:load />
+      </section>
 
       {
         weight && weight.entries.length > 0 && (

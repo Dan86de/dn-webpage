@@ -33,3 +33,6 @@ plans
 .env.example
 .sandcastle/
 sandcastle.json
+
+# vercel env pull
+.env*.local

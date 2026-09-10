@@ -97,40 +97,9 @@
 </button>
 
 <script>
-  // Audio setup for theme toggle sound
-  let audioContext: AudioContext | null = null;
-  let audioBuffer: AudioBuffer | null = null;
+  import { createSound } from "@/lib/sound";
 
-  function initAudio() {
-    const AudioContextClass =
-      window.AudioContext || (window as any).webkitAudioContext;
-
-    if (!AudioContextClass) {
-      console.warn("Web Audio API is not supported in this browser.");
-      return;
-    }
-
-    audioContext = new AudioContextClass();
-
-    fetch("/audio/click.wav")
-      .then((res) => res.arrayBuffer())
-      .then((data) => audioContext!.decodeAudioData(data))
-      .then((decoded) => {
-        audioBuffer = decoded;
-      })
-      .catch((err) => {
-        console.log("Failed to load click sound:", err);
-      });
-  }
-
-  function playClickSound() {
-    if (audioContext && audioBuffer) {
-      const source = audioContext.createBufferSource();
-      source.buffer = audioBuffer;
-      source.connect(audioContext.destination);
-      source.start(0);
-    }
-  }
+  const click = createSound("/audio/click.wav");
 
   function updateIcons() {
     const isDark = document.documentElement.classList.contains("dark");
@@ -153,9 +122,6 @@
       }
     }
   }
-
-  // Initialize audio
-  initAudio();
 
   const button = document.getElementById("theme-toggle");
 
@@ -181,7 +147,7 @@
       ? "dark"
       : "light";
     const newTheme = currentTheme === "dark" ? "light" : "dark";
-    playClickSound();
+    click.play();
     updateTheme(newTheme);
   };
 
@@ -192,7 +158,6 @@
 
   // Re-attach event listener after navigation (for view transitions)
   document.addEventListener("astro:after-swap", () => {
-    initAudio();
     updateIcons();
     const button = document.getElementById("theme-toggle");
     button?.addEventListener("click", toggleTheme);
