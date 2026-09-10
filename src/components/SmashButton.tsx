@@ -239,26 +239,24 @@ export default function SmashButton() {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(flush, FLUSH_DELAY_MS);
 
-    if (!reduced) {
-      const id = nextId.current++;
-      setBursts((current) => [
-        // Bigger than the old flying words, so fewer of them can stack up.
-        ...current.slice(-3),
-        {
-          id,
-          word: WORDS[id % WORDS.length],
-          // Stamped around the dome, jittered so repeat hits never land
-          // exactly on top of each other.
-          x: -46 + Math.random() * 92,
-          y: -96 + Math.random() * 46,
-          tilt: -13 + Math.random() * 26,
-        },
-      ]);
-    }
+    const id = nextId.current++;
+    setBursts((current) => [
+      // Big enough that only a few can usefully stack up.
+      ...current.slice(-3),
+      {
+        id,
+        word: WORDS[id % WORDS.length],
+        // Stamped around the dome, jittered so repeat hits never land exactly
+        // on top of each other.
+        x: -46 + Math.random() * 92,
+        y: -96 + Math.random() * 46,
+        tilt: -13 + Math.random() * 26,
+      },
+    ]);
   }
 
-  // The press is an affordance rather than decoration, so it survives reduced
-  // motion; only the overshoot, the hover lift and the confetti drop away.
+  // The press and the hit are feedback rather than decoration, so both survive
+  // reduced motion; only the overshoot, the hover lift and the slam drop away.
   const lift = pressed ? PRESS_TOP : hovered && !reduced ? -HOVER_LIFT : 0;
   const sink = pressed;
   const spring = reduced
@@ -443,22 +441,41 @@ export default function SmashButton() {
                 style={{ overflow: "visible", left: "50%", top: "50%" }}
                 aria-hidden="true"
                 initial={{
-                  scale: 1.55,
+                  scale: reduced ? 1 : 1.55,
                   opacity: 0,
                   x: burst.x - BALLOON_W / 2,
                   y: burst.y - BALLOON_H / 2,
-                  rotate: burst.tilt * 1.7,
+                  rotate: reduced ? burst.tilt : burst.tilt * 1.7,
                 }}
-                animate={{
-                  scale: [1.55, 1, 1, 1.14],
-                  opacity: [0, 1, 1, 0],
-                  rotate: [burst.tilt * 1.7, burst.tilt, burst.tilt, burst.tilt],
-                }}
-                transition={{
-                  duration: HIT_DURATION,
-                  times: HIT_TIMES,
-                  ease: [SLAM_IN, "linear", "easeOut"],
-                }}
+                animate={
+                  reduced
+                    ? { opacity: [0, 1, 1, 0] }
+                    : {
+                        scale: [1.55, 1, 1, 1.14],
+                        opacity: [0, 1, 1, 0],
+                        rotate: [
+                          burst.tilt * 1.7,
+                          burst.tilt,
+                          burst.tilt,
+                          burst.tilt,
+                        ],
+                      }
+                }
+                transition={
+                  reduced
+                    ? // No slam, no scale: it fades up, holds a beat longer so
+                      // it stays readable without movement, and fades out.
+                      {
+                        duration: 0.7,
+                        times: [0, 0.14, 0.72, 1],
+                        ease: "linear",
+                      }
+                    : {
+                        duration: HIT_DURATION,
+                        times: HIT_TIMES,
+                        ease: [SLAM_IN, "linear", "easeOut"],
+                      }
+                }
                 onAnimationComplete={() =>
                   setBursts((current) =>
                     current.filter((item) => item.id !== burst.id),
