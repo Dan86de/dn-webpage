@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { balloonPoints } from "@/lib/balloon";
 import { createSound, type Sound } from "@/lib/sound";
 
 /**
@@ -106,25 +107,6 @@ const BALLOON_FILL = "oklch(88% 0.115 66)";
 const SLAM_IN = [0.19, 1, 0.22, 1] as const; // ease-out-expo
 const HIT_DURATION = 0.46;
 const HIT_TIMES = [0, 0.24, 0.6, 1];
-
-/** A hand-inked burst balloon: uneven spikes, uneven spacing. */
-function balloonPoints(seed: number, spikes = 13) {
-  const points: string[] = [];
-  for (let i = 0; i < spikes * 2; i++) {
-    const isTip = i % 2 === 0;
-    // Cheap deterministic noise, so a balloon never reshuffles mid-animation
-    // but no two of them are quite the same shape.
-    const noise = (((i + 1) * 9301 + seed * 49297) % 233280) / 233280;
-    const radius = isTip ? 0.84 + noise * 0.16 : 0.44 + noise * 0.14;
-    const angle =
-      (Math.PI * i) / spikes - Math.PI / 2 + (noise - 0.5) * 0.18;
-    points.push(
-      `${(BALLOON_W / 2 + Math.cos(angle) * radius * (BALLOON_W / 2)).toFixed(1)},` +
-        `${(BALLOON_H / 2 + Math.sin(angle) * radius * (BALLOON_H / 2)).toFixed(1)}`,
-    );
-  }
-  return points.join(" ");
-}
 
 const formatCount = (value: number) => value.toLocaleString("en-US");
 
@@ -483,7 +465,7 @@ export default function SmashButton() {
                 }
               >
                 <polygon
-                  points={balloonPoints(burst.id)}
+                  points={balloonPoints(burst.id, BALLOON_W, BALLOON_H)}
                   fill={BALLOON_FILL}
                   stroke={INK}
                   strokeWidth={5}

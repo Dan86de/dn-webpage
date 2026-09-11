@@ -5,6 +5,9 @@ import SEO from "@/components/SEO.astro";
 import HabitGrid from "@/components/HabitGrid.astro";
 import WeightChart from "@/components/WeightChart.tsx";
 import SmashButton from "@/components/SmashButton.tsx";
+import WeeklyBet from "@/components/betting/WeeklyBet.tsx";
+import Leaderboard from "@/components/betting/Leaderboard.tsx";
+import { STARTING_COINS } from "@/lib/betting";
 import { todayISO } from "@/lib/habits";
 
 const canonicalURL = new URL("/habits", Astro.site).href;
@@ -20,7 +23,7 @@ const weight = (await getCollection("weight"))[0]?.data;
   <SEO
     slot="head"
     title="Habits - Daniel Noworyta"
-    description="A public log of my habits: CrossFit or gym twice a week, football or running once a week, clean eating every day."
+    description="A public log of my habits: CrossFit or gym twice a week, football or running once a week, clean eating every day. Bet on whether I hit them."
     canonicalURL={canonicalURL}
     type="website"
   />
@@ -75,6 +78,22 @@ const weight = (await getCollection("weight"))[0]?.data;
         )
       }
 
+      <section class="mb-16" aria-labelledby="bets">
+        <h2
+          id="bets"
+          class="text-2xl! leading-7! tablet:text-3xl! tablet:leading-8.5! font-medium"
+        >
+          Bet on me
+        </h2>
+        <p class="text-gray-1100 mt-1 mb-8 max-w-2xl">
+          One bet a week: a habit, a target, a deadline. Back me, or bet I'll
+          fold. You start with {STARTING_COINS} coins, the winning side splits
+          the pot, and my log below settles it. No real money. Just bragging
+          rights over who knew me best.
+        </p>
+        <WeeklyBet client:visible />
+      </section>
+
       <div class="flex flex-col gap-16">
         {
           habits.map((habit) => (
@@ -102,6 +121,19 @@ const weight = (await getCollection("weight"))[0]?.data;
           ></span> Today
         </span>
       </div>
+
+      <section class="mt-16" aria-labelledby="friends-table">
+        <h2
+          id="friends-table"
+          class="text-2xl! leading-7! tablet:text-3xl! tablet:leading-8.5! font-medium"
+        >
+          The friends table
+        </h2>
+        <p class="text-gray-1100 mt-1 mb-6 max-w-2xl">
+          Everyone who has placed a bet, richest first.
+        </p>
+        <Leaderboard client:visible />
+      </section>
     </div>
   </div>
 </Layout>

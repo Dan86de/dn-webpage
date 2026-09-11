@@ -41,11 +41,11 @@ export default defineConfig({
     },
     imageService: true,
     devImageService: "sharp",
-    // The smash counter has to run per request: served through ISR its
-    // response is cached for the life of the deployment, so the total would
-    // freeze at whatever the first visitor saw.
+    // The smash counter and the betting book have to run per request: served
+    // through ISR a response is cached for the life of the deployment, so the
+    // total and the pools would freeze at whatever the first visitor saw.
     isr: {
-      exclude: ["/api/smash"],
+      exclude: ["/api/smash", "/api/bets"],
     },
   }),
 });

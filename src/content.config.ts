@@ -47,6 +47,21 @@ const habits = defineCollection({
   }),
 });
 
+// One bet per week, in a file named after that week's Monday. See
+// src/content/bets/README.md and src/lib/betting.ts.
+const bets = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/bets" }),
+  schema: z.object({
+    // A habit file name, e.g. "crossfit".
+    habit: z.string(),
+    // Days logged from Monday to the due date that make it a "yes".
+    target: z.number().int().positive(),
+    question: z.string(),
+    // Local Warsaw time, quoted: "YYYY-MM-DDTHH:MM". Betting closes then.
+    due: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/),
+  }),
+});
+
 const burnAnchor = z.object({
   weight: z.number().positive(),
   kcal: z.number().positive(),
@@ -81,4 +96,4 @@ const weight = defineCollection({
   }),
 });
 
-export const collections = { blog, habits, weight };
+export const collections = { blog, habits, weight, bets };

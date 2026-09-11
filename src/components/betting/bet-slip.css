@@ -1,0 +1,134 @@
+/*
+ * The betting slip is a physical object, like the smash buzzer: its colours
+ * are literal rather than theme tokens, so it reads as the same bit of paper
+ * in light and dark. Only dimmed a touch at night so it doesn't glare.
+ */
+.bet-slip-wrap {
+  --paper: oklch(97.5% 0.012 85);
+  --paper-edge: oklch(88% 0.02 80);
+  --ink: oklch(16% 0.02 40);
+  --ink-soft: oklch(45% 0.02 50);
+
+  /* The shadow lives on the wrapper: on the slip itself the mask would cut it
+     off. Here it follows the perforated edge. */
+  position: relative;
+  width: min(100%, 320px);
+  filter: drop-shadow(0 12px 18px oklch(30% 0.05 50 / 0.18));
+}
+
+.dark .bet-slip-wrap {
+  --paper: oklch(91% 0.014 85);
+  --paper-edge: oklch(80% 0.02 80);
+  filter: drop-shadow(0 14px 24px oklch(0% 0 0 / 0.6));
+}
+
+.bet-slip {
+  --notch: 7px;
+
+  padding: 22px 22px 18px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  /* Perforated top and bottom: a row of bites out of the paper. */
+  --bite-top: radial-gradient(
+      circle at 50% 0,
+      transparent calc(var(--notch) - 0.5px),
+      #000 var(--notch)
+    )
+    top / 18px 51% repeat-x;
+  --bite-bottom: radial-gradient(
+      circle at 50% 100%,
+      transparent calc(var(--notch) - 0.5px),
+      #000 var(--notch)
+    )
+    bottom / 18px 51% repeat-x;
+  -webkit-mask: var(--bite-top), var(--bite-bottom);
+  mask: var(--bite-top), var(--bite-bottom);
+}
+
+.bet-slip__soft {
+  color: var(--ink-soft);
+}
+
+.bet-slip__brand {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+.bet-slip__question {
+  margin: 4px 0 2px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.bet-slip__rule {
+  margin: 12px 0;
+  border: 0;
+  border-top: 1.5px dashed var(--paper-edge);
+}
+
+.bet-slip__label {
+  color: var(--ink-soft);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bet-slip__total {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 32px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bet-slip__barcode {
+  height: 34px;
+  margin-top: 14px;
+  opacity: 0.85;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0 2px,
+    transparent 2px 4px,
+    var(--ink) 4px 5px,
+    transparent 5px 8px,
+    var(--ink) 8px 11px,
+    transparent 11px 12px,
+    var(--ink) 12px 13px,
+    transparent 13px 17px
+  );
+}
+
+.bet-slip__stamp {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 232px;
+  height: 148px;
+  margin: -74px 0 0 -116px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.bet-slip__stamp polygon {
+  stroke: var(--ink);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+.bet-slip__stamp text {
+  fill: #fff;
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  paint-order: stroke fill;
+  stroke: var(--ink);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}

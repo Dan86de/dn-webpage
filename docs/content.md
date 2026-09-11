@@ -61,6 +61,24 @@ Facebook and LinkedIn cache the first scrape of a URL, so after changing an imag
 Days are rendered by `src/components/HabitGrid.astro` as a rolling 53-week grid with streak stats.
 "Today" is computed in `Europe/Warsaw` (see `src/lib/habits.ts`).
 
+## Bets Collection
+
+**Location**: `src/content/bets/<monday>.yaml` (one file per week, named after that week's Monday, so one bet a week)
+
+**Schema**:
+- `habit` - A habit id from `src/content/habits`
+- `target` - Days logged from Monday to the due date that make it a "yes"
+- `question` - What the page asks, e.g. "Two sessions by Sunday?"
+- `due` - Quoted local Warsaw time `"YYYY-MM-DDTHH:MM"`, inside the file's week; betting closes then
+
+**Setting**: the opti `habits` package's `bet()` commits the file, or locally `pnpm bet <habit> <target> "<question>" <YYYY-MM-DDTHH:MM>` (`--force` replaces a week's bet).
+A week without a file has no bet. A file that fails the rules in `betProblem()` is skipped with a warning.
+
+**Settling**: the log settles it (`src/lib/betting.ts`): "yes" as soon as the target is hit, "no" at noon the day after `due`, so a late-logged session still counts.
+Only the money lives outside git: players, slips and pools are in Upstash Redis behind `/api/bets` (`src/lib/bet-store*.ts`), settled lazily on each request, and a recorded outcome is final.
+Rendered by `src/components/betting/` (the weekly bet, the slip, the friends table).
+On the dev server `/habits?now=YYYY-MM-DDTHH:MM` fakes the clock to walk a bet through closing and settling.
+
 ## Weight Collection
 
 **Location**: `src/content/weight/log.yaml` (a single file)
