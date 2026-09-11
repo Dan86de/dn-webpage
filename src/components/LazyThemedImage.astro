@@ -1,5 +1,5 @@
 ---
-import { Image, getImage } from "astro:assets";
+import { getImage } from "astro:assets";
 
 export interface Props {
   lightSrc: ImageMetadata;
@@ -35,7 +35,7 @@ const darkImage = await getImage({
   format: "webp",
 });
 
-const id = `theme-img-${Math.random().toString(36).substr(2, 9)}`;
+const id = `theme-img-${Math.random().toString(36).slice(2, 11)}`;
 ---
 
 <div
@@ -73,13 +73,6 @@ const id = `theme-img-${Math.random().toString(36).substr(2, 9)}`;
           ? wrapper.getAttribute("data-dark")
           : wrapper.getAttribute("data-light");
 
-        console.log("Theme update:", {
-          isDark,
-          currentSrc: img.src,
-          newSrc,
-          darkClass: document.documentElement.classList.contains("dark"),
-        });
-
         if (newSrc) {
           img.src = newSrc;
         }
@@ -94,13 +87,7 @@ const id = `theme-img-${Math.random().toString(36).substr(2, 9)}`;
     }
 
     // Watch for theme changes
-    const observer = new MutationObserver((mutations) => {
-      console.log(
-        "Theme class changed!",
-        document.documentElement.classList.contains("dark"),
-      );
-      updateThemedImages();
-    });
+    const observer = new MutationObserver(updateThemedImages);
 
     observer.observe(document.documentElement, {
       attributes: true,

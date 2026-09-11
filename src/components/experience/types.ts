@@ -1,5 +1,3 @@
-import type { SvgComponent } from "astro/types";
-
 export interface WorkExperienceProps {
   companyName: string;
   isCurrentJob?: boolean;
