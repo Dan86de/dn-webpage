@@ -59,6 +59,9 @@ const bets = defineCollection({
     question: z.string(),
     // Local Warsaw time, quoted: "YYYY-MM-DDTHH:MM". Betting closes then.
     due: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/),
+    // First day that counts, e.g. the Saturday of a weekend bet. Defaults to
+    // the Monday. Quoted or not, as the habit days are.
+    from: z.coerce.date().transform(isoDate).optional(),
   }),
 });
 

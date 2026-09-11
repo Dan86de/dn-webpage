@@ -48,6 +48,8 @@ const MAX_STAKE = 100_000;
 
 type Bet = {
   week: string;
+  /** First day that counts: the Monday, unless the bet starts later. */
+  from: string;
   habit: string;
   habitName: string;
   target: number;
@@ -80,7 +82,7 @@ async function loadBets(): Promise<Map<string, Bet>> {
   for (const { id, data } of bets) {
     const habit = habitsById.get(data.habit);
     const problem = habit
-      ? betProblem(id, data.due)
+      ? betProblem(id, data.due, data.from)
       : `there is no habit called "${data.habit}"`;
     if (problem || !habit) {
       console.warn(`bets: skipping src/content/bets/${id}.yaml: ${problem}`);
@@ -88,6 +90,7 @@ async function loadBets(): Promise<Map<string, Bet>> {
     }
     usable.set(id, {
       week: id,
+      from: data.from ?? id,
       habit: habit.id,
       habitName: habit.data.name,
       target: data.target,
@@ -114,7 +117,7 @@ function readPlayerId(cookies: AstroCookies): string | null {
 }
 
 function liveStatus(bet: Bet, now: string): MarketStatus {
-  return marketStatus(bet.days, bet.week, bet.due, bet.target, now);
+  return marketStatus(bet.days, bet.from, bet.due, bet.target, now);
 }
 
 /** Pay out every bet the log has decided since anyone last looked. */
@@ -161,7 +164,7 @@ async function buildState(
       habitName: bet.habitName,
       question: bet.question,
       target: bet.target,
-      done: countTowards(bet.days, bet.week, bet.due),
+      done: countTowards(bet.days, bet.from, bet.due),
       // A recorded outcome is final, whatever the log says now.
       status: outcomes[bet.week] ?? liveStatus(bet, now),
       due: bet.due,

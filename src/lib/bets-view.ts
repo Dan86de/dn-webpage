@@ -20,7 +20,7 @@ export type MarketView = {
   habitName: string;
   question: string;
   target: number;
-  /** Days logged from Monday up to the due date so far. */
+  /** Days logged from the bet's first day up to the due date so far. */
   done: number;
   status: MarketStatus;
   /** Local Warsaw time betting closes, "YYYY-MM-DDTHH:MM". */

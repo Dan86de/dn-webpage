@@ -45,10 +45,36 @@ test("a bet file must be named after its Monday and be due that week", () => {
   assert.match(betProblem(WEEK, "Sunday 20:00") ?? "", /YYYY-MM-DDTHH:MM/);
 });
 
+test("a bet's first counting day must be in its week and not after the due date", () => {
+  assert.equal(betProblem(WEEK, "2026-09-13T20:00", "2026-09-12"), null);
+  assert.equal(betProblem(WEEK, "2026-09-13T20:00", "2026-09-13"), null);
+  assert.match(betProblem(WEEK, "2026-09-13T20:00", "2026-09-06") ?? "", /not a day in the week/);
+  assert.match(betProblem(WEEK, "2026-09-11T20:00", "2026-09-12") ?? "", /after the due date/);
+  assert.match(betProblem(WEEK, "2026-09-13T20:00", "Saturday") ?? "", /not a day in the week/);
+});
+
 test("only days from Monday to the due date count", () => {
   const days = ["2026-09-06", "2026-09-07", "2026-09-10", "2026-09-12"];
   assert.equal(countTowards(days, WEEK, "2026-09-13T20:00"), 3);
   assert.equal(countTowards(days, WEEK, "2026-09-10T18:00"), 2);
+});
+
+test("a weekend bet ignores the weekdays already logged", () => {
+  const due = "2026-09-13T20:00";
+  const weekdays = ["2026-09-07", "2026-09-08", "2026-09-09", "2026-09-10"];
+  assert.equal(marketStatus(weekdays, "2026-09-12", due, 2, "2026-09-11T10:00"), "open");
+  assert.equal(
+    marketStatus([...weekdays, "2026-09-12"], "2026-09-12", due, 2, "2026-09-13T09:00"),
+    "open",
+  );
+  assert.equal(
+    marketStatus([...weekdays, "2026-09-12", "2026-09-13"], "2026-09-12", due, 2, "2026-09-14T08:00"),
+    "yes",
+  );
+  assert.equal(
+    marketStatus([...weekdays, "2026-09-12"], "2026-09-12", due, 2, "2026-09-14T12:00"),
+    "no",
+  );
 });
 
 test("a bet is open until the due date, then waits for noon next day", () => {

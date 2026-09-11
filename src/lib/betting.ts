@@ -87,10 +87,11 @@ export function settlesAt(due: string): string {
 
 /**
  * Why a bet file cannot be used, or null when it is fine. The file is named
- * after the Monday of its week, which is what makes it one bet per week, and
- * its due date has to fall inside that week.
+ * after the Monday of its week, which is what makes it one bet per week. Its
+ * due date, and the optional first day that counts (`from`), have to fall
+ * inside that week.
  */
-export function betProblem(week: string, due: string): string | null {
+export function betProblem(week: string, due: string, from?: string): string | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(week) || weekStartOf(week) !== week) {
     return `the file name must be a Monday (YYYY-MM-DD), not "${week}"`;
   }
@@ -98,13 +99,22 @@ export function betProblem(week: string, due: string): string | null {
   if (weekStartOf(due.slice(0, 10)) !== week) {
     return `due ${due} is not in the week of ${week}`;
   }
+  if (from !== undefined) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(from) || weekStartOf(from) !== week) {
+      return `from ${from} is not a day in the week of ${week}`;
+    }
+    if (from > due.slice(0, 10)) return `from ${from} is after the due date ${due}`;
+  }
   return null;
 }
 
-/** Days logged from the Monday of the bet's week up to its due date. */
-export function countTowards(days: string[], week: string, due: string): number {
+/**
+ * Days logged from `from` up to the bet's due date. `from` is the Monday of
+ * the week unless the bet names a later first day, e.g. a weekend-only bet.
+ */
+export function countTowards(days: string[], from: string, due: string): number {
   const last = due.slice(0, 10);
-  return days.filter((day) => day >= week && day <= last).length;
+  return days.filter((day) => day >= from && day <= last).length;
 }
 
 /**
@@ -116,12 +126,12 @@ export function countTowards(days: string[], week: string, due: string): number 
  */
 export function marketStatus(
   days: string[],
-  week: string,
+  from: string,
   due: string,
   target: number,
   now: string,
 ): MarketStatus {
-  if (countTowards(days, week, due) >= target) return "yes";
+  if (countTowards(days, from, due) >= target) return "yes";
   if (now >= settlesAt(due)) return "no";
   if (now >= due) return "closed";
   return "open";
