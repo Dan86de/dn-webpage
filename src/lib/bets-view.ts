@@ -23,8 +23,10 @@ export type MarketView = {
   /** Days logged from the bet's first day up to the due date so far. */
   done: number;
   status: MarketStatus;
-  /** Local Warsaw time betting closes, "YYYY-MM-DDTHH:MM". */
+  /** Local Warsaw time the sessions must be logged by, "YYYY-MM-DDTHH:MM". */
   due: string;
+  /** When betting closes: the due date, unless the bet closes earlier. */
+  closes: string;
   /** When a "no" becomes final. */
   settlesAt: string;
   pools: Pools;
@@ -57,6 +59,8 @@ export type BetsState = {
   current: MarketView | null;
   /** Last week's bet, only sent when you had a slip on it. */
   previous: MarketView | null;
+  /** Next week's bet once it is set, shown as a teaser before it opens. */
+  upcoming: MarketView | null;
   board: BoardRow[];
 };
 

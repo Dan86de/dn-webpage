@@ -61,9 +61,11 @@ export default function BetSlip({
 
   const note =
     market.status === "open"
-      ? `Odds move until ${weekdayTime(market.due)}. Settles the moment he logs it, or ${weekdayTime(market.settlesAt)} if he doesn't.`
+      ? `Odds move until ${weekdayTime(market.closes)}. Settles the moment he logs it, or ${weekdayTime(market.settlesAt)} if he doesn't.`
       : market.status === "closed"
-        ? `Betting closed. Settles from the log ${weekdayTime(market.settlesAt)}.`
+        ? market.closes === market.due
+          ? `Betting closed. Settles from the log ${weekdayTime(market.settlesAt)}.`
+          : `Betting closed. He has until ${weekdayTime(market.due)}; settles ${weekdayTime(market.settlesAt)}.`
         : null;
 
   return (

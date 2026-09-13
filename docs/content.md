@@ -69,10 +69,12 @@ Days are rendered by `src/components/HabitGrid.astro` as a rolling 53-week grid 
 - `habit` - A habit id from `src/content/habits`
 - `target` - Days logged from `from` to the due date that make it a "yes"
 - `question` - What the page asks, e.g. "Two sessions by Sunday?"
-- `due` - Quoted local Warsaw time `"YYYY-MM-DDTHH:MM"`, inside the file's week; betting closes then
+- `due` - Deadline for the sessions: quoted local Warsaw time `"YYYY-MM-DDTHH:MM"`, inside the file's week. Betting closes then unless `closes` is set
 - `from` - Optional first day that counts (`YYYY-MM-DD`, in the file's week, not after `due`); defaults to the Monday. A clean weekend is `target: 2`, `from` the Saturday, `due` the Sunday
+- `closes` - Optional quoted local time betting closes, if that is earlier than `due` (in the file's week, not after `due`); defaults to `due`. Bets close Wednesday, the sessions still count until Sunday
 
-**Setting**: the opti `habits` package's `bet()` commits the file, or locally `pnpm bet <habit> <target> "<question>" <YYYY-MM-DDTHH:MM> [--from YYYY-MM-DD]` (`--force` replaces a week's bet).
+**Setting**: the opti `habits` package's `bet()` commits the file, or locally `pnpm bet <habit> <target> "<question>" <YYYY-MM-DDTHH:MM> [--from YYYY-MM-DD] [--closes YYYY-MM-DDTHH:MM]` (`--force` replaces a week's bet).
+Next week's bet, once set, shows on the page as a teaser ("Up next"); betting on it opens when its week does.
 A week without a file has no bet. A file that fails the rules in `betProblem()` is skipped with a warning.
 
 **Settling**: the log settles it (`src/lib/betting.ts`): "yes" as soon as the target is hit, "no" at noon the day after `due`, so a late-logged session still counts.

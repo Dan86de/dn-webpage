@@ -62,6 +62,9 @@ const bets = defineCollection({
     // First day that counts, e.g. the Saturday of a weekend bet. Defaults to
     // the Monday. Quoted or not, as the habit days are.
     from: z.coerce.date().transform(isoDate).optional(),
+    // When betting closes, if that is earlier than the deadline: bets close
+    // Wednesday, the sessions still count until `due`. Defaults to `due`.
+    closes: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/).optional(),
   }),
 });
 

@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node --test \"src/**/*.test.ts\"",
+    "test": "node --experimental-strip-types --test \"src/**/*.test.ts\"",
     "habit": "node scripts/log-habit.mjs",
     "bet": "node scripts/set-bet.mjs",
     "weight": "node scripts/log-weight.mjs",

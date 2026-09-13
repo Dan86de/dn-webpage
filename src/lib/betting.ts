@@ -91,7 +91,12 @@ export function settlesAt(due: string): string {
  * due date, and the optional first day that counts (`from`), have to fall
  * inside that week.
  */
-export function betProblem(week: string, due: string, from?: string): string | null {
+export function betProblem(
+  week: string,
+  due: string,
+  from?: string,
+  closes?: string,
+): string | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(week) || weekStartOf(week) !== week) {
     return `the file name must be a Monday (YYYY-MM-DD), not "${week}"`;
   }
@@ -104,6 +109,15 @@ export function betProblem(week: string, due: string, from?: string): string | n
       return `from ${from} is not a day in the week of ${week}`;
     }
     if (from > due.slice(0, 10)) return `from ${from} is after the due date ${due}`;
+  }
+  if (closes !== undefined) {
+    if (!LOCAL_TIME.test(closes)) {
+      return `closes must be "YYYY-MM-DDTHH:MM", not "${closes}"`;
+    }
+    if (weekStartOf(closes.slice(0, 10)) !== week) {
+      return `closes ${closes} is not in the week of ${week}`;
+    }
+    if (closes > due) return `closes ${closes} is after the due date ${due}`;
   }
   return null;
 }
@@ -121,8 +135,10 @@ export function countTowards(days: string[], from: string, due: string): number 
  * Where a bet stands at local time `now`, judged from the log.
  *
  * A "yes" settles the moment the log shows the target hit. Betting closes at
- * the due date, and a "no" waits until noon the next day, because an unlogged
- * session is not a missed one until Daniel has had a chance to log it.
+ * `closes`, which is the due date unless the bet sets an earlier one (bets
+ * close Wednesday, the sessions still count until Sunday). A "no" waits until
+ * noon the day after the due date, because an unlogged session is not a missed
+ * one until Daniel has had a chance to log it.
  */
 export function marketStatus(
   days: string[],
@@ -130,10 +146,11 @@ export function marketStatus(
   due: string,
   target: number,
   now: string,
+  closes: string = due,
 ): MarketStatus {
   if (countTowards(days, from, due) >= target) return "yes";
   if (now >= settlesAt(due)) return "no";
-  if (now >= due) return "closed";
+  if (now >= closes) return "closed";
   return "open";
 }
 

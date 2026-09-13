@@ -1,19 +1,24 @@
 #!/usr/bin/env node
 // Set a week's bet:
-//   pnpm bet <habit> <target> "<question>" <YYYY-MM-DDTHH:MM> [--from YYYY-MM-DD] [--force]
+//   pnpm bet <habit> <target> "<question>" <YYYY-MM-DDTHH:MM>
+//     [--from YYYY-MM-DD] [--closes YYYY-MM-DDTHH:MM] [--force]
 // Writes src/content/bets/<monday>.yaml for the week of the due date (Warsaw
 // local time). --from makes a later day the first that counts, e.g. the
-// Saturday of a weekend bet. The opti `habits` package does the same by
-// committing to GitHub.
+// Saturday of a weekend bet; --closes stops betting before the deadline, e.g.
+// bets close Wednesday and the sessions still count until Sunday. The opti
+// `habits` package does the same by committing to GitHub.
 import { existsSync, writeFileSync } from "node:fs";
 
 const argv = process.argv.slice(2);
-const force = argv.includes("--force");
-const fromAt = argv.indexOf("--from");
-const from = fromAt === -1 ? undefined : argv[fromAt + 1];
-const positional = argv.filter(
-  (arg, i) => arg !== "--force" && i !== fromAt && i !== fromAt + 1,
-);
+const flags = {};
+const positional = [];
+for (let i = 0; i < argv.length; i++) {
+  const arg = argv[i];
+  if (arg === "--force") flags.force = true;
+  else if (arg === "--from" || arg === "--closes") flags[arg.slice(2)] = argv[++i];
+  else positional.push(arg);
+}
+const { force, from, closes } = flags;
 const [habit, targetArg, question, due] = positional;
 
 const fail = (message) => {
@@ -23,7 +28,8 @@ const fail = (message) => {
 
 if (!habit || !targetArg || !question || !due) {
   fail(
-    'Usage: pnpm bet <habit> <target> "<question>" <YYYY-MM-DDTHH:MM> [--from YYYY-MM-DD] [--force]',
+    'Usage: pnpm bet <habit> <target> "<question>" <YYYY-MM-DDTHH:MM>' +
+      " [--from YYYY-MM-DD] [--closes YYYY-MM-DDTHH:MM] [--force]",
   );
 }
 
@@ -59,6 +65,16 @@ if (from !== undefined) {
   if (from > dueDay) fail(`--from ${from} is after the due date ${due}`);
 }
 
+if (closes !== undefined) {
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(closes)) {
+    fail(`Invalid --closes "${closes}", expected YYYY-MM-DDTHH:MM in Warsaw time`);
+  }
+  if (mondayOf(closes.slice(0, 10)) !== monday) {
+    fail(`--closes ${closes} is not in the week of ${monday}`);
+  }
+  if (closes > due) fail(`--closes ${closes} is after the due date ${due}`);
+}
+
 const available = (utc(dueDay) - utc(first)) / DAY_MS + 1;
 if (target > available) {
   fail(`A target of ${target} cannot be hit: only ${available} day(s) from ${first} to ${dueDay} count.`);
@@ -81,9 +97,11 @@ writeFileSync(
     `question: ${JSON.stringify(question)}`,
     ...(from ? [`from: ${JSON.stringify(from)}`] : []),
     `due: ${JSON.stringify(due)}`,
+    ...(closes ? [`closes: ${JSON.stringify(closes)}`] : []),
     "",
   ].join("\n"),
 );
 console.log(
-  `Bet for the week of ${monday}: ${question} (${habit}, ${target} from ${first} by ${due})`,
+  `Bet for the week of ${monday}: ${question} (${habit}, ${target} from ${first} by ${due}` +
+    `${closes ? `, betting closes ${closes}` : ""})`,
 );

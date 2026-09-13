@@ -53,6 +53,27 @@ test("a bet's first counting day must be in its week and not after the due date"
   assert.match(betProblem(WEEK, "2026-09-13T20:00", "Saturday") ?? "", /not a day in the week/);
 });
 
+test("a bet can close before its deadline", () => {
+  const due = "2026-09-20T20:00"; // Sunday
+  const closes = "2026-09-16T20:00"; // Wednesday
+  const week = "2026-09-14";
+  const none: string[] = [];
+  assert.equal(betProblem(week, due, undefined, closes), null);
+  assert.match(betProblem(week, due, undefined, "2026-09-21T20:00") ?? "", /not in the week/);
+  assert.match(betProblem(week, "2026-09-16T09:00", undefined, closes) ?? "", /after the due date/);
+  assert.match(betProblem(week, due, undefined, "Wed 20:00") ?? "", /YYYY-MM-DDTHH:MM/);
+
+  // Betting stops on Wednesday, the sessions still count until Sunday.
+  assert.equal(marketStatus(none, week, due, 2, "2026-09-16T19:59", closes), "open");
+  assert.equal(marketStatus(none, week, due, 2, "2026-09-16T20:00", closes), "closed");
+  assert.equal(marketStatus(none, week, due, 2, "2026-09-20T21:00", closes), "closed");
+  assert.equal(
+    marketStatus(["2026-09-18", "2026-09-19"], week, due, 2, "2026-09-19T10:00", closes),
+    "yes",
+  );
+  assert.equal(marketStatus(none, week, due, 2, "2026-09-21T12:00", closes), "no");
+});
+
 test("only days from Monday to the due date count", () => {
   const days = ["2026-09-06", "2026-09-07", "2026-09-10", "2026-09-12"];
   assert.equal(countTowards(days, WEEK, "2026-09-13T20:00"), 3);

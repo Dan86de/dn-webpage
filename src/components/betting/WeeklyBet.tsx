@@ -31,11 +31,16 @@ const PICK_LABEL: Record<Side, string> = {
 };
 
 function statusLine(market: MarketView): string {
+  // Bets can close before the deadline, so name both when they differ.
+  const deadline =
+    market.closes === market.due ? "" : ` · deadline ${weekdayTime(market.due)}`;
   switch (market.status) {
     case "open":
-      return `Closes ${weekdayTime(market.due)} · ${market.done} of ${market.target} logged`;
+      return `Closes ${weekdayTime(market.closes)}${deadline} · ${market.done} of ${market.target} logged`;
     case "closed":
-      return `Betting closed · settles ${weekdayTime(market.settlesAt)}`;
+      return market.closes === market.due
+        ? `Betting closed · settles ${weekdayTime(market.settlesAt)}`
+        : `Betting closed · he has until ${weekdayTime(market.due)} · ${market.done} of ${market.target} logged`;
     case "yes":
       return "Settled · he did it";
     case "no":
@@ -311,7 +316,7 @@ export default function WeeklyBet() {
     );
   }
 
-  const { current, previous, me } = state;
+  const { current, previous, upcoming, me } = state;
   const slips = [
     current?.mine && { market: current, label: "Your slip" },
     previous?.mine && { market: previous, label: "Last week's slip" },
@@ -323,8 +328,24 @@ export default function WeeklyBet() {
         <Market market={current} me={me} />
       ) : (
         <p className="text-gray-1100">
-          No bet this week yet. When I set one, it shows up here.
+          {upcoming
+            ? "No bet this week. The next one is already set, below."
+            : "No bet this week yet. When I set one, it shows up here."}
         </p>
+      )}
+
+      {upcoming && (
+        <div className="mt-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 border-t border-gray-400 pt-4">
+          <div>
+            <p className="caption text-gray-1000">
+              Up next · {upcoming.habitName} · Week {isoWeek(upcoming.week)}
+            </p>
+            <p className="font-display text-lg font-medium">{upcoming.question}</p>
+          </div>
+          <p className="caption text-gray-1000">
+            Betting opens Monday · closes {weekdayTime(upcoming.closes)}
+          </p>
+        </div>
       )}
 
       {slips.length > 0 && (

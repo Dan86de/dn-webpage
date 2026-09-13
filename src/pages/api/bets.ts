@@ -55,6 +55,8 @@ type Bet = {
   target: number;
   question: string;
   due: string;
+  /** When betting closes: the due date, unless the bet closes earlier. */
+  closes: string;
   days: string[];
 };
 
@@ -82,7 +84,7 @@ async function loadBets(): Promise<Map<string, Bet>> {
   for (const { id, data } of bets) {
     const habit = habitsById.get(data.habit);
     const problem = habit
-      ? betProblem(id, data.due, data.from)
+      ? betProblem(id, data.due, data.from, data.closes)
       : `there is no habit called "${data.habit}"`;
     if (problem || !habit) {
       console.warn(`bets: skipping src/content/bets/${id}.yaml: ${problem}`);
@@ -96,6 +98,7 @@ async function loadBets(): Promise<Map<string, Bet>> {
       target: data.target,
       question: data.question,
       due: data.due,
+      closes: data.closes ?? data.due,
       days: habit.data.days,
     });
   }
@@ -117,7 +120,7 @@ function readPlayerId(cookies: AstroCookies): string | null {
 }
 
 function liveStatus(bet: Bet, now: string): MarketStatus {
-  return marketStatus(bet.days, bet.from, bet.due, bet.target, now);
+  return marketStatus(bet.days, bet.from, bet.due, bet.target, now, bet.closes);
 }
 
 /** Pay out every bet the log has decided since anyone last looked. */
@@ -147,7 +150,9 @@ async function buildState(
   const current = bets.get(thisWeek) ?? null;
   // Last week's bet only matters to someone who had a slip on it.
   const previous = slipByWeek.has(lastWeek) ? (bets.get(lastWeek) ?? null) : null;
-  const shown = [current, previous].filter((bet): bet is Bet => bet !== null);
+  // Next week's bet is only a teaser: betting on it opens when its week does.
+  const upcoming = bets.get(addDays(thisWeek, 7)) ?? null;
+  const shown = [current, previous, upcoming].filter((bet): bet is Bet => bet !== null);
   const ids = shown.map((bet) => bet.week);
 
   const [pools, outcomes, board] = await Promise.all([
@@ -168,6 +173,7 @@ async function buildState(
       // A recorded outcome is final, whatever the log says now.
       status: outcomes[bet.week] ?? liveStatus(bet, now),
       due: bet.due,
+      closes: bet.closes,
       settlesAt: settlesAt(bet.due),
       pools: pools[bet.week],
       mine: slip
@@ -195,6 +201,7 @@ async function buildState(
       : null,
     current: current && view(current),
     previous: previous && view(previous),
+    upcoming: upcoming && view(upcoming),
     board: board.map((row) => ({
       nick: row.nick,
       balance: row.balance,
@@ -244,8 +251,17 @@ export const POST: APIRoute = async ({ request, cookies, url }) => {
 
     // Check the bet before anything else, so a slip that cannot go in never
     // leaves a half-made player behind.
-    const bet = bets.get(weekStartOf(now.slice(0, 10)));
-    if (!bet) return fail(404, "no-bet", "There's no bet this week yet.");
+    const thisWeek = weekStartOf(now.slice(0, 10));
+    const bet = bets.get(thisWeek);
+    if (!bet) {
+      return fail(
+        404,
+        "no-bet",
+        bets.has(addDays(thisWeek, 7))
+          ? "This week has no bet. Next week's opens on Monday."
+          : "There's no bet this week yet.",
+      );
+    }
     const status = (await store.getOutcomes([bet.week]))[bet.week] ?? liveStatus(bet, now);
     if (status !== "open") {
       return fail(409, "closed", "Betting on this one is closed.");
