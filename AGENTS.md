@@ -13,6 +13,11 @@ Astro 7 website with Tailwind CSS 4, deployed to Vercel with ISR.
 - TypeScript path alias: `@/*` → `src/*`
 - Tailwind config: Inline `@theme` in `src/styles/global.css` (no config file)
 
+## Verifying a change
+
+Use the `verify` skill (`.agents/skills/verify/`) to prove a change in the running site.
+A change the feature map (`docs/manual/`) describes is done only when a verify run's `evidence.md` has no failed check, and the map changes in the same PR as the behaviour.
+
 ## Detailed Docs
 
 - Styling System @docs/styling.md - Tailwind theme, colors, breakpoints, utilities

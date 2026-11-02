@@ -15,8 +15,14 @@ const VISITOR_TTL_SECONDS = 60 * 60 * 24 * 90; // 90 days
 /** Most smashes a single visitor can ever add to the total. */
 export const PER_VISITOR_CAP = 16;
 
-/** Stand-in store used only when Redis is not configured. */
-const memory = { total: 0, visitors: new Map<string, number>() };
+type Memory = { total: number; visitors: Map<string, number> };
+
+/**
+ * Stand-in store used only when Redis is not configured. On globalThis because
+ * the dev server re-evaluates this module whenever content changes.
+ */
+const dev = globalThis as { smashMemory?: Memory };
+const memory = (dev.smashMemory ??= { total: 0, visitors: new Map() });
 
 export async function readTotal(): Promise<number> {
   if (!isConfigured) return memory.total;
