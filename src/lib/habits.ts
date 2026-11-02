@@ -98,9 +98,10 @@ export function monthLabels(weeks: DayCell[][]): MonthLabel[] {
     });
   });
 
-  // Drop a label that would collide with the next one (short first month).
+  // Drop a label that would collide with the next one (short first month) or
+  // be clipped by the right edge of the grid (a month that has only just begun).
   return labels.filter(
-    (label, i) => i === labels.length - 1 || labels[i + 1].column - label.column >= 3,
+    (label, i) => (labels[i + 1]?.column ?? weeks.length) - label.column >= 3,
   );
 }
 
