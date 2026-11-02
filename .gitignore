@@ -27,7 +27,10 @@ plans
 .vercel
 .zed/
 .zed/settings.json
-.claude
+.claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/verify
 
 # sandcastle
 .env.example
@@ -36,3 +39,6 @@ sandcastle.json
 
 # vercel env pull
 .env*.local
+
+# verify runs
+.scratch/
