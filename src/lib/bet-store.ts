@@ -67,7 +67,13 @@ export interface BetStore {
 
 let store: BetStore | undefined;
 
+// On globalThis because the dev server re-evaluates this module whenever
+// content changes, and logging a day must not wipe the bets it settles.
+const dev = globalThis as { betMemoryStore?: BetStore };
+
 export function getStore(): BetStore {
-  store ??= isConfigured ? createRedisStore() : createMemoryStore();
+  store ??= isConfigured
+    ? createRedisStore()
+    : (dev.betMemoryStore ??= createMemoryStore());
   return store;
 }
