@@ -52,13 +52,14 @@ drive doctor
 Read-only.
 It checks the server is this run's and answering, that it has no store URL, that the browser driver is alive, and that the working tree has not changed since the run started.
 It ends in `FIT` (exit 0) or `UNFIT` (exit 1), with a line for each thing wrong.
+After a stop, name the run: `drive --run <run> doctor`.
 Run it first, and whenever something looks off.
 The site has no sign-in; a bettor is a cookie in the run's browser, and `visitor` switches between them.
 
 ## Drive
 
 Handles are roles, accessible names, labels, visible text and routes, never CSS classes.
-Names and text match as case-insensitive substrings, and the `caption` style uppercases what it shows, so `see` prints `YOUR SLIP` for `Your slip`.
+Names and text match as case-insensitive substrings, and the `caption` style uppercases what it shows, so `text` prints `YOUR SLIP` for `Your slip`, while `see` prints the text as written.
 
 In the browser:
 
@@ -72,10 +73,10 @@ In the browser:
 | `drive press <key>` | Presses a key |
 | `drive wait <role> <name>` | Scrolls until it is visible. Use on a heading above a `client:visible` island: the island only hydrates once scrolled to |
 | `drive see <text>` | Exits 0 once the text is visible, 1 after 15s |
-| `drive absent <text>` | Exits 1 if the text is visible now |
+| `drive absent <text>` | Exits 1 if the text is visible now. It does not wait, so `see` something from the same island first |
 | `drive text [<role> <name>]` | Prints the text of it, or of the page |
 | `drive snapshot [<role> <name>]` | Prints the accessibility tree of it, or of the page |
-| `drive shot <name> [--full]` | Saves `shots/<name>.png`. Look at it: Read the file |
+| `drive shot <name> [--full]` | Waits a second for animations to land, then saves `shots/<name>.png`. Look at it: Read the file |
 | `drive visitor <name>` | Switches to another person, with their own cookies, storage and user agent. The first is `default` |
 | `drive viewport <w> <h>` | Resizes the page |
 | `drive where` | Prints the visitor and the URL |
@@ -84,7 +85,7 @@ Reading back:
 
 | Command | Does |
 | --- | --- |
-| `drive fetch <METHOD> <path> [<json>] [--grep <regex>]` | Calls the run's server as the current visitor, with their cookie |
+| `drive fetch <METHOD> <path> [<json>] [--grep <regex>]` | Calls the run's server as the current visitor, with their cookie. `--grep` filters by line, and JSON and the RSS feed are one line |
 | `drive await-api <METHOD> <path>` | Waits for the page to make that call from now on, up to 15s, and prints it |
 | `drive requests` | Lists API calls the pages made, and external requests that were blocked, with bodies |
 | `drive console` | Lists browser console errors. Blocked external requests are not in it |
@@ -123,6 +124,7 @@ Record each check right after driving it:
 drive check "<heading>" <pass|fail|manual|"not driven"> "<note>"
 ```
 
+Use the step's bold name as the heading, and `Behind it: <what>` for a `Behind it` line.
 The section takes its commands and output from everything run since the last check, and the screenshots they saved.
 A check needs commands behind it, unless it is `not driven`.
 `check` refuses once the site's sources have changed since the start, because the evidence would be stale, and refuses a heading already recorded: a re-check belongs in a new run.
@@ -132,7 +134,7 @@ Each check is:
 
 - `pass`: the product does what the check says.
 - `fail`: it does not, and the code is wrong. The note says what happened instead.
-- `manual`: it does not, and the map is wrong, because the change meant this. The note says why, and the map changes in the same PR.
+- `manual`: it does not, and the map is wrong, because the change meant this, or because the step was never right. The note says why, and the map changes in the same PR.
 - `not driven`: it needs something a run cannot reach. The note names it, and the check stays with the user.
 
 The verdict at the top follows from the checks:

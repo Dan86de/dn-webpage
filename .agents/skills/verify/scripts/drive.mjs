@@ -826,7 +826,7 @@ async function daemon(runDir) {
       await locator
         .first()
         .waitFor({ state: "visible", timeout: SEE_TIMEOUT_MS });
-      return `seen: ${(await locator.first().innerText()).trim()}`;
+      return `seen: ${(await locator.first().textContent()).trim()}`;
     },
     absent: async ([text]) => {
       const count = await (
@@ -856,6 +856,8 @@ async function daemon(runDir) {
       const [name] = args.filter((arg) => arg !== "--full");
       if (!/^[\w-]+$/.test(name ?? ""))
         throw new Refused("usage: shot <name> [--full]");
+      // Stamps and bars animate in once scrolled to: capture where they land.
+      await sleep(1000);
       await (
         await page()
       ).screenshot({

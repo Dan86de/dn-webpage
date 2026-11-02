@@ -24,7 +24,7 @@ A reader leaves a first name and an email on the homepage or under a post, and i
 ## Behind it
 
 The site stores nothing: the only trace of a sign-up is that one request.
-A sign-up is not driven past the request: whether Kit accepts it, the confirmation email, and the redirect to `/confirmed` stay with the user.
+Past the request, whether Kit accepts it, the confirmation email, and the redirect to `/confirmed` are `not driven`.
 
 ## Gotchas
 

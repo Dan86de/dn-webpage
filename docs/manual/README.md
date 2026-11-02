@@ -18,6 +18,7 @@ The site is an Astro website with a few React islands, a JSON API backed by Redi
 - Follow a step that writes something with a read of what it wrote.
 - Every step and every `Behind it` line is a check; an entry point with no step of its own is not driven.
 - Quoted output is how the output starts, or the part of it that matters. Matching ignores case, because captions render uppercase.
+- A line that says `not driven` is recorded as a `not driven` check: it stays with the user, and the verdict names it.
 - `<today>` is today's date in `Europe/Warsaw`, as `2026-11-02` in a CLI's output and `2 Nov 2026` on a page.
 - Start a fresh run per feature file.
 
