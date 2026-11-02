@@ -21,7 +21,7 @@ Every step fakes the clock with `?now=` in January 2030, so nothing here depends
 - **Set next week's bet.** Run `drive run pnpm bet crossfit 1 "One session next week?" 2030-01-20T20:00`.
   It prints `Bet for the week of 2030-01-14`, and `drive read src/content/bets/2030-01-14.yaml` has `target: 1`.
 - **See it open.** Run `drive goto "/habits?now=2030-01-07T12:00"`, `drive wait heading "Bet on me"`, then `drive see "Two sessions in the test week?"`.
-  `drive see "Closes"` prints `CLOSES WED 20:00 · DEADLINE SUN 20:00 · 0 OF 2 LOGGED`, and `drive see "No bets yet"` passes.
+  `drive see "Closes"` prints `Closes Wed 20:00 · deadline Sun 20:00 · 0 of 2 logged`, and `drive see "No bets yet"` passes.
 - **See the teaser.** Run `drive see "One session next week?"`, then `drive see "Betting opens Monday"`.
 - **See the form.** Run `drive snapshot group "Pick a side"` and `drive snapshot group "Stake"`.
   The sides are `He'll make it No takers yet` and `He'll fold No takers yet`; the stakes are `10`, `25` (pressed), `50`, `All in`.
@@ -39,11 +39,11 @@ Every step fakes the clock with `?now=` in January 2030, so nothing here depends
 - **The odds move.** Run `drive fill "Your nickname" "Bob"`, `drive click button "on the couch"`, `drive see "Your slip"`, then `drive snapshot img "of the pot"`.
   It reads `20% of the pot backs him, 80% bets he folds`.
 - **Betting closes.** Run `drive visitor carol`, `drive goto "/habits?now=2030-01-10T12:00"`, `drive wait heading "Bet on me"`, then `drive see "Betting closed"`.
-  It reads `BETTING CLOSED · HE HAS UNTIL SUN 20:00 · 0 OF 2 LOGGED`, and `drive absent "Pick a side"` passes: someone new gets no form.
+  It reads `Betting closed · he has until Sun 20:00 · 0 of 2 logged`, and `drive absent "Pick a side"` passes: someone new gets no form.
 - **A late bet is refused.** Run `drive fetch POST "/api/bets?now=2030-01-10T12:00" '{"side":"believe","stake":5}'`.
   It answers 409 with `Betting on this one is closed.`
 - **The log settles it, a loser's view.** Run `drive visitor bob`, `drive run pnpm habit crossfit 2030-01-08`, `drive run pnpm habit crossfit 2030-01-09`, `drive read src/content/habits/crossfit.yaml --grep 2030`, `drive goto "/habits?now=2030-01-10T12:00"`, `drive wait heading "Bet on me"`, `drive see "Settled"`, then `drive snapshot article "Slip"`.
-  The file has both days, the status reads `SETTLED · HE DID IT`; the slip is named `Slip 0002: 100 coins on "he'll fold", busted`, and `PAID OUT` reads `0`.
+  The file has both days, the status reads `Settled · he did it`; the slip is named `Slip 0002: 100 coins on "he'll fold", busted`, and `PAID OUT` reads `0`.
 - **A winner's view.** Run `drive visitor default`, `drive goto "/habits?now=2030-01-10T12:00"`, `drive wait heading "Bet on me"`, then `drive snapshot article "Slip"`.
   The slip is named `Slip 0001: 25 coins on "he'll make it", paid`, and `PAID OUT` reads `125`.
   `drive see "PAID!"`, `drive shot paid`, and look at the stamp.
